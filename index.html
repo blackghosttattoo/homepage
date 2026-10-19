@@ -13,7 +13,7 @@
 <style>
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:#000000;color:#E7E3DC;font-family:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:16px;line-height:1.75;-webkit-text-size-adjust:100%}
+body{margin:0;background:#000000;color:#E7E3DC;font-family:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:16px;line-height:1.75;-webkit-text-size-adjust:100%;word-break:keep-all;overflow-wrap:break-word}
 a{color:#E7E3DC}a:hover{color:#FFFFFF}
 a:focus-visible{outline:2px solid #E7E3DC;outline-offset:3px}
 img{max-width:100%}
@@ -52,6 +52,20 @@ h2{margin:0;font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:clamp(3
 .info div{display:flex;flex-direction:column;gap:6px;min-width:0}
 .info dt{font-size:13px;color:#9C978F}
 .info dd{margin:0;font-size:17px;color:#F2EFEA}
+.info dd a{color:#F2EFEA;text-decoration:none;border-bottom:1px solid #5C5A56}
+.info dd a:hover{color:#FFFFFF;border-color:#E7E3DC}
+.points{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:28px 20px}
+.points div{display:flex;flex-direction:column;gap:8px;padding-top:18px;border-top:1px solid #5C5A56}
+.points strong{font-family:'Nanum Myeongjo',serif;font-size:20px;color:#F2EFEA}
+.points span{color:#CFCAC1;font-size:15px}
+.route{margin:0;padding:0;list-style:none;display:flex;flex-direction:column}
+.route li{padding:16px 0;border-top:1px solid #26252A;display:flex;gap:20px}
+.route li:last-child{border-bottom:1px solid #26252A}
+.route b{font-family:'Nanum Myeongjo',serif;font-weight:800;color:#9C978F;min-width:64px;flex:none}
+.artist a{text-decoration:none}
+.artist .photo:hover{border-color:#5C5A56}
+.artist .ig{color:#CFCAC1}
+.artist .ig:hover{color:#FFFFFF}
 </style>
 </head>
 <body>
@@ -60,6 +74,7 @@ h2{margin:0;font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:clamp(3
 <div style="max-width: 1200px; margin: 0 auto; padding: 16px 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 32px">
 <a href="#top" class="slv" style="font-family: 'Cinzel', 'Times New Roman', serif; font-weight: 600; font-size: 20px; letter-spacing: 0.22em; text-decoration: none">BLACKGHOST</a>
 <nav class="bg-nav" aria-label="메인 메뉴">
+<a href="#studio">소개</a>
 <a href="#artists">아티스트</a>
 <a href="#process">예약 방법</a>
 <a href="#aftercare">관리법</a>
@@ -71,15 +86,31 @@ h2{margin:0;font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:clamp(3
 <main>
 <section id="top" style="max-width: 1200px; margin: 0 auto; padding: 40px 20px 80px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px">
 <img src="logo.jpg" alt="BLACKGHOST TATTOO STUDIO 로고" width="600" height="600" style="width: min(100%, 440px); height: auto; display: block">
-<p style="margin: 0; max-width: 30em; font-family: 'Nanum Myeongjo', serif; font-weight: 700; font-size: clamp(19px, 2.6vw, 24px); line-height: 1.6; color: #E7E3DC; text-wrap: balance">[가게 한 줄 소개 — 예: 인천에서 15명의 타투이스트가 각자의 장르로 작업합니다]</p>
-<p style="margin: 0; font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 0.24em; color: #9C978F">INCHEON · BY APPOINTMENT ONLY</p>
+<p style="margin: 0; max-width: 30em; font-family: 'Nanum Myeongjo', serif; font-weight: 700; font-size: clamp(19px, 2.6vw, 24px); line-height: 1.6; color: #E7E3DC; text-wrap: balance">인천 주안, 100평 규모의 대형 타투 스튜디오</p>
+<p style="margin: 0; max-width: 34em; font-size: 15px; color: #CFCAC1; text-wrap: balance">타투를 처음 받는 분도, 여러 번 받아 보신 분도 안심하고 찾을 수 있는 곳.<br>개성과 스타일이 다른 여러 아티스트가 고객의 취향과 이야기를 담아 디자인합니다.</p>
+<p style="margin: 0; font-family: 'Cinzel', serif; font-size: 13px; letter-spacing: 0.24em; color: #9C978F">JUAN · INCHEON · OPEN 24H · BY APPOINTMENT</p>
 <div class="btns" style="justify-content: center; margin-top: 6px">
 <a href="#visit" class="btn btn-solid">예약 문의하기</a>
 <a href="#artists" class="btn">아티스트 보기</a>
 </div>
 </section>
 
-<section id="artists" class="sec">
+<section id="studio" class="sec">
+<div class="wrap">
+<div class="head">
+<div class="eyebrow"><span></span>STUDIO</div>
+<h2 class="slv">블랙고스트 타투 스튜디오</h2>
+</div>
+<div class="points">
+<div><strong>다양한 장르</strong><span>레터링 · 블랙앤그레이 · 올드스쿨 · 뉴스쿨 · 라인워크 · 미니 · 파인라인 · 이레즈미 · 도트워크 · 컬러 · 커버업 · 리터치</span></div>
+<div><strong>상담부터 관리까지</strong><span>무리한 작업은 권하지 않아요. 부위와 피부 상태, 디자인을 함께 고민합니다.</span></div>
+<div><strong>철저한 위생</strong><span>작업 공간을 늘 청결하게 유지하고 위생 기준에 맞춰 작업합니다.</span></div>
+<div><strong>넓고 편한 공간</strong><span>약 100평에 작업실 · 대기실 · 휴게실 · 흡연실이 따로 있고, 동행하신 분을 위한 오락 시설도 있어요.</span></div>
+</div>
+</div>
+</section>
+
+<section id="artists" class="sec sec-alt">
 <div class="wrap">
 <div class="head">
 <div class="eyebrow"><span></span>ARTISTS</div>
@@ -87,153 +118,153 @@ h2{margin:0;font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:clamp(3
 <p style="margin: 0; color: #9C978F; font-size: 15px">아티스트마다 장르가 달라요. 인스타그램에서 작업물을 보고 골라 주세요.</p>
 </div>
 <div class="artists">
-<!-- 아티스트 1 -->
+<!-- 아티스트 1: 인스타 주소는 아래 두 곳의 href에 넣기 -->
 <article class="artist">
-<div class="photo bg-ph"><span>PHOTO</span></div>
+<a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="[아티스트 1] 인스타그램 보기 (새 창)"><div class="photo bg-ph"><span>PHOTO</span></div></a>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <h3>[아티스트 1]</h3>
 <p style="color: #9C978F">[장르 — 예: 블랙워크, 레터링]</p>
-<p style="color: #CFCAC1">[@인스타]</p>
+<p><a class="ig" href="https://www.instagram.com/" target="_blank" rel="noopener">[@인스타]</a></p>
 </div>
 </article>
-<!-- 아티스트 2 -->
+<!-- 아티스트 2: 인스타 주소는 아래 두 곳의 href에 넣기 -->
 <article class="artist">
-<div class="photo bg-ph"><span>PHOTO</span></div>
+<a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="[아티스트 2] 인스타그램 보기 (새 창)"><div class="photo bg-ph"><span>PHOTO</span></div></a>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <h3>[아티스트 2]</h3>
 <p style="color: #9C978F">[장르 — 예: 블랙워크, 레터링]</p>
-<p style="color: #CFCAC1">[@인스타]</p>
+<p><a class="ig" href="https://www.instagram.com/" target="_blank" rel="noopener">[@인스타]</a></p>
 </div>
 </article>
-<!-- 아티스트 3 -->
+<!-- 아티스트 3: 인스타 주소는 아래 두 곳의 href에 넣기 -->
 <article class="artist">
-<div class="photo bg-ph"><span>PHOTO</span></div>
+<a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="[아티스트 3] 인스타그램 보기 (새 창)"><div class="photo bg-ph"><span>PHOTO</span></div></a>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <h3>[아티스트 3]</h3>
 <p style="color: #9C978F">[장르 — 예: 블랙워크, 레터링]</p>
-<p style="color: #CFCAC1">[@인스타]</p>
+<p><a class="ig" href="https://www.instagram.com/" target="_blank" rel="noopener">[@인스타]</a></p>
 </div>
 </article>
-<!-- 아티스트 4 -->
+<!-- 아티스트 4: 인스타 주소는 아래 두 곳의 href에 넣기 -->
 <article class="artist">
-<div class="photo bg-ph"><span>PHOTO</span></div>
+<a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="[아티스트 4] 인스타그램 보기 (새 창)"><div class="photo bg-ph"><span>PHOTO</span></div></a>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <h3>[아티스트 4]</h3>
 <p style="color: #9C978F">[장르 — 예: 블랙워크, 레터링]</p>
-<p style="color: #CFCAC1">[@인스타]</p>
+<p><a class="ig" href="https://www.instagram.com/" target="_blank" rel="noopener">[@인스타]</a></p>
 </div>
 </article>
-<!-- 아티스트 5 -->
+<!-- 아티스트 5: 인스타 주소는 아래 두 곳의 href에 넣기 -->
 <article class="artist">
-<div class="photo bg-ph"><span>PHOTO</span></div>
+<a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="[아티스트 5] 인스타그램 보기 (새 창)"><div class="photo bg-ph"><span>PHOTO</span></div></a>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <h3>[아티스트 5]</h3>
 <p style="color: #9C978F">[장르 — 예: 블랙워크, 레터링]</p>
-<p style="color: #CFCAC1">[@인스타]</p>
+<p><a class="ig" href="https://www.instagram.com/" target="_blank" rel="noopener">[@인스타]</a></p>
 </div>
 </article>
-<!-- 아티스트 6 -->
+<!-- 아티스트 6: 인스타 주소는 아래 두 곳의 href에 넣기 -->
 <article class="artist">
-<div class="photo bg-ph"><span>PHOTO</span></div>
+<a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="[아티스트 6] 인스타그램 보기 (새 창)"><div class="photo bg-ph"><span>PHOTO</span></div></a>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <h3>[아티스트 6]</h3>
 <p style="color: #9C978F">[장르 — 예: 블랙워크, 레터링]</p>
-<p style="color: #CFCAC1">[@인스타]</p>
+<p><a class="ig" href="https://www.instagram.com/" target="_blank" rel="noopener">[@인스타]</a></p>
 </div>
 </article>
-<!-- 아티스트 7 -->
+<!-- 아티스트 7: 인스타 주소는 아래 두 곳의 href에 넣기 -->
 <article class="artist">
-<div class="photo bg-ph"><span>PHOTO</span></div>
+<a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="[아티스트 7] 인스타그램 보기 (새 창)"><div class="photo bg-ph"><span>PHOTO</span></div></a>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <h3>[아티스트 7]</h3>
 <p style="color: #9C978F">[장르 — 예: 블랙워크, 레터링]</p>
-<p style="color: #CFCAC1">[@인스타]</p>
+<p><a class="ig" href="https://www.instagram.com/" target="_blank" rel="noopener">[@인스타]</a></p>
 </div>
 </article>
-<!-- 아티스트 8 -->
+<!-- 아티스트 8: 인스타 주소는 아래 두 곳의 href에 넣기 -->
 <article class="artist">
-<div class="photo bg-ph"><span>PHOTO</span></div>
+<a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="[아티스트 8] 인스타그램 보기 (새 창)"><div class="photo bg-ph"><span>PHOTO</span></div></a>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <h3>[아티스트 8]</h3>
 <p style="color: #9C978F">[장르 — 예: 블랙워크, 레터링]</p>
-<p style="color: #CFCAC1">[@인스타]</p>
+<p><a class="ig" href="https://www.instagram.com/" target="_blank" rel="noopener">[@인스타]</a></p>
 </div>
 </article>
-<!-- 아티스트 9 -->
+<!-- 아티스트 9: 인스타 주소는 아래 두 곳의 href에 넣기 -->
 <article class="artist">
-<div class="photo bg-ph"><span>PHOTO</span></div>
+<a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="[아티스트 9] 인스타그램 보기 (새 창)"><div class="photo bg-ph"><span>PHOTO</span></div></a>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <h3>[아티스트 9]</h3>
 <p style="color: #9C978F">[장르 — 예: 블랙워크, 레터링]</p>
-<p style="color: #CFCAC1">[@인스타]</p>
+<p><a class="ig" href="https://www.instagram.com/" target="_blank" rel="noopener">[@인스타]</a></p>
 </div>
 </article>
-<!-- 아티스트 10 -->
+<!-- 아티스트 10: 인스타 주소는 아래 두 곳의 href에 넣기 -->
 <article class="artist">
-<div class="photo bg-ph"><span>PHOTO</span></div>
+<a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="[아티스트 10] 인스타그램 보기 (새 창)"><div class="photo bg-ph"><span>PHOTO</span></div></a>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <h3>[아티스트 10]</h3>
 <p style="color: #9C978F">[장르 — 예: 블랙워크, 레터링]</p>
-<p style="color: #CFCAC1">[@인스타]</p>
+<p><a class="ig" href="https://www.instagram.com/" target="_blank" rel="noopener">[@인스타]</a></p>
 </div>
 </article>
-<!-- 아티스트 11 -->
+<!-- 아티스트 11: 인스타 주소는 아래 두 곳의 href에 넣기 -->
 <article class="artist">
-<div class="photo bg-ph"><span>PHOTO</span></div>
+<a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="[아티스트 11] 인스타그램 보기 (새 창)"><div class="photo bg-ph"><span>PHOTO</span></div></a>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <h3>[아티스트 11]</h3>
 <p style="color: #9C978F">[장르 — 예: 블랙워크, 레터링]</p>
-<p style="color: #CFCAC1">[@인스타]</p>
+<p><a class="ig" href="https://www.instagram.com/" target="_blank" rel="noopener">[@인스타]</a></p>
 </div>
 </article>
-<!-- 아티스트 12 -->
+<!-- 아티스트 12: 인스타 주소는 아래 두 곳의 href에 넣기 -->
 <article class="artist">
-<div class="photo bg-ph"><span>PHOTO</span></div>
+<a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="[아티스트 12] 인스타그램 보기 (새 창)"><div class="photo bg-ph"><span>PHOTO</span></div></a>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <h3>[아티스트 12]</h3>
 <p style="color: #9C978F">[장르 — 예: 블랙워크, 레터링]</p>
-<p style="color: #CFCAC1">[@인스타]</p>
+<p><a class="ig" href="https://www.instagram.com/" target="_blank" rel="noopener">[@인스타]</a></p>
 </div>
 </article>
-<!-- 아티스트 13 -->
+<!-- 아티스트 13: 인스타 주소는 아래 두 곳의 href에 넣기 -->
 <article class="artist">
-<div class="photo bg-ph"><span>PHOTO</span></div>
+<a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="[아티스트 13] 인스타그램 보기 (새 창)"><div class="photo bg-ph"><span>PHOTO</span></div></a>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <h3>[아티스트 13]</h3>
 <p style="color: #9C978F">[장르 — 예: 블랙워크, 레터링]</p>
-<p style="color: #CFCAC1">[@인스타]</p>
+<p><a class="ig" href="https://www.instagram.com/" target="_blank" rel="noopener">[@인스타]</a></p>
 </div>
 </article>
-<!-- 아티스트 14 -->
+<!-- 아티스트 14: 인스타 주소는 아래 두 곳의 href에 넣기 -->
 <article class="artist">
-<div class="photo bg-ph"><span>PHOTO</span></div>
+<a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="[아티스트 14] 인스타그램 보기 (새 창)"><div class="photo bg-ph"><span>PHOTO</span></div></a>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <h3>[아티스트 14]</h3>
 <p style="color: #9C978F">[장르 — 예: 블랙워크, 레터링]</p>
-<p style="color: #CFCAC1">[@인스타]</p>
+<p><a class="ig" href="https://www.instagram.com/" target="_blank" rel="noopener">[@인스타]</a></p>
 </div>
 </article>
-<!-- 아티스트 15 -->
+<!-- 아티스트 15: 인스타 주소는 아래 두 곳의 href에 넣기 -->
 <article class="artist">
-<div class="photo bg-ph"><span>PHOTO</span></div>
+<a href="https://www.instagram.com/" target="_blank" rel="noopener" aria-label="[아티스트 15] 인스타그램 보기 (새 창)"><div class="photo bg-ph"><span>PHOTO</span></div></a>
 <div style="display: flex; flex-direction: column; gap: 2px">
 <h3>[아티스트 15]</h3>
 <p style="color: #9C978F">[장르 — 예: 블랙워크, 레터링]</p>
-<p style="color: #CFCAC1">[@인스타]</p>
+<p><a class="ig" href="https://www.instagram.com/" target="_blank" rel="noopener">[@인스타]</a></p>
 </div>
 </article>
 </div>
 </div>
 </section>
 
-<section id="process" class="sec sec-alt">
+<section id="process" class="sec">
 <div class="wrap">
 <div class="head">
 <div class="eyebrow"><span></span>BOOKING</div>
 <h2 class="slv">예약은 이렇게 진행돼요</h2>
 </div>
 <ol class="steps">
-<li><span class="num">I</span><strong>상담</strong><span class="txt">원하는 도안, 부위, 크기를 [카카오톡 채널 / 인스타 DM]으로 보내주세요.</span></li>
+<li><span class="num">I</span><strong>상담</strong><span class="txt">원하는 도안, 부위, 크기를 카카오톡 오픈채팅이나 인스타그램 DM으로 보내주세요.</span></li>
 <li><span class="num">II</span><strong>견적·일정</strong><span class="txt">담당 아티스트가 견적과 가능한 날짜를 안내해 드려요.</span></li>
 <li><span class="num">III</span><strong>예약금</strong><span class="txt">예약금 [금액]을 입금하면 예약이 확정돼요. [환불 규정]</span></li>
 <li><span class="num">IV</span><strong>작업 당일</strong><span class="txt">신분증을 지참하고, 식사를 하고 와 주세요.</span></li>
@@ -241,7 +272,7 @@ h2{margin:0;font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:clamp(3
 </div>
 </section>
 
-<section id="aftercare" class="sec">
+<section id="aftercare" class="sec sec-alt">
 <div class="wrap" style="flex-direction: row; flex-wrap: wrap; gap: 36px 72px">
 <div style="flex: 1 1 320px; min-width: 0; display: flex; flex-direction: column; gap: 14px; align-items: flex-start">
 <div class="eyebrow"><span></span>AFTERCARE</div>
@@ -257,22 +288,30 @@ h2{margin:0;font-family:'Nanum Myeongjo',serif;font-weight:800;font-size:clamp(3
 </div>
 </section>
 
-<section id="visit" class="sec sec-alt">
+<section id="visit" class="sec">
 <div class="wrap">
 <div class="head">
 <div class="eyebrow"><span></span>VISIT</div>
 <h2 class="slv">오시는 길 · 예약 문의</h2>
 </div>
 <dl class="info">
-<div><dt>주소</dt><dd>[도로명 주소]<br>[찾아오는 방법 — 예: ○○역 3번 출구 도보 5분]</dd></div>
-<div><dt>영업시간</dt><dd>[예: 매일 12:00 – 22:00]<br>100% 예약제</dd></div>
-<div><dt>문의</dt><dd>카카오톡 채널 [채널명]<br>인스타그램 [@아이디]</dd></div>
+<div><dt>주소</dt><dd>인천 미추홀구 경인로325번길 18, 2층<br>주안시민지하도상가 19번 출구 도보 1분</dd></div>
+<div><dt>영업시간</dt><dd>연중무휴 24시간<br>100% 예약제</dd></div>
+<div><dt>문의</dt><dd>전화 <a href="tel:01076406272">010-7640-6272</a><br><a href="https://open.kakao.com/o/sLedaTNb" target="_blank" rel="noopener">카카오톡 오픈채팅</a><br>인스타그램 <a href="https://www.instagram.com/blackghost_tattoo" target="_blank" rel="noopener">@blackghost_tattoo</a></dd></div>
 </dl>
+<ul class="route">
+<li><b>지하철</b><span>1호선 · 인천2호선 주안역 → 주안시민지하도상가 19번 출구에서 도보 1분</span></li>
+<li><b>버스</b><span>주안사거리 정류장 하차 후 도보 1분</span></li>
+<li><b>자가용</b><span>지도 앱에서 "블랙고스트타투" 검색</span></li>
+<li><b>근처</b><span>미추홀구 보건소에서 도보 3분</span></li>
+</ul>
 <div class="btns">
-<a href="https://www.instagram.com/" class="btn btn-solid">인스타그램 DM</a>
-<a href="https://pf.kakao.com/" class="btn">카카오톡 상담</a>
-<a href="https://map.naver.com/" class="btn">네이버 지도</a>
+<a href="https://www.instagram.com/blackghost_tattoo" target="_blank" rel="noopener" class="btn btn-solid">인스타그램 DM</a>
+<a href="https://open.kakao.com/o/sLedaTNb" target="_blank" rel="noopener" class="btn">카카오톡 상담</a>
+<a href="tel:01076406272" class="btn">전화하기</a>
+<a href="https://map.naver.com/p/search/%EB%B8%94%EB%9E%99%EA%B3%A0%EC%8A%A4%ED%8A%B8%ED%83%80%ED%88%AC" target="_blank" rel="noopener" class="btn">네이버 지도</a>
 </div>
+<p style="margin: 0; font-size: 14px; color: #9C978F">타투이스트를 위한 <strong style="color: #E7E3DC; font-weight: 500">타투 쉐어 공간</strong>도 운영합니다. 전화나 방문으로 문의해 주세요.</p>
 </div>
 </section>
 </main>
