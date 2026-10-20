@@ -61,28 +61,29 @@
 - 찾아오는 길: 주안역(1호선·인천2호선) → 주안시민지하도상가 19번 출구 도보 1분 / 주안사거리 버스정류장 도보 1분 / 미추홀구 보건소 도보 3분
 - 타투이스트용 타투 쉐어 공간도 운영 (전화·방문 문의)
 
-### 아티스트 (순서대로)
+### 아티스트
 
-| 칸 | 이름 | 인스타 |
-|---|---|---|
-| 1 | 타투백 | @tatooist_back |
-| 2 | 풀문 | @fullmoontattoo_s2 |
-| 3 | 연화 | @tattooer_yeonhwa |
-| 4 | 와이즈 | @wise_tattoo |
-| 5 | 운 | @tattooer_own |
-| 6 | 선한 | @sunhan.tattoo |
-| 7 | 동백 | @dongbaektattoo |
-| 8 | 연 | @yeon__irezumi |
-| 9 | 킨타 | @kinta_tattooer |
-| 10 | 설화 | @seolhwa.tattoo |
-| 11 | 샤카 | @tattooer_shaka |
+| 칸 | 화면 이름 | 한글 이름 | 장르 | 인스타 | 사진 파일 |
+|---|---|---|---|---|---|
+| 1 | BACK | 타투백 | 올라운더 | @tatooist_back | `artists/back.jpg` |
+| 2 | FULLMOON | 풀문 | 파인라인 · 감성타투 | @fullmoontattoo_s2 | `artists/fullmoon.jpg` |
+| 3 | YEONHWA | 연화 | 블랙워크 · 블랙앤그레이 · 리얼리즘 | @tattooer_yeonhwa | `artists/yeonhwa.jpg` |
+| 4 | WISE | 와이즈 | 리얼리즘 | @wise_tattoo | `artists/wise.jpg` |
+| 5 | OWN | 운 | 동양화 | @tattooer_own | `artists/own.jpg` |
+| 6 | SUNHAN | 선한 | 트래디셔널 | @sunhan.tattoo | `artists/sunhan.jpg` |
+| 7 | DONGBAEK | 동백 | 블랙앤그레이 | @dongbaektattoo | `artists/dongbaek.jpg` |
+| 8 | YEON | 연 | 이레즈미 | @yeon__irezumi | `artists/yeon.jpg` |
+| 9 | KINTA | 킨타 | 블랙워크 | @kinta_tattooer | `artists/kinta.jpg` |
+| 10 | SEOLHWA | 설화 | 올라운더 | @seolhwa.tattoo | `artists/seolhwa.jpg` |
+| 11 | SHAKA | 샤카 | 이레즈미 · 블랙워크 · 블랙앤그레이 | @tattooer_shaka | `artists/shaka.jpg` |
 
-- 화면에는 이름·장르 + **인스타 아이콘**만 보입니다. (@아이디 글자는 보이지 않게 함) 사진이나 아이콘을 누르면 인스타가 새 창으로 열림.
-- **순서 랜덤 섞기는 사진을 다 받은 뒤에 켭니다.** (그 전까지는 위 표 순서)
-- 사진: 대장님이 아티스트에게 받아서 올려주시기로 함 (Claude는 인스타 접속 불가).
-  - 기준: 대표 **작업물 사진**, 캡처 말고 **원본**, 정사각형 또는 세로.
-  - Claude가 세로 4:5로 잘라 640×800으로 줄여 `artists/이름.jpg`로 저장.
-  - 받은 사진: 선한(`artists/sunhan.jpg`), 와이즈(`artists/wise.jpg` — 분홍 로고 150px, **임시**. 큰 원본이나 작업물 사진 받으면 교체)
+- 화면에는 **동그란 사진 + 영어 이름(Michroma) + 장르 + 인스타 아이콘**만 보입니다. 한글 이름은 화면에 안 나오고, 읽어 주기 기능용 설명에만 씀.
+- 사진이나 아이콘을 누르면 인스타가 새 창으로 열림. (@아이디 글자는 보이지 않게 함)
+- **순서는 홈페이지를 열 때마다 랜덤으로 섞입니다.** (index.html 맨 아래 짧은 명령. 위 표 순서는 관리용)
+- 사진: 인스타 프로필 화면 캡처에서 동그라미 안쪽만 잘라 600×600 정사각형으로 저장 → 화면에서 동그라미로 표시.
+  - 새 사진 기준: 정사각형 또는 세로, 가능하면 원본.
+  - **SHAKA 사진(SEXI 로고)은 펩시 로고 패러디라 상표 문제 소지 → 다른 사진으로 교체 추천.**
+  - OWN, YEON 사진은 흐릿함 → 선명한 사진 받으면 교체.
 
 ### 사업자 정보
 
@@ -91,7 +92,7 @@
 ### 파일 위치
 
 - `index.html` — 홈페이지 본문 (아티스트 사진·이름 등도 여기서 고침)
-- `artists/` — 아티스트 사진
+- `artists/` — 아티스트 사진 (영어 이름 소문자.jpg)
 - `logo.jpg` — 로고 (sales-app의 `icons/logo.jpg`를 복사한 것. 맨 위 로고와 브라우저 탭 아이콘에 사용)
 
 ### 모르는 정보
@@ -122,11 +123,10 @@
 - ⏸ 홈페이지를 `main`으로 옮기기 (배포) — **홈페이지를 다 꾸민 뒤에** (대장님 지시)
 - ⏸ `CNAME` 파일 넣기 (blackghosttattoo.com) — 배포 때 같이
 - ⏸ 호스팅kr 설정 안내 (blackghosttattoo.com DNS, incheontattoo.com 포워딩) — 배포 때 같이
-- ⏸ 아티스트 순서 랜덤 섞기 — 사진을 다 받은 뒤
 
 ## 아직 모르는 정보 (받으면 채우기)
 
-- 아티스트 11명: 장르, 사진 (받은 것: 선한, 와이즈(임시))
+- (선택) SHAKA 교체 사진, OWN·YEON 선명한 사진
 - 예약금 금액, 환불 규정
 - 작업 후 관리 문구 (당일 / 1~2주 / 이후)
 
@@ -146,3 +146,6 @@
 - 인스타 @아이디 글자 대신 인스타 아이콘으로 변경
 - 선한·와이즈 사진 넣음 (와이즈는 임시)
 - 폰트 변경: 영문 Michroma, 한글 제목 Noto Sans KR 900 (시안과 index.html 둘 다)
+- 아티스트 이름 영어로(Michroma), 장르 11명 모두 넣음
+- 아티스트 사진 11명 모두 넣음, 동그란 프로필 모양으로 변경
+- 아티스트 순서 랜덤 섞기 켬
