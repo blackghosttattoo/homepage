@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>타투플레이스 아카데미 · TATTOO PLACE ACADEMY</title>
+<meta name="description" content="인천 주안 타투 학원 타투플레이스 아카데미 — 현직 타투이스트 강사진의 실습 위주 타투 수강">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Michroma&amp;family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#000000;color:#E7E3DC;font-family:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:16px;line-height:1.75;-webkit-text-size-adjust:100%;word-break:keep-all;overflow-wrap:break-word}
+a{color:#E7E3DC}a:hover{color:#FFFFFF}
+a:focus-visible{outline:2px solid #E7E3DC;outline-offset:3px}
+img{max-width:100%}
+.slv{background:linear-gradient(180deg,#FFFFFF 0%,#D8D3CB 38%,#8E8982 62%,#E9E5DE 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.bg-ph{background:radial-gradient(120% 90% at 50% 0%,#1A1A1D 0%,#0B0B0C 70%)}
+.wrap{max-width:1200px;margin:0 auto;padding:72px 20px;display:flex;flex-direction:column;gap:36px}
+.sec{border-top:1px solid #1F1F22}
+.sec-alt{background:#0B0B0C}
+.head{display:flex;flex-direction:column;gap:10px}
+.eyebrow{display:flex;align-items:center;gap:14px;font-family:'Michroma',sans-serif;font-size:13px;letter-spacing:0.26em;color:#9C978F}
+.eyebrow span{width:40px;height:1px;background:#5C5A56}
+h2{margin:0;font-family: 'Noto Sans KR', sans-serif; font-weight: 900; letter-spacing: -0.03em;font-size:clamp(30px,4.4vw,44px);line-height:1.3}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 28px;border:1px solid #5C5A56;color:#E7E3DC;text-decoration:none;border-radius:2px}
+.btn-solid{background:#E7E3DC;border-color:#E7E3DC;color:#000000;font-weight:700}
+.btn-solid:hover{background:#FFFFFF;color:#000000}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.bg-nav{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:14px}
+.bg-nav a{color:#B7B2AA;text-decoration:none}
+.bg-nav a:hover{color:#FFFFFF}
+.steps{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:28px 20px}
+.steps li{display:flex;flex-direction:column;gap:8px;padding-top:18px;border-top:1px solid #5C5A56}
+.steps .num{font-family:'Michroma',sans-serif;font-size:13px;letter-spacing:0.2em;color:#9C978F}
+.steps strong{font-family:'Noto Sans KR',sans-serif;font-weight:900;letter-spacing:-0.02em;font-size:20px;color:#F2EFEA}
+.steps .txt{color:#CFCAC1;font-size:15px}
+.info{margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:28px 24px}
+.info div{display:flex;flex-direction:column;gap:6px;min-width:0}
+.info dt{font-size:13px;color:#9C978F}
+.info dd{margin:0;font-size:17px;color:#F2EFEA}
+.info dd a{color:#F2EFEA;text-decoration:none;border-bottom:1px solid #5C5A56}
+.info dd a:hover{color:#FFFFFF;border-color:#E7E3DC}
+.points{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:28px 20px}
+.points div{display:flex;flex-direction:column;gap:8px;padding-top:18px;border-top:1px solid #5C5A56}
+.points strong{font-family:'Noto Sans KR',sans-serif;font-weight:900;letter-spacing:-0.02em;font-size:20px;color:#F2EFEA}
+.points span{color:#CFCAC1;font-size:15px}
+.route{margin:0;padding:0;list-style:none;display:flex;flex-direction:column}
+.route li{padding:16px 0;border-top:1px solid #26252A;display:flex;gap:20px}
+.route li:last-child{border-bottom:1px solid #26252A}
+.route b{font-family: 'Noto Sans KR', sans-serif; font-weight: 900; letter-spacing: -0.03em;color:#9C978F;min-width:64px;flex:none}
+.bg-nav a[aria-current]{color:#F2EFEA}
+.hero-title{margin:0;font-family:'Michroma',sans-serif;font-weight:400;font-size:clamp(30px,6.4vw,64px);line-height:1.15;letter-spacing:0.06em}
+.hero-sub{display:block;font-size:0.5em;letter-spacing:0.32em;color:#9C978F;margin-top:6px}
+.chips{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:10px}
+.chips li{padding:8px 16px;border:1px solid #3A3936;border-radius:999px;font-size:14px;color:#E7E3DC}
+.why{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:16px}
+.why li{display:flex;gap:16px;padding:22px;border:1px solid #26252A;background:#0B0B0C}
+.why .n{font-family:'Michroma',sans-serif;font-size:12px;letter-spacing:0.12em;color:#9C978F;padding-top:5px;flex:none}
+.why strong{display:block;font-family:'Noto Sans KR',sans-serif;font-weight:900;letter-spacing:-0.02em;font-size:19px;color:#F2EFEA;margin-bottom:6px}
+.why span{color:#CFCAC1;font-size:15px}
+.stats{margin:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));border-top:1px solid #5C5A56;border-bottom:1px solid #26252A}
+.stats div{padding:24px 8px;text-align:center;display:flex;flex-direction:column;gap:6px}
+.stats div+div{border-left:1px solid #26252A}
+.stats dt{font-family:'Michroma',sans-serif;font-size:11px;letter-spacing:0.2em;color:#9C978F}
+.stats dd{margin:0;font-family:'Noto Sans KR',sans-serif;font-weight:900;font-size:clamp(20px,3.6vw,32px);letter-spacing:-0.02em;color:#F2EFEA}
+.notes{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px;color:#CFCAC1;font-size:15px}
+.notes li::before{content:"— ";color:#5C5A56}
+.faq{display:flex;flex-direction:column;border-top:1px solid #26252A}
+.faq details{border-bottom:1px solid #26252A}
+.faq summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:16px;padding:20px 0;min-height:44px;font-family:'Noto Sans KR',sans-serif;font-weight:700;font-size:17px;color:#F2EFEA}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .q{font-family:'Michroma',sans-serif;font-size:13px;color:#9C978F;flex:none}
+.faq summary::after{content:"+";margin-left:auto;font-family:'Michroma',sans-serif;color:#9C978F;font-size:18px;transition:transform .2s}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq p{margin:0;padding:0 0 22px 34px;color:#CFCAC1;font-size:15px}
+</style>
+</head>
+<body>
+
+<header style="border-bottom: 1px solid #1F1F22">
+<div style="max-width: 1200px; margin: 0 auto; padding: 16px 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 32px">
+<a href="index.html" class="slv" style="font-family: 'Michroma', sans-serif; font-size: 20px; letter-spacing: 0.22em; text-decoration: none">BLACKGHOST</a>
+<nav class="bg-nav" aria-label="메인 메뉴">
+<a href="index.html#studio">소개</a>
+<a href="index.html#artists">아티스트</a>
+<a href="index.html#process">예약 방법</a>
+<a href="index.html#aftercare">관리법</a>
+<a href="index.html#visit">오시는 길</a>
+<a href="academy.html" aria-current="page">타투플레이스</a>
+</nav>
+</div>
+</header>
+
+<main>
+<section id="top" style="max-width: 1200px; margin: 0 auto; padding: 72px 20px 80px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px">
+<p style="margin: 0; font-family: 'Michroma', sans-serif; font-size: 12px; letter-spacing: 0.3em; color: #9C978F">INCHEON JUAN</p>
+<h1 class="hero-title"><span class="slv">TATTOO PLACE</span><span class="hero-sub">ACADEMY</span></h1>
+<p style="margin: 0; font-family: 'Noto Sans KR', sans-serif; font-weight: 700; font-size: clamp(19px, 2.6vw, 24px); color: #E7E3DC">인천 타투 수강의 중심, 타투플레이스</p>
+<ul class="chips">
+<li>실습 위주 커리큘럼</li>
+<li>확실한 애프터케어</li>
+<li>수료 후 크루 활동</li>
+</ul>
+<div class="btns" style="justify-content: center; margin-top: 8px">
+<a href="tel:01076406272" class="btn btn-solid">상담 전화하기</a>
+<a href="https://www.instagram.com/tattooplace_academy" target="_blank" rel="noopener" class="btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:8px"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"></circle></svg>인스타그램</a>
+<a href="https://open.kakao.com/o/sLedaTNb" target="_blank" rel="noopener" class="btn">카카오톡 상담</a>
+</div>
+</section>
+
+<section id="why" class="sec sec-alt">
+<div class="wrap">
+<div class="head">
+<div class="eyebrow"><span></span>WHY TATTOO PLACE</div>
+<h2 class="slv">왜 타투플레이스에서 배워야 할까요?</h2>
+</div>
+<ol class="why">
+<li><span class="n">01</span><div><strong>현직 타투이스트 강사진</strong><span>과거 경력이 아닌, 지금 활발하게 활동 중인 전문 타투이스트 강사진이 가르칩니다.</span></div></li>
+<li><span class="n">02</span><div><strong>타투 수강 전용 수강실</strong><span>타투 스튜디오 옆 공간이 아닌, 수강만을 위한 단독 공간에서 집중해서 배울 수 있습니다.</span></div></li>
+<li><span class="n">03</span><div><strong>책임 지도와 맞춤 교육</strong><span>기수별 소수 정원을 모집해 개인의 방향에 맞는 1:1 교육을 진행합니다.</span></div></li>
+<li><span class="n">04</span><div><strong>전문 타투이스트 피드백</strong><span>현직 강사진의 실전 노하우를 무제한으로 피드백 받을 수 있습니다.</span></div></li>
+<li><span class="n">05</span><div><strong>크루 · 쉐어 활동</strong><span>원하시면 수료 후 블랙고스트 타투 스튜디오에서 바로 활동할 수 있습니다.</span></div></li>
+</ol>
+</div>
+</section>
+
+<section id="course" class="sec">
+<div class="wrap">
+<div class="head">
+<div class="eyebrow"><span></span>CURRICULUM</div>
+<h2 class="slv">실습 위주 교육</h2>
+<p style="margin: 0; max-width: 40em; color: #CFCAC1">불필요한 교육은 덜어내고 꼭 필요한 실전 위주의 교육만 골라, 이론부터 실전·실습 수업까지 수강생 눈높이에 맞춰 최고의 결과로 이끌어 드립니다.</p>
+</div>
+<dl class="stats">
+<div><dt>PERIOD</dt><dd>3~4개월</dd></div>
+<div><dt>CLASS</dt><dd>주 2회</dd></div>
+<div><dt>TIME</dt><dd>3~5시간</dd></div>
+</dl>
+<ul class="notes">
+<li>수강 인원에 따라 날짜와 시간은 바뀔 수 있습니다.</li>
+<li>수업 시간 외에도 자율 연습이 가능합니다.</li>
+<li>수강료 외에 추가 금액은 없습니다.</li>
+</ul>
+</div>
+</section>
+
+<section id="faq" class="sec sec-alt">
+<div class="wrap">
+<div class="head">
+<div class="eyebrow"><span></span>FAQ</div>
+<h2 class="slv">자주 묻는 질문</h2>
+</div>
+<div class="faq">
+<details><summary><span class="q">Q</span>미술을 전공하거나 그림에 소질이 있어야 하나요?</summary><p>그림을 전혀 그리지 못하는 분도 배워서 실력 있는 타투이스트로 성장할 수 있습니다. 그림을 잘 그리면 도움이 되지만 꼭 필요한 조건은 아니에요. 진심과 열정을 가지고 따라오시면 최고의 결과로 이끌어 드리겠습니다.</p></details>
+<details><summary><span class="q">Q</span>수업에 빠지면 보충 수업이 있나요?</summary><p>개인 사정으로 정규 수업에 빠지시면 보충 수업을 따로 안내해 드리고 있습니다.</p></details>
+<details><summary><span class="q">Q</span>수강을 마친 뒤에는 어떻게 하나요?</summary><p>수강이 끝난 뒤에도 꾸준한 서포트와 부스 쉐어 시스템으로 졸업생을 위한 다양한 혜택이 있습니다. 창업에 대한 부담을 덜고, 현직 타투이스트 강사진이 늘 있는 샵에서 함께 성장할 수 있도록 계속 교류합니다.</p></details>
+<details><summary><span class="q">Q</span>수강 이후 창업은 어떻게 하나요?</summary><p>창업에 맞는 컨설팅 등 필요한 노하우를 모두 알려 드리고, 자리 잡는 기간 동안 필요한 도움을 드립니다.</p></details>
+</div>
+</div>
+</section>
+
+<section id="contact" class="sec">
+<div class="wrap">
+<div class="head">
+<div class="eyebrow"><span></span>CONTACT</div>
+<h2 class="slv">수강 상담</h2>
+<p style="margin: 0; color: #CFCAC1">자세한 내용은 전화 문의 또는 방문 상담으로 안내해 드립니다.</p>
+</div>
+<dl class="info">
+<div><dt>상담 시간</dt><dd>24시간 상담 가능</dd></div>
+<div><dt>문의</dt><dd>전화 <a href="tel:01076406272">010-7640-6272</a><br><a href="https://open.kakao.com/o/sLedaTNb" target="_blank" rel="noopener">카카오톡 상담</a><br>인스타그램 <a href="https://www.instagram.com/tattooplace_academy" target="_blank" rel="noopener">@tattooplace_academy</a></dd></div>
+<div><dt>위치</dt><dd>인천 미추홀구 경인로325번길 18, 2층<br>주안시민지하도상가 19번 출구 도보 1분</dd></div>
+</dl>
+<div class="btns">
+<a href="tel:01076406272" class="btn btn-solid">상담 전화하기</a>
+<a href="https://www.instagram.com/tattooplace_academy" target="_blank" rel="noopener" class="btn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right:8px"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"></circle></svg>인스타그램 DM</a>
+<a href="https://open.kakao.com/o/sLedaTNb" target="_blank" rel="noopener" class="btn">카카오톡 상담</a>
+</div>
+</div>
+</section>
+</main>
+
+<footer style="border-top: 1px solid #1F1F22">
+<div style="max-width: 1200px; margin: 0 auto; padding: 36px 20px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; font-size: 13px; color: #9C978F">
+<div style="display: flex; align-items: center; gap: 14px; width: min(100%, 420px)"><span style="flex: 1; height: 1px; background: #3A3936"></span><span class="slv" style="font-family: 'Michroma', sans-serif; font-size: 16px; letter-spacing: 0.24em; white-space: nowrap">TATTOO PLACE</span><span style="flex: 1; height: 1px; background: #3A3936"></span></div>
+<span style="font-family: 'Michroma', sans-serif; letter-spacing: 0.3em; font-size: 11px">ACADEMY · BY BLACKGHOST</span>
+<span>[타투플레이스 상호 · 사업자등록번호 · 대표]</span>
+</div>
+</footer>
+
+</body>
+</html>
