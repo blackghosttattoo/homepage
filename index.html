@@ -33,16 +33,25 @@ h2{margin:0;font-family: 'Noto Sans KR', sans-serif; font-weight: 900; letter-sp
 .bg-nav{display:flex;flex-wrap:wrap;gap:6px 22px;font-size:14px}
 .bg-nav a{color:#B7B2AA;text-decoration:none}
 .bg-nav a:hover{color:#FFFFFF}
-.artists{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,160px),1fr));gap:44px 24px}
-.artist{display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;min-width:0}
-.artist .ph{display:block;width:100%;max-width:200px;aspect-ratio:1/1;border-radius:50%;overflow:hidden;border:1px solid #26252A;background:#0B0B0C}
-.artist .ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s ease}
-.artist .ph:hover img{transform:scale(1.04)}
-.artist .ph:focus-visible{outline-offset:4px}
-.artist h3{margin:0;font-family:'Michroma',sans-serif;font-weight:400;font-size:14px;letter-spacing:0.12em;color:#F2EFEA}
-.artist p{margin:0;font-size:13px;line-height:1.5;color:#9C978F}
-.artist .ig{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;margin-top:-6px;color:#CFCAC1}
+.artists{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:36px 20px}
+.artist{display:flex;flex-direction:column;gap:14px;min-width:0}
+.artist .ph{display:block;aspect-ratio:4/5;overflow:hidden;border:1px solid #1F1F22;background:#0B0B0C}
+.artist .ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease}
+.artist .ph:hover img{transform:scale(1.03)}
+.artist .ph:focus-visible{outline-offset:3px}
+.artist .meta{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.artist h3{margin:0;font-family:'Michroma',sans-serif;font-weight:400;font-size:15px;letter-spacing:0.12em;color:#F2EFEA}
+.artist p{margin:4px 0 0;font-size:13px;line-height:1.5;color:#9C978F}
+.artist .ig{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;margin:-12px -12px 0 0;flex:none;color:#CFCAC1}
 .artist .ig:hover{color:#FFFFFF}
+.swipe-hint{display:none;margin:0;font-family:'Michroma',sans-serif;font-size:11px;letter-spacing:0.2em;color:#9C978F}
+/* 폰: 옆으로 넘기기 */
+@media (max-width:640px){
+.artists{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;margin:0 -20px;padding:0 20px 6px;scroll-padding:0 20px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.artists::-webkit-scrollbar{display:none}
+.artist{flex:0 0 78%;scroll-snap-align:start}
+.swipe-hint{display:block}
+}
 .steps{margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:28px 20px}
 .steps li{display:flex;flex-direction:column;gap:8px;padding-top:18px;border-top:1px solid #5C5A56}
 .steps .num{font-family:'Michroma',sans-serif;font-size:13px;letter-spacing:0.2em;color:#9C978F}
@@ -115,84 +124,129 @@ h2{margin:0;font-family: 'Noto Sans KR', sans-serif; font-weight: 900; letter-sp
 <div class="eyebrow"><span></span>ARTISTS</div>
 <h2 class="slv">아티스트</h2>
 <p style="margin: 0; color: #9C978F; font-size: 15px">아티스트마다 장르가 달라요. 인스타그램에서 작업물을 보고 골라 주세요.</p>
+<p class="swipe-hint" aria-hidden="true">SWIPE →</p>
 </div>
 <div class="artists">
 <!-- 타투백 -->
 <article class="artist">
-<a class="ph" href="https://www.instagram.com/tatooist_back/" target="_blank" rel="noopener" aria-label="타투백(BACK) 인스타그램 보기 (새 창)"><img src="artists/back.jpg" alt="BACK 프로필 사진" width="600" height="600" loading="lazy"></a>
+<a class="ph" href="https://www.instagram.com/tatooist_back/" target="_blank" rel="noopener" aria-label="타투백(BACK) 인스타그램 보기 (새 창)"><img src="artists/back.jpg" alt="BACK 대표 사진" width="560" height="700" loading="lazy"></a>
+<div class="meta">
+<div style="min-width: 0">
 <h3>BACK</h3>
 <p>올라운더</p>
+</div>
 <a class="ig" href="https://www.instagram.com/tatooist_back/" target="_blank" rel="noopener" aria-label="타투백 인스타그램 (새 창)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"></circle></svg></a>
+</div>
 </article>
 <!-- 풀문 -->
 <article class="artist">
-<a class="ph" href="https://www.instagram.com/fullmoontattoo_s2/" target="_blank" rel="noopener" aria-label="풀문(FULLMOON) 인스타그램 보기 (새 창)"><img src="artists/fullmoon.jpg" alt="FULLMOON 프로필 사진" width="600" height="600" loading="lazy"></a>
+<a class="ph" href="https://www.instagram.com/fullmoontattoo_s2/" target="_blank" rel="noopener" aria-label="풀문(FULLMOON) 인스타그램 보기 (새 창)"><img src="artists/fullmoon.jpg" alt="FULLMOON 대표 사진" width="560" height="700" loading="lazy"></a>
+<div class="meta">
+<div style="min-width: 0">
 <h3>FULLMOON</h3>
 <p>파인라인 · 감성타투</p>
+</div>
 <a class="ig" href="https://www.instagram.com/fullmoontattoo_s2/" target="_blank" rel="noopener" aria-label="풀문 인스타그램 (새 창)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"></circle></svg></a>
+</div>
 </article>
 <!-- 연화 -->
 <article class="artist">
-<a class="ph" href="https://www.instagram.com/tattooer_yeonhwa/" target="_blank" rel="noopener" aria-label="연화(YEONHWA) 인스타그램 보기 (새 창)"><img src="artists/yeonhwa.jpg" alt="YEONHWA 프로필 사진" width="600" height="600" loading="lazy"></a>
+<a class="ph" href="https://www.instagram.com/tattooer_yeonhwa/" target="_blank" rel="noopener" aria-label="연화(YEONHWA) 인스타그램 보기 (새 창)"><img src="artists/yeonhwa.jpg" alt="YEONHWA 대표 사진" width="560" height="700" loading="lazy"></a>
+<div class="meta">
+<div style="min-width: 0">
 <h3>YEONHWA</h3>
 <p>블랙워크 · 블랙앤그레이 · 리얼리즘</p>
+</div>
 <a class="ig" href="https://www.instagram.com/tattooer_yeonhwa/" target="_blank" rel="noopener" aria-label="연화 인스타그램 (새 창)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"></circle></svg></a>
+</div>
 </article>
 <!-- 와이즈 -->
 <article class="artist">
-<a class="ph" href="https://www.instagram.com/wise_tattoo/" target="_blank" rel="noopener" aria-label="와이즈(WISE) 인스타그램 보기 (새 창)"><img src="artists/wise.jpg" alt="WISE 프로필 사진" width="600" height="600" loading="lazy"></a>
+<a class="ph" href="https://www.instagram.com/wise_tattoo/" target="_blank" rel="noopener" aria-label="와이즈(WISE) 인스타그램 보기 (새 창)"><img src="artists/wise.jpg" alt="WISE 대표 사진" width="560" height="700" loading="lazy"></a>
+<div class="meta">
+<div style="min-width: 0">
 <h3>WISE</h3>
 <p>리얼리즘</p>
+</div>
 <a class="ig" href="https://www.instagram.com/wise_tattoo/" target="_blank" rel="noopener" aria-label="와이즈 인스타그램 (새 창)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"></circle></svg></a>
+</div>
 </article>
 <!-- 운 -->
 <article class="artist">
-<a class="ph" href="https://www.instagram.com/tattooer_own/" target="_blank" rel="noopener" aria-label="운(OWN) 인스타그램 보기 (새 창)"><img src="artists/own.jpg" alt="OWN 프로필 사진" width="600" height="600" loading="lazy"></a>
+<a class="ph" href="https://www.instagram.com/tattooer_own/" target="_blank" rel="noopener" aria-label="운(OWN) 인스타그램 보기 (새 창)"><img src="artists/own.jpg" alt="OWN 대표 사진" width="560" height="700" loading="lazy"></a>
+<div class="meta">
+<div style="min-width: 0">
 <h3>OWN</h3>
 <p>동양화</p>
+</div>
 <a class="ig" href="https://www.instagram.com/tattooer_own/" target="_blank" rel="noopener" aria-label="운 인스타그램 (새 창)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"></circle></svg></a>
+</div>
 </article>
 <!-- 선한 -->
 <article class="artist">
-<a class="ph" href="https://www.instagram.com/sunhan.tattoo/" target="_blank" rel="noopener" aria-label="선한(SUNHAN) 인스타그램 보기 (새 창)"><img src="artists/sunhan.jpg" alt="SUNHAN 프로필 사진" width="600" height="600" loading="lazy"></a>
+<a class="ph" href="https://www.instagram.com/sunhan.tattoo/" target="_blank" rel="noopener" aria-label="선한(SUNHAN) 인스타그램 보기 (새 창)"><img src="artists/sunhan.jpg" alt="SUNHAN 대표 사진" width="560" height="700" loading="lazy"></a>
+<div class="meta">
+<div style="min-width: 0">
 <h3>SUNHAN</h3>
 <p>트래디셔널</p>
+</div>
 <a class="ig" href="https://www.instagram.com/sunhan.tattoo/" target="_blank" rel="noopener" aria-label="선한 인스타그램 (새 창)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"></circle></svg></a>
+</div>
 </article>
 <!-- 동백 -->
 <article class="artist">
-<a class="ph" href="https://www.instagram.com/dongbaektattoo/" target="_blank" rel="noopener" aria-label="동백(DONGBAEK) 인스타그램 보기 (새 창)"><img src="artists/dongbaek.jpg" alt="DONGBAEK 프로필 사진" width="600" height="600" loading="lazy"></a>
+<a class="ph" href="https://www.instagram.com/dongbaektattoo/" target="_blank" rel="noopener" aria-label="동백(DONGBAEK) 인스타그램 보기 (새 창)"><img src="artists/dongbaek.jpg" alt="DONGBAEK 대표 사진" width="560" height="700" loading="lazy"></a>
+<div class="meta">
+<div style="min-width: 0">
 <h3>DONGBAEK</h3>
 <p>블랙앤그레이</p>
+</div>
 <a class="ig" href="https://www.instagram.com/dongbaektattoo/" target="_blank" rel="noopener" aria-label="동백 인스타그램 (새 창)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"></circle></svg></a>
+</div>
 </article>
 <!-- 연 -->
 <article class="artist">
-<a class="ph" href="https://www.instagram.com/yeon__irezumi/" target="_blank" rel="noopener" aria-label="연(YEON) 인스타그램 보기 (새 창)"><img src="artists/yeon.jpg" alt="YEON 프로필 사진" width="600" height="600" loading="lazy"></a>
+<a class="ph" href="https://www.instagram.com/yeon__irezumi/" target="_blank" rel="noopener" aria-label="연(YEON) 인스타그램 보기 (새 창)"><img src="artists/yeon.jpg" alt="YEON 대표 사진" width="560" height="700" loading="lazy"></a>
+<div class="meta">
+<div style="min-width: 0">
 <h3>YEON</h3>
 <p>이레즈미</p>
+</div>
 <a class="ig" href="https://www.instagram.com/yeon__irezumi/" target="_blank" rel="noopener" aria-label="연 인스타그램 (새 창)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"></circle></svg></a>
+</div>
 </article>
 <!-- 킨타 -->
 <article class="artist">
-<a class="ph" href="https://www.instagram.com/kinta_tattooer/" target="_blank" rel="noopener" aria-label="킨타(KINTA) 인스타그램 보기 (새 창)"><img src="artists/kinta.jpg" alt="KINTA 프로필 사진" width="600" height="600" loading="lazy"></a>
+<a class="ph" href="https://www.instagram.com/kinta_tattooer/" target="_blank" rel="noopener" aria-label="킨타(KINTA) 인스타그램 보기 (새 창)"><img src="artists/kinta.jpg" alt="KINTA 대표 사진" width="560" height="700" loading="lazy"></a>
+<div class="meta">
+<div style="min-width: 0">
 <h3>KINTA</h3>
 <p>블랙워크</p>
+</div>
 <a class="ig" href="https://www.instagram.com/kinta_tattooer/" target="_blank" rel="noopener" aria-label="킨타 인스타그램 (새 창)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"></circle></svg></a>
+</div>
 </article>
 <!-- 설화 -->
 <article class="artist">
-<a class="ph" href="https://www.instagram.com/seolhwa.tattoo/" target="_blank" rel="noopener" aria-label="설화(SEOLHWA) 인스타그램 보기 (새 창)"><img src="artists/seolhwa.jpg" alt="SEOLHWA 프로필 사진" width="600" height="600" loading="lazy"></a>
+<a class="ph" href="https://www.instagram.com/seolhwa.tattoo/" target="_blank" rel="noopener" aria-label="설화(SEOLHWA) 인스타그램 보기 (새 창)"><img src="artists/seolhwa.jpg" alt="SEOLHWA 대표 사진" width="560" height="700" loading="lazy"></a>
+<div class="meta">
+<div style="min-width: 0">
 <h3>SEOLHWA</h3>
 <p>올라운더</p>
+</div>
 <a class="ig" href="https://www.instagram.com/seolhwa.tattoo/" target="_blank" rel="noopener" aria-label="설화 인스타그램 (새 창)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"></circle></svg></a>
+</div>
 </article>
 <!-- 샤카 -->
 <article class="artist">
-<a class="ph" href="https://www.instagram.com/tattooer_shaka/" target="_blank" rel="noopener" aria-label="샤카(SHAKA) 인스타그램 보기 (새 창)"><img src="artists/shaka.jpg" alt="SHAKA 프로필 사진" width="600" height="600" loading="lazy"></a>
+<a class="ph" href="https://www.instagram.com/tattooer_shaka/" target="_blank" rel="noopener" aria-label="샤카(SHAKA) 인스타그램 보기 (새 창)"><img src="artists/shaka.jpg" alt="SHAKA 대표 사진" width="560" height="700" loading="lazy"></a>
+<div class="meta">
+<div style="min-width: 0">
 <h3>SHAKA</h3>
 <p>이레즈미 · 블랙워크 · 블랙앤그레이</p>
+</div>
 <a class="ig" href="https://www.instagram.com/tattooer_shaka/" target="_blank" rel="noopener" aria-label="샤카 인스타그램 (새 창)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"></circle></svg></a>
+</div>
 </article>
 </div>
 </div>
