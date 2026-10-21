@@ -83,6 +83,7 @@
 }
 </script>
 <meta name="theme-color" content="#000000">
+<script>document.documentElement.classList.add('js-rv')</script>
 <link rel="icon" href="academy/tp-icon.png">
 <link rel="apple-touch-icon" href="academy/tp-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -131,7 +132,7 @@ h2{margin:0;font-family: 'Noto Sans KR', sans-serif; font-weight: 900; letter-sp
 .hero{position:relative;overflow:hidden;border-bottom:1px solid #1F1F22;background:#000 url("academy/hero.jpg") center/cover no-repeat}
 .hero::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.55) 45%,rgba(0,0,0,.92) 100%)}
 .hero>div{position:relative}
-.hero-logo{display:block;width:min(64%,280px);height:auto;margin:0 auto 4px}
+.hero-logo{display:block;width:min(42%,170px);height:auto;margin:0 auto 4px}
 .sec-photo{position:relative;background:#000 url("academy/tools.jpg") center/cover no-repeat}
 .sec-photo::before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.94) 0%,rgba(0,0,0,.86) 55%,rgba(0,0,0,.7) 100%)}
 .sec-photo>.wrap{position:relative}
@@ -179,6 +180,10 @@ h2{margin:0;font-family: 'Noto Sans KR', sans-serif; font-weight: 900; letter-sp
 .toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:50;padding:14px 22px;border:1px solid #3A3936;border-radius:999px;background:#111113;color:#F2EFEA;font-size:15px;box-shadow:0 10px 30px rgba(0,0,0,.6);transition:opacity .25s,transform .25s}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 @media (max-width:640px){.topnav{width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.topnav a,.topnav button{flex-direction:column;justify-content:center;gap:3px;min-height:54px;padding:0;border-radius:12px;font-size:12px}}
+/* 스크롤하면 하나씩 나타나기 */
+html.js-rv .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+html.js-rv .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){html.js-rv .rv{opacity:1;transform:none;transition:none}}
 </style>
 </head>
 <body>
@@ -319,6 +324,39 @@ function bgToast(msg) {
   clearTimeout(t._h);
   t._h = setTimeout(function () { t.classList.remove('show'); }, 2200);
 }
+</script>
+<script>
+// 스크롤하면 칸이 하나씩 올라오며 나타나기 (동작 줄이기 설정이면 바로 보임)
+(function () {
+  var root = document.documentElement;
+  if (!('IntersectionObserver' in window)) { root.classList.remove('js-rv'); return; }
+  // 묶음: 안에 있는 것들이 차례로 나타남
+  var groups = '.points, .artists, .steps, .care, .info, .route, .btns, .why, .stats, .notes, .gallery, .faq, .price, .checks, .items';
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var el = e.target;
+      if (el.matches(groups)) {
+        Array.prototype.forEach.call(el.children, function (c, i) {
+          c.style.transitionDelay = Math.min(i * 0.08, 0.6) + 's';
+          c.classList.add('in');
+        });
+      } else {
+        el.classList.add('in');
+      }
+      io.unobserve(el);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  document.querySelectorAll('main .head, main .wrap > p, main .wrap > div:not(.head):not(' + groups.replace(/, /g, '):not(') + ')').forEach(function (el) {
+    if (el.closest('#top')) return;
+    el.classList.add('rv'); io.observe(el);
+  });
+  document.querySelectorAll(groups).forEach(function (g) {
+    if (g.closest('#top')) return;
+    Array.prototype.forEach.call(g.children, function (c) { c.classList.add('rv'); });
+    io.observe(g);
+  });
+})();
 </script>
 </body>
 </html>

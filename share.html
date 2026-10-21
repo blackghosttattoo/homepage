@@ -6,6 +6,7 @@
 <title>블랙고스트 타투 쉐어 | 인천 주안 타투 작업실 쉐어 · TATTOO SHARE</title>
 <meta name="description" content="인천 주안 블랙고스트 타투 스튜디오의 타투 쉐어. 24시간 이용, 두 개 층 대형 스튜디오, 기본 장비·소모품 제공. 1개월 30만원(무보증), 12개월 월 25만원, 원데이 5만원. 머신만 챙겨 오면 바로 작업.">
 <meta name="theme-color" content="#000000">
+<script>document.documentElement.classList.add('js-rv')</script>
 <link rel="icon" href="logo.jpg">
 <link rel="canonical" href="https://blackghosttattoo.com/share.html">
 <meta property="og:type" content="website">
@@ -174,6 +175,10 @@ h2{margin:0;font-family: 'Noto Sans KR', sans-serif; font-weight: 900; letter-sp
 .items summary .cnt{font-family:'Michroma',sans-serif;font-size:11px;letter-spacing:0.12em;color:#9C978F;font-weight:400}
 .chiplist{margin:0;padding:0 20px 20px;list-style:none;display:flex;flex-wrap:wrap;gap:8px}
 .chiplist li{padding:6px 12px;border:1px solid #3A3936;border-radius:999px;font-size:14px;color:#CFCAC1}
+/* 스크롤하면 하나씩 나타나기 */
+html.js-rv .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
+html.js-rv .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){html.js-rv .rv{opacity:1;transform:none;transition:none}}
 </style>
 </head>
 <body>
@@ -292,6 +297,39 @@ function bgToast(msg) {
   clearTimeout(t._h);
   t._h = setTimeout(function () { t.classList.remove('show'); }, 2200);
 }
+</script>
+<script>
+// 스크롤하면 칸이 하나씩 올라오며 나타나기 (동작 줄이기 설정이면 바로 보임)
+(function () {
+  var root = document.documentElement;
+  if (!('IntersectionObserver' in window)) { root.classList.remove('js-rv'); return; }
+  // 묶음: 안에 있는 것들이 차례로 나타남
+  var groups = '.points, .artists, .steps, .care, .info, .route, .btns, .why, .stats, .notes, .gallery, .faq, .price, .checks, .items';
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      var el = e.target;
+      if (el.matches(groups)) {
+        Array.prototype.forEach.call(el.children, function (c, i) {
+          c.style.transitionDelay = Math.min(i * 0.08, 0.6) + 's';
+          c.classList.add('in');
+        });
+      } else {
+        el.classList.add('in');
+      }
+      io.unobserve(el);
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  document.querySelectorAll('main .head, main .wrap > p, main .wrap > div:not(.head):not(' + groups.replace(/, /g, '):not(') + ')').forEach(function (el) {
+    if (el.closest('#top')) return;
+    el.classList.add('rv'); io.observe(el);
+  });
+  document.querySelectorAll(groups).forEach(function (g) {
+    if (g.closest('#top')) return;
+    Array.prototype.forEach.call(g.children, function (c) { c.classList.add('rv'); });
+    io.observe(g);
+  });
+})();
 </script>
 </body>
 </html>
