@@ -125,7 +125,8 @@
   - 홈페이지: TattooParlor(주소·전화·24시간·인스타), 학원: EducationalOrganization + 자주 묻는 질문(FAQ).
 - `robots.txt`, `sitemap.xml` (주소 blackghosttattoo.com 기준). 페이지가 늘면 sitemap에 추가.
 - `_config.yml`: CLAUDE.md·README.md는 홈페이지에 안 올라가게 제외. (단, 저장소가 공개라 GitHub에서는 보임)
-- **구글 서치콘솔: 소유권 확인 완료** (URL 접두어 https://blackghosttattoo.com/, HTML 태그 방식). `index.html`의 `google-site-verification` 줄은 **절대 지우지 않기**.
+- **구글 서치콘솔: 소유권 확인 완료** (URL 접두어 https://blackghosttattoo.com/, HTML 태그 방식). `index.html`의 `google-site-verification`, `naver-site-verification` 두 줄은 **절대 지우지 않기**.
+- **구글 사이트맵 제출 완료** (성공, 발견된 페이지 3).
 - 남은 일: 구글 사이트맵 제출(sitemap.xml), 네이버 서치어드바이저 등록, 네이버플레이스에 홈페이지 주소 입력.
 
 ### 로그인·관리 페이지 (계획, 아직 안 만듦)
