@@ -180,7 +180,7 @@
 
 ## 대기 목록 (대장님이 "실행"하면 처리)
 
-- 🔄 **배포·주소 연결 진행 중 (대장님과 한 단계씩)**: ① GitHub Pages 켜기 → ② 호스팅kr DNS → ③ 주소 입력·CNAME → ④ HTTPS → ⑤ incheontattoo.com 포워딩 → ⑥ 네이버·구글 등록
+- 🔄 **배포·주소 연결**: ✅① GitHub Pages ✅② 호스팅kr DNS(A 4개 + www CNAME) ✅③ Custom domain·CNAME ✅④ HTTPS(Enforce 체크) ✅⑤ incheontattoo.com 유동 포워딩(닷홈 A 2줄 삭제, 도메인 잠금 다시 켜기) → ⑥ 네이버·구글 등록 진행 중
 - ⏸ **홈페이지 첫 화면 배경 사진** — 대장님이 매장 사진을 새로 찍어 보내주시기로 함
 - ⏸ 로그인·관리 페이지 — 주소 연결 뒤
 - ⏸ 수강생 작품 칸 — 사진 받으면
