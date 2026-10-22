@@ -89,11 +89,14 @@
     function reveal() { var w = document.getElementById('phw'); if (w) w.remove(); }
     var safety = setTimeout(reveal, 4000);
     get('site/photos').then(function (j) {
-      var v = fields(j.fields).v || {}, keys = Object.keys(v);
+      var f = fields(j.fields), v = f.v || {}, pos = f.pos || {};
+      var keys = Object.keys(v).concat(Object.keys(pos).filter(function (k) { return !v[k]; }));
       try { localStorage.setItem('bg-ph', JSON.stringify(keys)); } catch (e) {}
       var jobs = [];
       Array.prototype.forEach.call(spots, function (el) {
-        var k = el.getAttribute('data-photo');
+        var k = el.getAttribute('data-photo'), p = pos[k];
+        // 관리자가 맞춘 '보여 줄 곳'
+        if (p) el.style[el.tagName === 'IMG' ? 'objectPosition' : 'backgroundPosition'] = (+p.x || 0) + '% ' + (+p.y || 0) + '%';
         if (!v[k]) return;
         jobs.push(get('pagePhotos/' + k).then(function (d) {
           var src = fields(d.fields).data; if (!src) return;

@@ -99,6 +99,14 @@ h3.t{margin:0;font-family:'Noto Sans KR',sans-serif;font-weight:900;letter-spaci
 .crop .card{width:min(100%,420px);max-height:calc(100vh - 40px);overflow:auto}
 .crop canvas{width:100%;aspect-ratio:4/5;display:block;border:1px solid #3A3936;touch-action:none;cursor:grab}
 .crop input[type=range]{width:100%;accent-color:#E7E3DC}
+.crop .wide-card{width:min(100%,820px)}
+.pp-row{display:flex;flex-wrap:wrap;align-items:flex-start;gap:16px}
+.pp{display:flex;flex-direction:column;gap:6px;min-width:0}
+.pp-pc{flex:1 1 360px}.pp-ph{flex:0 0 150px}
+.pp-l{font-size:12px;color:#9C978F}
+.pp-f{position:relative;width:100%;border:1px solid #3A3936;background:#000 center/cover no-repeat;touch-action:none;cursor:grab;user-select:none}
+.pp-f:active{cursor:grabbing}
+.pp-f i{position:absolute;inset:0;pointer-events:none}
 .sec-label{margin:18px 0 0;font:13px Michroma,sans-serif;letter-spacing:.2em;color:#9C978F}
 .txt-row{display:flex;flex-direction:column;gap:6px;padding:12px 0;border-top:1px solid #1F1F22}
 .txt-row .k{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:#5C5A56}
@@ -556,47 +564,109 @@ function bgToast(msg) {
     });
   }
 
-  // ---- 페이지 사진 바꾸기 (배경·수업 사진) ----
-  // [이름표, 설명, 원래 사진, 긴 쪽 크기, 어느 페이지]
+  // ---- 페이지 사진 바꾸기 (배경·수업 사진) + 보여 줄 위치 맞추기 ----
+  // pc·ph: 실제 페이지에서 그 칸의 가로÷세로 (PC·폰), ov: 페이지에서 사진 위에 덮는 어둡게 하기
+  var HERO_OV = 'linear-gradient(180deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.55) 45%,rgba(0,0,0,.92) 100%)';
   var SPOTS = [
-    ['s_hero', '타투 쉐어 · 맨 위 배경', 'share/hero.jpg', 1600, 'share.html'],
-    ['a_hero', '타투플레이스 · 맨 위 배경', 'academy/hero.jpg', 1600, 'academy.html'],
-    ['a_tools', '타투플레이스 · \'실습 위주 교육\' 배경', 'academy/tools.jpg', 1600, 'academy.html#course'],
-    ['a_class2', '타투플레이스 · 수업 현장 (이론 수업)', 'academy/class2.jpg', 1200, 'academy.html#class'],
-    ['a_class1', '타투플레이스 · 수업 현장 (실습 수업)', 'academy/class1.jpg', 1200, 'academy.html#class']
+    { k: 's_hero', name: '타투 쉐어 · 맨 위 배경', src: 'share/hero.jpg', size: 1600, page: 'share.html', pc: 2.18, ph: 0.69, ov: HERO_OV },
+    { k: 'a_hero', name: '타투플레이스 · 맨 위 배경', src: 'academy/hero.jpg', size: 1600, page: 'academy.html', pc: 1.88, ph: 0.53, ov: HERO_OV },
+    { k: 'a_tools', name: '타투플레이스 · \'실습 위주 교육\' 배경', src: 'academy/tools.jpg', size: 1600, page: 'academy.html#course', pc: 2.15, ph: 0.67, ov: 'linear-gradient(90deg,rgba(0,0,0,.94) 0%,rgba(0,0,0,.86) 55%,rgba(0,0,0,.7) 100%)' },
+    { k: 'a_class2', name: '타투플레이스 · 수업 현장 (이론 수업)', src: 'academy/class2.jpg', size: 1200, page: 'academy.html#class', pc: 4 / 3 },
+    { k: 'a_class1', name: '타투플레이스 · 수업 현장 (실습 수업)', src: 'academy/class1.jpg', size: 1200, page: 'academy.html#class', pc: 4 / 3 }
   ];
+  function posText(p) { return p ? Math.round(p.x) + '% ' + Math.round(p.y) + '%' : '50% 50%'; }
+  // 위치 맞추기 창: 사진을 끌어서 보여 줄 곳을 정함 → {x, y} (퍼센트) 또는 취소하면 null
+  function placePhoto(src, s, start) {
+    return new Promise(function (done) {
+      var img = new Image(), p = { x: start ? start.x : 50, y: start ? start.y : 50 };
+      var d = document.createElement('div'); d.className = 'crop';
+      function frame(r, label, cls) {
+        return '<div class="pp ' + cls + '"><span class="pp-l">' + label + '</span><div class="pp-f" style="aspect-ratio:' + r + '">' +
+          (s.ov ? '<i style="background:' + s.ov + '"></i>' : '') + '</div></div>';
+      }
+      d.innerHTML = '<div class="card wide-card"><h3 class="t">보여 줄 곳 맞추기</h3>' +
+        '<p class="muted">사진을 끌어서 보여 주고 싶은 곳을 맞추세요.' + (s.ph ? ' PC와 폰은 화면 모양이 달라서 잘리는 곳이 달라요. 두 화면 다 확인해 주세요.' : '') + '</p>' +
+        '<div class="pp-row">' + frame(s.pc, 'PC 화면', 'pp-pc') + (s.ph ? frame(s.ph, '폰 화면', 'pp-ph') : '') + '</div>' +
+        '<p class="warn" data-same hidden>사진 모양이 칸 모양과 같아서 옮길 곳이 없어요. 다른 부분을 보여 주려면 그 부분만 잘라 낸 사진을 올려 주세요.</p>' +
+        '<div class="btns"><button type="button" class="btn btn-solid" data-ok>이 위치로 저장</button><button type="button" class="btn" data-mid>가운데로</button><button type="button" class="btn" data-no>취소</button></div></div>';
+      document.body.appendChild(d);
+      var fs = $$('.pp-f', d);
+      function draw() { fs.forEach(function (f) { f.style.backgroundImage = 'url("' + src + '")'; f.style.backgroundPosition = posText(p); }); }
+      img.onload = function () {
+        draw();
+        $('[data-same]', d).hidden = fs.some(function (f) {
+          var W = f.clientWidth, H = f.clientHeight, r = Math.max(W / img.naturalWidth, H / img.naturalHeight);
+          return img.naturalWidth * r - W > 2 || img.naturalHeight * r - H > 2;
+        });
+        fs.forEach(function (f) {
+          var drag = null;
+          f.addEventListener('pointerdown', function (e) { drag = { x: e.clientX, y: e.clientY, px: p.x, py: p.y }; f.setPointerCapture(e.pointerId); e.preventDefault(); });
+          f.addEventListener('pointermove', function (e) {
+            if (!drag) return;
+            var W = f.clientWidth, H = f.clientHeight, r = Math.max(W / img.naturalWidth, H / img.naturalHeight);
+            var ox = img.naturalWidth * r - W, oy = img.naturalHeight * r - H;
+            if (ox > 1) p.x = Math.min(100, Math.max(0, drag.px - (e.clientX - drag.x) / ox * 100));
+            if (oy > 1) p.y = Math.min(100, Math.max(0, drag.py - (e.clientY - drag.y) / oy * 100));
+            draw();
+          });
+          f.addEventListener('pointerup', function () { drag = null; });
+          f.addEventListener('pointercancel', function () { drag = null; });
+        });
+      };
+      img.src = src;
+      $('[data-mid]', d).onclick = function () { p = { x: 50, y: 50 }; draw(); };
+      $('[data-ok]', d).onclick = function () { d.remove(); done({ x: Math.round(p.x), y: Math.round(p.y) }); };
+      $('[data-no]', d).onclick = function () { d.remove(); done(null); };
+    });
+  }
   function photosTab(body) {
-    body.innerHTML = '<div class="head"><h3 class="t">페이지 사진 바꾸기</h3><p class="muted">사진을 고르면 알맞은 크기로 줄여서 바로 바뀌어요. 배경 사진은 글씨가 잘 보이도록 홈페이지에서 자동으로 어둡게 보여요. \'원래대로\'를 누르면 처음 사진으로 돌아가요.</p></div><div data-list><p class="spin">불러오는 중…</p></div>';
+    body.innerHTML = '<div class="head"><h3 class="t">페이지 사진 바꾸기</h3><p class="muted">\'사진 바꾸기\'로 새 사진을 고르면 보여 줄 곳을 맞추는 창이 떠요. 이미 있는 사진은 \'위치 맞추기\'로 보이는 곳만 바꿀 수 있어요. 배경 사진은 글씨가 잘 보이도록 홈페이지에서 자동으로 어둡게 보여요. \'원래대로\'를 누르면 처음 사진·가운데 위치로 돌아가요.</p></div><div data-list><p class="spin">불러오는 중…</p></div>';
     var idx = db.collection('site').doc('photos'), col = db.collection('pagePhotos');
-    Promise.all([idx.get()].concat(SPOTS.map(function (s) { return col.doc(s[0]).get(); }))).then(function (r) {
-      var v = (r[0].exists && r[0].data().v) || {}, h = '<div class="rows">';
+    Promise.all([idx.get()].concat(SPOTS.map(function (s) { return col.doc(s.k).get(); }))).then(function (r) {
+      var info = r[0].exists ? r[0].data() : {}, v = info.v || {}, pos = info.pos || {}, h = '<div class="rows">', mine = {};
       SPOTS.forEach(function (s, i) {
-        var d = r[i + 1], mine = d.exists && v[s[0]] ? d.data().data : '';
-        h += '<div class="row" data-s="' + s[0] + '"><div class="frame" style="flex:0 0 160px;aspect-ratio:4/3;' + bg(mine || s[2]) + '"></div>' +
-          '<div class="who"><b>' + esc(s[1]) + '</b><span>' + (mine ? '바꾼 사진' : '처음 사진') + ' · <a href="' + s[4] + '" target="_blank" rel="noopener" style="color:#9C978F">페이지에서 보기</a></span></div>' +
+        var d = r[i + 1]; mine[s.k] = d.exists && v[s.k] ? d.data().data : '';
+        var changed = mine[s.k] || pos[s.k];
+        h += '<div class="row" data-s="' + s.k + '"><div class="frame" style="flex:0 0 160px;aspect-ratio:4/3;' + bg(mine[s.k] || s.src) + ';background-position:' + posText(pos[s.k]) + '"></div>' +
+          '<div class="who"><b>' + esc(s.name) + '</b><span>' + (mine[s.k] ? '바꾼 사진' : '처음 사진') + (pos[s.k] ? ' · 위치 맞춤' : '') + ' · <a href="' + s.page + '" target="_blank" rel="noopener" style="color:#9C978F">페이지에서 보기</a></span></div>' +
           '<label class="btn btn-sm btn-solid filebtn">사진 바꾸기<input type="file" accept="image/*"></label>' +
-          (mine ? '<button type="button" class="btn btn-sm" data-undo>원래대로</button>' : '') + '</div>';
+          '<button type="button" class="btn btn-sm" data-pos>위치 맞추기</button>' +
+          (changed ? '<button type="button" class="btn btn-sm" data-undo>원래대로</button>' : '') + '</div>';
       });
       $('[data-list]', body).innerHTML = h + '</div>';
+      function savePos(k, p, extra) {
+        var o = { pos: {} }; o.pos[k] = p;
+        if (extra) { o.v = {}; o.v[k] = Date.now(); }
+        return idx.set(o, { merge: true });
+      }
       SPOTS.forEach(function (s) {
-        var row = $('[data-s="' + s[0] + '"]', body), patch = {};
+        var row = $('[data-s="' + s.k + '"]', body);
         $('input', row).onchange = function () {
-          var file = this.files[0]; this.value = ''; if (!file) return;
-          bgToast('사진을 줄여서 올리는 중…');
+          var file = this.files[0], data; this.value = ''; if (!file) return;
           loadImg(file).then(function (img) {
-            return col.doc(s[0]).set({ data: photoData(img, s[3]), updatedAt: NOW() });
-          }).then(function () {
-            patch = {}; patch[s[0]] = Date.now();
-            return idx.set({ v: patch }, { merge: true });
-          }).then(function () { bgToast('바꿨어요. 페이지를 새로고침하면 보여요.'); photosTab(body); })
-            .catch(function (e) { bgToast(fail(e)); });
+            data = photoData(img, s.size);
+            return placePhoto(data, s, null);
+          }).then(function (p) {
+            if (!p) return;
+            bgToast('사진을 올리는 중…');
+            return col.doc(s.k).set({ data: data, updatedAt: NOW() })
+              .then(function () { return savePos(s.k, p, true); })
+              .then(function () { bgToast('바꿨어요. 페이지를 새로고침하면 보여요.'); photosTab(body); });
+          }).catch(function (e) { bgToast(fail(e)); });
+        };
+        $('[data-pos]', row).onclick = function () {
+          placePhoto(mine[s.k] || s.src, s, pos[s.k]).then(function (p) {
+            if (!p) return;
+            return savePos(s.k, p).then(function () { bgToast('위치를 맞췄어요. 페이지를 새로고침하면 보여요.'); photosTab(body); });
+          }).catch(function (e) { bgToast(fail(e)); });
         };
         var u = $('[data-undo]', row);
         if (u) u.onclick = function () {
-          if (!confirm('처음 사진으로 되돌릴까요?')) return;
-          var f = {}; f['v.' + s[0]] = firebase.firestore.FieldValue.delete();
-          idx.update(f).then(function () { return col.doc(s[0]).delete(); })
-            .then(function () { bgToast('처음 사진으로 되돌렸어요.'); photosTab(body); }).catch(function (e) { bgToast(fail(e)); });
+          if (!confirm('처음 사진·가운데 위치로 되돌릴까요?')) return;
+          var f = {}, del = firebase.firestore.FieldValue.delete();
+          f['v.' + s.k] = del; f['pos.' + s.k] = del;
+          idx.update(f).then(function () { return mine[s.k] ? col.doc(s.k).delete() : null; })
+            .then(function () { bgToast('처음대로 되돌렸어요.'); photosTab(body); }).catch(function (e) { bgToast(fail(e)); });
         };
       });
     }).catch(function (e) { $('[data-list]', body).innerHTML = '<p class="msg">' + esc(fail(e)) + '</p>'; });
