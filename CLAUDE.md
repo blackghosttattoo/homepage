@@ -130,7 +130,7 @@
 
 ### 로그인·관리 페이지 (`login.html`) — 만듦
 
-- **Firebase 프로젝트 `blackghost-homepage`** (무료 Spark, 관리 앱 sales-app과 완전히 분리). 로그인: 구글 + 이메일/비밀번호. Firestore 위치 서울(asia-northeast3). 승인된 도메인에 blackghosttattoo.com, www 추가함.
+- **Firebase 프로젝트 `blackghost-homepage`** (무료 Spark, 관리 앱 sales-app과 완전히 분리). 로그인: 구글 + 이메일/비밀번호. Firestore 위치 서울(asia-northeast3). 서비스 계정 `rules-bot`(역할 Firebase 규칙 관리) 키를 GitHub Secret `FIREBASE_RULES_KEY`에 등록함(2026-10-22, 첫 자동 게시 성공). 승인된 도메인에 blackghosttattoo.com, www 추가함.
 - **관리자 = `vbnmvbnm6272@gmail.com` (구글 로그인으로 들어와야 관리자)**. 규칙 파일 `firestore.rules`에도 적혀 있음.
 - **규칙(`firestore.rules`) 자동 게시**: sales-app과 같은 방식. `main`에 `firestore.rules`가 올라오면 GitHub Actions(`.github/workflows/rules.yml`, '보안 규칙 게시')가 Firebase에 게시함. 저장소 Secret `FIREBASE_RULES_KEY`(서비스 계정 키 JSON, 역할 'Firebase 규칙 관리자') 필요.
   - 대장님께는 GitHub → Actions 탭에서 '보안 규칙 게시'가 초록 체크인지 확인하라고 안내. 실패하거나 키가 없으면 예전처럼 콘솔 → Firestore → 규칙에 붙여 넣고 '게시'.
@@ -206,9 +206,8 @@
 
 - 🔄 **배포·주소 연결**: ✅① GitHub Pages ✅② 호스팅kr DNS(A 4개 + www CNAME) ✅③ Custom domain·CNAME ✅④ HTTPS(Enforce 체크) ✅⑤ incheontattoo.com 유동 포워딩(닷홈 A 2줄 삭제, 도메인 잠금 다시 켜기) → ⑥ 네이버·구글 등록 진행 중
 - ⏸ **홈페이지 첫 화면 배경 사진** — 대장님이 매장 사진을 새로 찍어 보내주시기로 함
-- 🔄 **로그인·관리 페이지** — main에 반영함. 남은 것: 규칙 게시 확인 → 대장님 구글 로그인 → 아티스트 불러오기 → 실제로 고쳐 보기
+- 🔄 **로그인·관리 페이지** — main에 반영, 관리자 로그인·아티스트 12명 불러오기 완료. 남은 것: 실제로 소개·사진 고쳐 보기, 아티스트들 가입 받기
 - ⏸ 수강생 작품 칸 — 사진 받으면
-- 🔄 **로그인하면 메뉴 바뀌기 + 페이지 사진 바꾸기 + 규칙 자동 게시** — 만듦(작업 브랜치). 대장님이 서비스 계정 키 → GitHub Secret `FIREBASE_RULES_KEY` 등록 → "반영"하면 main에 올림(규칙도 자동 게시)
 
 ## 아직 모르는 정보 (받으면 채우기)
 
@@ -247,3 +246,5 @@
 - 스크롤하면 하나씩 나타나는 효과 (세 페이지), 아카데미 TP 로고 작게 (170)
 - 새 메뉴·작은 로고·쉐어 페이지·스크롤 효과를 실제 홈페이지(main)에 반영
 - JJANGGA 사진·인스타 넣음, 사업자 정보 숨김(세 페이지), 예약 단계·예약금 안내·작업 전 주의사항, 작업 후 관리(앱에서 옮겨 옴), 오시는 길(GS편의점·naver.me·주차) 정리. 시안 3화면을 실제 페이지와 똑같이 다시 맞춤
+- 로그인·관리 페이지(`login.html`, 구글·이메일 로그인, 가입 승인, 아티스트·문구 고치기, 아티스트 창) main 반영
+- 로그인하면 메뉴가 관리/마이페이지/로그아웃으로 바뀜, 관리 '페이지 사진' 탭, 규칙 자동 게시(GitHub Actions) main 반영
