@@ -127,6 +127,7 @@ h3.t{margin:0;font-family:'Noto Sans KR',sans-serif;font-weight:900;letter-spaci
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
+<script src="bg-site.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
@@ -205,8 +206,8 @@ function bgToast(msg) {
     }
     return d;
   }
-  function photoData(img) {
-    var m = 1400, r = Math.min(1, m / Math.max(img.naturalWidth, img.naturalHeight));
+  function photoData(img, size) {
+    var m = size || 1400, r = Math.min(1, m / Math.max(img.naturalWidth, img.naturalHeight));
     var c = document.createElement('canvas'); c.width = Math.round(img.naturalWidth * r); c.height = Math.round(img.naturalHeight * r);
     var x = c.getContext('2d'); x.fillStyle = '#000'; x.fillRect(0, 0, c.width, c.height); x.drawImage(img, 0, 0, c.width, c.height);
     return shrink(c, 700000);
@@ -250,7 +251,7 @@ function bgToast(msg) {
     return '<div class="bar"><span><b>' + esc(user.displayName || (me && me.name) || user.email) + '</b> · ' + esc(user.email) + '<span class="role">' + role + '</span></span>' +
       '<button type="button" class="btn btn-sm" data-out>로그아웃</button></div>';
   }
-  function bindBar() { $$('[data-out]').forEach(function (b) { b.onclick = function () { auth.signOut(); }; }); }
+  function bindBar() { $$('[data-out]').forEach(function (b) { b.onclick = function () { setWho(''); auth.signOut(); }; }); }
 
   // ---- 1. 로그인 화면 ----
   function showLogin() {
@@ -433,7 +434,8 @@ function bgToast(msg) {
     app.innerHTML = bar() + '<div class="tabs" role="tablist">' +
       '<button type="button" role="tab" data-t="users">가입 승인<span class="n" data-n hidden></span></button>' +
       '<button type="button" role="tab" data-t="artists">아티스트</button>' +
-      '<button type="button" role="tab" data-t="texts">페이지 문구</button></div><div data-body style="display:flex;flex-direction:column;gap:24px"></div>';
+      '<button type="button" role="tab" data-t="texts">페이지 문구</button>' +
+      '<button type="button" role="tab" data-t="photos">페이지 사진</button></div><div data-body style="display:flex;flex-direction:column;gap:24px"></div>';
     bindBar();
     $$('[data-t]').forEach(function (b) {
       b.setAttribute('aria-selected', b.getAttribute('data-t') === tab ? 'true' : 'false');
@@ -444,6 +446,7 @@ function bgToast(msg) {
     if (tab === 'users') usersTab(body);
     if (tab === 'artists') artistsTab(body);
     if (tab === 'texts') textsTab(body);
+    if (tab === 'photos') photosTab(body);
   }
   function pendingCount() {
     db.collection('users').where('role', '==', 'pending').get().then(function (q) {
@@ -553,6 +556,52 @@ function bgToast(msg) {
     });
   }
 
+  // ---- 페이지 사진 바꾸기 (배경·수업 사진) ----
+  // [이름표, 설명, 원래 사진, 긴 쪽 크기, 어느 페이지]
+  var SPOTS = [
+    ['s_hero', '타투 쉐어 · 맨 위 배경', 'share/hero.jpg', 1600, 'share.html'],
+    ['a_hero', '타투플레이스 · 맨 위 배경', 'academy/hero.jpg', 1600, 'academy.html'],
+    ['a_tools', '타투플레이스 · \'실습 위주 교육\' 배경', 'academy/tools.jpg', 1600, 'academy.html#course'],
+    ['a_class2', '타투플레이스 · 수업 현장 (이론 수업)', 'academy/class2.jpg', 1200, 'academy.html#class'],
+    ['a_class1', '타투플레이스 · 수업 현장 (실습 수업)', 'academy/class1.jpg', 1200, 'academy.html#class']
+  ];
+  function photosTab(body) {
+    body.innerHTML = '<div class="head"><h3 class="t">페이지 사진 바꾸기</h3><p class="muted">사진을 고르면 알맞은 크기로 줄여서 바로 바뀌어요. 배경 사진은 글씨가 잘 보이도록 홈페이지에서 자동으로 어둡게 보여요. \'원래대로\'를 누르면 처음 사진으로 돌아가요.</p></div><div data-list><p class="spin">불러오는 중…</p></div>';
+    var idx = db.collection('site').doc('photos'), col = db.collection('pagePhotos');
+    Promise.all([idx.get()].concat(SPOTS.map(function (s) { return col.doc(s[0]).get(); }))).then(function (r) {
+      var v = (r[0].exists && r[0].data().v) || {}, h = '<div class="rows">';
+      SPOTS.forEach(function (s, i) {
+        var d = r[i + 1], mine = d.exists && v[s[0]] ? d.data().data : '';
+        h += '<div class="row" data-s="' + s[0] + '"><div class="frame" style="flex:0 0 160px;aspect-ratio:4/3;' + bg(mine || s[2]) + '"></div>' +
+          '<div class="who"><b>' + esc(s[1]) + '</b><span>' + (mine ? '바꾼 사진' : '처음 사진') + ' · <a href="' + s[4] + '" target="_blank" rel="noopener" style="color:#9C978F">페이지에서 보기</a></span></div>' +
+          '<label class="btn btn-sm btn-solid filebtn">사진 바꾸기<input type="file" accept="image/*"></label>' +
+          (mine ? '<button type="button" class="btn btn-sm" data-undo>원래대로</button>' : '') + '</div>';
+      });
+      $('[data-list]', body).innerHTML = h + '</div>';
+      SPOTS.forEach(function (s) {
+        var row = $('[data-s="' + s[0] + '"]', body), patch = {};
+        $('input', row).onchange = function () {
+          var file = this.files[0]; this.value = ''; if (!file) return;
+          bgToast('사진을 줄여서 올리는 중…');
+          loadImg(file).then(function (img) {
+            return col.doc(s[0]).set({ data: photoData(img, s[3]), updatedAt: NOW() });
+          }).then(function () {
+            patch = {}; patch[s[0]] = Date.now();
+            return idx.set({ v: patch }, { merge: true });
+          }).then(function () { bgToast('바꿨어요. 페이지를 새로고침하면 보여요.'); photosTab(body); })
+            .catch(function (e) { bgToast(fail(e)); });
+        };
+        var u = $('[data-undo]', row);
+        if (u) u.onclick = function () {
+          if (!confirm('처음 사진으로 되돌릴까요?')) return;
+          var f = {}; f['v.' + s[0]] = firebase.firestore.FieldValue.delete();
+          idx.update(f).then(function () { return col.doc(s[0]).delete(); })
+            .then(function () { bgToast('처음 사진으로 되돌렸어요.'); photosTab(body); }).catch(function (e) { bgToast(fail(e)); });
+        };
+      });
+    }).catch(function (e) { $('[data-list]', body).innerHTML = '<p class="msg">' + esc(fail(e)) + '</p>'; });
+  }
+
   // 글자 칸 → 고치기용 글자 (굵게는 **, 줄바꿈 그대로)
   function toText(el) {
     var c = el.cloneNode(true);
@@ -604,14 +653,21 @@ function bgToast(msg) {
     }).catch(function (e) { $('[data-list]', body).innerHTML = '<p class="msg">' + esc(fail(e)) + '</p>'; });
   }
 
+  // 다른 페이지 메뉴가 '관리'/'마이페이지'로 바뀌도록 적어 둠
+  function setWho(w) {
+    try { if (w) localStorage.setItem('bg-who', w); else localStorage.removeItem('bg-who'); } catch (e) {}
+    if (window.bgNav) window.bgNav(w);
+  }
+
   // ---- 누구인지 보고 맞는 화면으로 ----
   function route() {
-    if (!user) return showLogin();
+    if (!user) { setWho(''); return showLogin(); }
     app.innerHTML = '<p class="spin">불러오는 중…</p>';
     admin = (user.email || '').toLowerCase() === ADMIN && user.emailVerified;
     db.collection('users').doc(user.uid).get().then(function (s) {
       me = s.exists ? s.data() : null;
       if (me && me.role === 'admin') admin = true;
+      setWho(admin ? 'admin' : 'artist');
       if (admin) return showAdmin();
       if (!me) return showApply();
       if (me.role === 'artist' && me.artistId) return showArtist();
@@ -619,6 +675,17 @@ function bgToast(msg) {
     }).catch(function (e) {
       app.innerHTML = bar() + '<div class="card narrow"><p class="msg">' + esc(fail(e)) + '</p></div>'; bindBar();
     });
+  }
+  // 메뉴의 '로그아웃' (login.html?logout=1&back=보던 페이지)
+  var qs = new URLSearchParams(location.search);
+  if (qs.get('logout')) {
+    var back = qs.get('back');
+    setWho('');
+    app.innerHTML = '<p class="spin">로그아웃하는 중…</p>';
+    auth.signOut().then(function () {
+      location.replace(PAGES.some(function (p) { return p[0] === back; }) ? back : 'login.html');
+    });
+    return;
   }
   auth.getRedirectResult().catch(function (e) { bgToast(fail(e)); });
   auth.onAuthStateChanged(function (u) { user = u; me = null; admin = false; route(); });

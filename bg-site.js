@@ -50,7 +50,64 @@
     try { localStorage.setItem('bg-texts', JSON.stringify(t)); } catch (e) {}
   }).catch(function () {});
 
-  // ---- 2. 아티스트 (홈페이지에만 있음) ----
+  // ---- 2. 로그인했으면 메뉴를 '관리'(관리자) / '마이페이지'(아티스트) + '로그아웃'으로 ----
+  // login.html이 로그인할 때 bg-who에 적어 두고, 로그아웃하면 지움
+  var ICON = {
+    admin: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10"></path><path d="M18 6h2"></path><circle cx="16" cy="6" r="2"></circle><path d="M4 12h4"></path><path d="M12 12h8"></path><circle cx="10" cy="12" r="2"></circle><path d="M4 18h10"></path><path d="M18 18h2"></path><circle cx="16" cy="18" r="2"></circle></svg>',
+    artist: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg>',
+    out: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4"></path><path d="M10 16l-4-4 4-4"></path><path d="M6 12h10"></path></svg>'
+  };
+  var navCss = document.createElement('style');
+  navCss.textContent = '@media (max-width:640px){.topnav.n5{grid-template-columns:repeat(5,minmax(0,1fr))}.topnav.n5 a{font-size:11px;letter-spacing:-0.02em}}';
+  document.head.appendChild(navCss);
+  window.bgNav = function (who) {
+    var nav = document.querySelector('.topnav'), btn = nav && nav.querySelector('.login');
+    if (!btn) return;
+    if (!btn._orig) btn._orig = btn.innerHTML;
+    var out = nav.querySelector('.logout');
+    if (who) {
+      btn.innerHTML = ICON[who === 'admin' ? 'admin' : 'artist'] + '<span>' + (who === 'admin' ? '관리' : '마이페이지') + '</span>';
+      if (!out) {
+        out = document.createElement('a'); out.className = 'logout';
+        out.innerHTML = ICON.out + '<span>로그아웃</span>';
+        nav.appendChild(out);
+      }
+      out.href = 'login.html?logout=1&back=' + encodeURIComponent(location.pathname.split('/').pop() || 'index.html');
+      nav.classList.add('n5');
+    } else {
+      btn.innerHTML = btn._orig;
+      if (out) out.remove();
+      nav.classList.remove('n5');
+    }
+  };
+  try { window.bgNav(localStorage.getItem('bg-who') || ''); } catch (e) {}
+
+  // ---- 3. 관리자가 바꾼 페이지 사진 (배경·수업 사진) ----
+  // 바꾼 사진이 있는 칸은 <head>의 짧은 명령이 잠깐 가려 두고(원래 사진이 깜빡 보이지 않게), 새 사진이 오면 보여 줌
+  (function () {
+    var spots = document.querySelectorAll('[data-photo]');
+    function reveal() { var w = document.getElementById('phw'); if (w) w.remove(); }
+    var safety = setTimeout(reveal, 4000);
+    get('site/photos').then(function (j) {
+      var v = fields(j.fields).v || {}, keys = Object.keys(v);
+      try { localStorage.setItem('bg-ph', JSON.stringify(keys)); } catch (e) {}
+      var jobs = [];
+      Array.prototype.forEach.call(spots, function (el) {
+        var k = el.getAttribute('data-photo');
+        if (!v[k]) return;
+        jobs.push(get('pagePhotos/' + k).then(function (d) {
+          var src = fields(d.fields).data; if (!src) return;
+          if (el.tagName === 'IMG') { el.removeAttribute('srcset'); el.src = src; }
+          else el.style.backgroundImage = 'url("' + src + '")';
+        }).catch(function () {}));
+      });
+      return Promise.all(jobs);
+    }).catch(function (e) {
+      if (e && e.message === '404') try { localStorage.setItem('bg-ph', '[]'); } catch (x) {}
+    }).then(function () { clearTimeout(safety); reveal(); });
+  })();
+
+  // ---- 4. 아티스트 (홈페이지에만 있음) ----
   var box = document.querySelector('.artists');
   if (!box) return;
   var IG = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"></circle></svg>';

@@ -84,6 +84,7 @@
 </script>
 <meta name="theme-color" content="#000000">
 <script>document.documentElement.classList.add('js-rv')</script>
+<script>try{var k=JSON.parse(localStorage.getItem('bg-ph')||'[]');if(k.length){var s=document.createElement('style');s.id='phw';s.textContent=k.map(function(x){return '[data-photo="'+x+'"]{background-image:none!important}img[data-photo="'+x+'"]{opacity:0}'}).join('');document.head.appendChild(s)}}catch(e){}</script>
 <link rel="icon" href="academy/tp-icon.png">
 <link rel="apple-touch-icon" href="academy/tp-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -201,7 +202,7 @@ html.js-rv .rv.in{opacity:1;transform:none}
 </header>
 
 <main>
-<section id="top" class="hero">
+<section id="top" class="hero" data-photo="a_hero">
 <div style="max-width: 1200px; margin: 0 auto; padding: 72px 20px 88px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 22px">
 <p data-edit="a01" style="margin: 0; font-family: 'Michroma', sans-serif; font-size: 12px; letter-spacing: 0.3em; color: #9C978F">INCHEON JUAN</p>
 <h1 class="hero-title"><img class="hero-logo" src="academy/tp-logo.png" alt="TATTOO PLACE" width="675" height="900"><span data-edit="a02" class="hero-sub">ACADEMY</span></h1>
@@ -235,7 +236,7 @@ html.js-rv .rv.in{opacity:1;transform:none}
 </div>
 </section>
 
-<section id="course" class="sec sec-photo">
+<section id="course" class="sec sec-photo" data-photo="a_tools">
 <div class="wrap">
 <div class="head">
 <div class="eyebrow"><span></span>CURRICULUM</div>
@@ -263,8 +264,8 @@ html.js-rv .rv.in{opacity:1;transform:none}
 <p data-edit="a30" class="swipe-hint" aria-hidden="true">SWIPE →</p>
 </div>
 <div class="gallery">
-<figure><img src="academy/class2.jpg" alt="강사가 화이트보드와 화면으로 이론 수업을 하는 모습" width="1000" height="750" loading="lazy"><figcaption><b data-edit="a31">THEORY</b>이론 수업</figcaption></figure>
-<figure><img src="academy/class1.jpg" alt="강사와 수강생이 연습 가죽에 실습하는 모습" width="1000" height="750" loading="lazy"><figcaption><b data-edit="a32">PRACTICE</b>실습 수업</figcaption></figure>
+<figure><img data-photo="a_class2" src="academy/class2.jpg" alt="강사가 화이트보드와 화면으로 이론 수업을 하는 모습" width="1000" height="750" loading="lazy"><figcaption><b data-edit="a31">THEORY</b>이론 수업</figcaption></figure>
+<figure><img data-photo="a_class1" src="academy/class1.jpg" alt="강사와 수강생이 연습 가죽에 실습하는 모습" width="1000" height="750" loading="lazy"><figcaption><b data-edit="a32">PRACTICE</b>실습 수업</figcaption></figure>
 </div>
 </div>
 </section>
