@@ -2,6 +2,7 @@
 <html lang="ko">
 <head>
 <meta charset="utf-8">
+<script>if(/\.html$/.test(location.pathname))history.replaceState(null,'',location.pathname.replace(/(index)?\.html$/,'')+location.search+location.hash)</script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>로그인 · 블랙고스트타투</title>
 <meta name="robots" content="noindex, nofollow">
@@ -121,12 +122,12 @@ h3.t{margin:0;font-family:'Noto Sans KR',sans-serif;font-weight:900;letter-spaci
 
 <header style="border-bottom: 1px solid #1F1F22">
 <div style="max-width: 1200px; margin: 0 auto; padding: 16px 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 32px">
-<a href="index.html" class="slv" style="font-family: 'Michroma', sans-serif; font-size: 20px; letter-spacing: 0.22em; text-decoration: none">BLACKGHOST</a>
+<a href="/" class="slv" style="font-family: 'Michroma', sans-serif; font-size: 20px; letter-spacing: 0.22em; text-decoration: none">BLACKGHOST</a>
 <nav class="topnav" aria-label="메인 메뉴">
-<a href="index.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l6-6"></path><path d="M8 13l3 3"></path><path d="M10 11l7-7 3 3-7 7z"></path><path d="M15 6l3 3"></path></svg><span>타투</span></a>
-<a href="share.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8"></path><path d="M12 16v4"></path></svg><span>쉐어</span></a>
-<a href="academy.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"></path><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"></path></svg><span>아카데미</span></a>
-<a href="login.html" class="login" aria-current="page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg><span>로그인</span></a>
+<a href="/"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l6-6"></path><path d="M8 13l3 3"></path><path d="M10 11l7-7 3 3-7 7z"></path><path d="M15 6l3 3"></path></svg><span>타투</span></a>
+<a href="/share"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8"></path><path d="M12 16v4"></path></svg><span>쉐어</span></a>
+<a href="/academy"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"></path><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"></path></svg><span>아카데미</span></a>
+<a href="/login" class="login" aria-current="page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg><span>로그인</span></a>
 </nav>
 </div>
 </header>
@@ -431,7 +432,7 @@ function bgToast(msg) {
 
   function showArtist() {
     app.innerHTML = bar() + '<div data-ed style="display:flex;flex-direction:column;gap:24px"></div>' +
-      '<p class="muted">고친 내용은 저장하면 <a href="index.html#artists">홈페이지</a>에 바로 반영돼요.</p>';
+      '<p class="muted">고친 내용은 저장하면 <a href="/#artists">홈페이지</a>에 바로 반영돼요.</p>';
     bindBar();
     editor($('[data-ed]'), me.artistId);
   }
@@ -568,11 +569,11 @@ function bgToast(msg) {
   // pc·ph: 실제 페이지에서 그 칸의 가로÷세로 (PC·폰), ov: 페이지에서 사진 위에 덮는 어둡게 하기
   var HERO_OV = 'linear-gradient(180deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.55) 45%,rgba(0,0,0,.92) 100%)';
   var SPOTS = [
-    { k: 's_hero', name: '타투 쉐어 · 맨 위 배경', src: 'share/hero.jpg', size: 1600, page: 'share.html', pc: 2.18, ph: 0.69, ov: HERO_OV },
-    { k: 'a_hero', name: '타투플레이스 · 맨 위 배경', src: 'academy/hero.jpg', size: 1600, page: 'academy.html', pc: 1.88, ph: 0.53, ov: HERO_OV },
-    { k: 'a_tools', name: '타투플레이스 · \'실습 위주 교육\' 배경', src: 'academy/tools.jpg', size: 1600, page: 'academy.html#course', pc: 2.15, ph: 0.67, ov: 'linear-gradient(90deg,rgba(0,0,0,.94) 0%,rgba(0,0,0,.86) 55%,rgba(0,0,0,.7) 100%)' },
-    { k: 'a_class2', name: '타투플레이스 · 수업 현장 (이론 수업)', src: 'academy/class2.jpg', size: 1200, page: 'academy.html#class', pc: 4 / 3 },
-    { k: 'a_class1', name: '타투플레이스 · 수업 현장 (실습 수업)', src: 'academy/class1.jpg', size: 1200, page: 'academy.html#class', pc: 4 / 3 }
+    { k: 's_hero', name: '타투 쉐어 · 맨 위 배경', src: 'images/share/hero.jpg', size: 1600, page: '/share', pc: 2.18, ph: 0.69, ov: HERO_OV },
+    { k: 'a_hero', name: '타투플레이스 · 맨 위 배경', src: 'images/academy/hero.jpg', size: 1600, page: '/academy', pc: 1.88, ph: 0.53, ov: HERO_OV },
+    { k: 'a_tools', name: '타투플레이스 · \'실습 위주 교육\' 배경', src: 'images/academy/tools.jpg', size: 1600, page: '/academy#course', pc: 2.15, ph: 0.67, ov: 'linear-gradient(90deg,rgba(0,0,0,.94) 0%,rgba(0,0,0,.86) 55%,rgba(0,0,0,.7) 100%)' },
+    { k: 'a_class2', name: '타투플레이스 · 수업 현장 (이론 수업)', src: 'images/academy/class2.jpg', size: 1200, page: '/academy#class', pc: 4 / 3 },
+    { k: 'a_class1', name: '타투플레이스 · 수업 현장 (실습 수업)', src: 'images/academy/class1.jpg', size: 1200, page: '/academy#class', pc: 4 / 3 }
   ];
   function posText(p) { return p ? Math.round(p.x) + '% ' + Math.round(p.y) + '%' : '50% 50%'; }
   // 위치 맞추기 창: 사진을 끌어서 보여 줄 곳을 정함 → {x, y} (퍼센트) 또는 취소하면 null
@@ -777,7 +778,8 @@ function bgToast(msg) {
     setWho('');
     app.innerHTML = '<p class="spin">로그아웃하는 중…</p>';
     auth.signOut().then(function () {
-      location.replace(PAGES.some(function (p) { return p[0] === back; }) ? back : 'login.html');
+      var hit = PAGES.filter(function (p) { return p[0] === back || p[0] === back + '.html'; })[0];
+      location.replace(hit ? (hit[0] === 'index.html' ? '/' : '/' + hit[0].replace('.html', '')) : '/login');
     });
     return;
   }

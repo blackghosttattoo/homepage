@@ -15,6 +15,9 @@
 
 ## 홈페이지 기본 사항
 
+- **주소에 .html 안 보이게 (깔끔한 주소)**: 메뉴·링크는 `/`, `/share`, `/academy`, `/login`으로 씀 (GitHub Pages가 `/share` → `share.html`을 알아서 보여 줌). 예전 `.html` 주소로 들어와도 각 페이지 `<head>` 맨 위 한 줄이 주소창에서 `.html`을 지워 줌. canonical·og:url·sitemap도 깔끔한 주소.
+  - 그래서 **페이지 이름과 같은 폴더를 만들면 안 됨** (예: `share/` 폴더가 있으면 `/share`가 폴더로 감). 사진 폴더는 `images/` 안에 둠.
+
 - 반응형 홈페이지(폰·PC 모두 잘 보이게). **GitHub Pages**로 올립니다.
 - 파일 구성: `index.html`(홈페이지) + `share.html`(타투 쉐어 안내) + `academy.html`(타투플레이스 학원 안내) + `login.html`(로그인·관리) + `bg-site.js`(세 페이지 공용: 고친 문구·아티스트 창) + `firestore.rules`(창고 잠금 규칙, 홈페이지엔 안 올라감) + 로고 `logo.jpg` + `artists/` 사진. 각 페이지는 한 파일 안에 디자인이 다 들어 있음(같은 색·폰트).
 - 디자인 시안: https://claude.ai/artifact/DWy5dgfoqno7LdwGSAFwUQ
@@ -106,7 +109,7 @@
   - 실습 위주 교육: 3~4개월 · 주 2회 · 3~5시간 (인원에 따라 변경 가능, 자율 연습 가능, 추가 금액 없음)
   - 자주 묻는 질문 4개 (누르면 펼쳐짐)
   - 상담: 24시간, 010-7640-6272, 카카오톡, 인스타 DM
-- 사진·로고 (`academy/` 폴더):
+- 사진·로고 (`images/academy/` 폴더):
   - `tp-logo.png`: 받은 로고(흰 바탕 검정)를 투명 바탕 + 은색으로 바꾼 것 → 맨 위 큰 로고
   - `tp-mark.png`, `tp-icon.png`: TP 마크(글자 없음) → 맨 아래 작은 마크, 브라우저 탭 아이콘
   - `hero.jpg`: 어두운 수강실 실습 사진 → 맨 위 배경 (어둡게)
@@ -123,7 +126,7 @@
 
 ### 검색 노출 (SEO)
 
-- 두 페이지 모두: 검색 제목·설명, 대표 주소(canonical), 카톡·인스타 공유 미리보기(`og.jpg`, `academy/og.jpg`), 가게 정보표(구조화 데이터) 넣음.
+- 두 페이지 모두: 검색 제목·설명, 대표 주소(canonical), 카톡·인스타 공유 미리보기(`og.jpg`, `images/academy/og.jpg`), 가게 정보표(구조화 데이터) 넣음.
   - 홈페이지: TattooParlor(주소·전화·24시간·인스타), 학원: EducationalOrganization + 자주 묻는 질문(FAQ).
 - `robots.txt`, `sitemap.xml` (주소 blackghosttattoo.com 기준). 페이지가 늘면 sitemap에 추가.
 - `_config.yml`: CLAUDE.md·README.md는 홈페이지에 안 올라가게 제외. (단, 저장소가 공개라 GitHub에서는 보임)
@@ -153,7 +156,7 @@
 
 ### 타투 쉐어 (`share.html`, 타투이스트용 작업 공간)
 
-- 내용 출처: 대장님이 보내주신 쉐어 홍보 이미지 2장 + 안내 글. 배경 `share/hero.jpg` = 홍보 이미지의 액자 벽 부분만 잘라 어둡게.
+- 내용 출처: 대장님이 보내주신 쉐어 홍보 이미지 2장 + 안내 글. 배경 `images/share/hero.jpg` = 홍보 이미지의 액자 벽 부분만 잘라 어둡게.
 - 맨 위: TATTOO SHARE / "혼자 하지 마세요, 함께해요" / 소개 / 상담 전화·카카오톡
 - 이용 요금: 1개월 30만원(무보증) · 12개월 **월 25만원 (12개월 한 번에 결제 시, 월 5만원 할인)** · 원데이 5만원(24시간)
 - 공간과 서비스 9가지 체크 목록, 제공하는 것(공용 물품 28개·소모품 15개, 누르면 펼쳐짐), 쉐어 상담
@@ -178,9 +181,9 @@
 ### 파일 위치
 
 - `index.html` — 홈페이지 본문 (아티스트 사진·이름 등도 여기서 고침)
-- `share.html` — 타투 쉐어 안내 (`share/` 사진)
+- `share.html` — 타투 쉐어 안내 (`images/share/` 사진)
 - `academy.html` — 타투플레이스 학원 안내
-- `academy/` — 타투플레이스 사진·로고
+- `images/academy/` — 타투플레이스 사진·로고, `images/share/` — 쉐어 사진
 - `artists/` — 아티스트 사진 (영어 이름 소문자.jpg)
 - `logo.jpg` — 로고 (sales-app의 `icons/logo.jpg`를 복사한 것. 맨 위 로고와 브라우저 탭 아이콘에 사용)
 
@@ -207,7 +210,9 @@
   거기에 연결하면 앱 주소(`blackghosttattoo.github.io/sales-app`)가 바뀌어 버립니다.
 - **`sales-app` 저장소는 이 작업에서 절대 수정하지 않습니다.** (로고 파일을 읽어서 복사하는 것만 가능)
 
-## 대기 목록 (대장님이 "실행"하면 처리)
+## 대기 목록
+
+- 🔄 **주소에서 .html 없애기 + 사진 폴더를 images/로 옮김** — 예시 완료(작업 브랜치, 시험 통과). 대장님 "반영" 기다림
 
 - 🔄 **배포·주소 연결**: ✅① GitHub Pages ✅② 호스팅kr DNS(A 4개 + www CNAME) ✅③ Custom domain·CNAME ✅④ HTTPS(Enforce 체크) ✅⑤ incheontattoo.com 유동 포워딩(닷홈 A 2줄 삭제, 도메인 잠금 다시 켜기) → ⑥ 구글 완료 / **네이버는 사진 정리 뒤에** (대장님 결정: 소유확인 → 사이트맵 제출 → 웹 페이지 수집 3개, 안내는 이미 드림)
 - ⏸ **홈페이지 첫 화면 배경 사진** — 대장님이 매장 사진을 새로 찍어 보내주시기로 함

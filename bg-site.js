@@ -72,7 +72,7 @@
         out.innerHTML = ICON.out + '<span>로그아웃</span>';
         nav.appendChild(out);
       }
-      out.href = 'login.html?logout=1&back=' + encodeURIComponent(location.pathname.split('/').pop() || 'index.html');
+      out.href = '/login?logout=1&back=' + encodeURIComponent(location.pathname.split('/').pop() || 'index.html');
       nav.classList.add('n5');
     } else {
       btn.innerHTML = btn._orig;
