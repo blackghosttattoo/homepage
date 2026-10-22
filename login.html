@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>로그인 · 블랙고스트타투</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="logo.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Michroma&amp;family=Noto+Sans+KR:wght@400;500;700;900&amp;display=swap">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#000000;color:#E7E3DC;font-family:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:16px;line-height:1.75;-webkit-text-size-adjust:100%;word-break:keep-all;overflow-wrap:break-word}
+a{color:#E7E3DC}a:hover{color:#FFFFFF}
+a:focus-visible{outline:2px solid #E7E3DC;outline-offset:3px}
+img{max-width:100%}
+.slv{background:linear-gradient(180deg,#FFFFFF 0%,#D8D3CB 38%,#8E8982 62%,#E9E5DE 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.wrap{max-width:1200px;margin:0 auto;padding:72px 20px;display:flex;flex-direction:column;gap:36px}
+.sec{border-top:1px solid #1F1F22}
+.sec-alt{background:#0B0B0C}
+.head{display:flex;flex-direction:column;gap:10px}
+.eyebrow{display:flex;align-items:center;gap:14px;font-family:'Michroma',sans-serif;font-size:13px;letter-spacing:0.26em;color:#9C978F}
+.eyebrow span{width:40px;height:1px;background:#5C5A56}
+h2{margin:0;font-family: 'Noto Sans KR', sans-serif; font-weight: 900; letter-spacing: -0.03em;font-size:clamp(30px,4.4vw,44px);line-height:1.3}
+.btn{display:inline-flex;align-items:center;min-height:48px;padding:0 28px;border:1px solid #5C5A56;color:#E7E3DC;text-decoration:none;border-radius:2px}
+.btn-solid{background:#E7E3DC;border-color:#E7E3DC;color:#000000;font-weight:700}
+.btn-solid:hover{background:#FFFFFF;color:#000000}
+.btns{display:flex;flex-wrap:wrap;gap:12px}
+.topnav{display:flex;flex-wrap:wrap;gap:8px}
+.topnav a,.topnav button{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:0 14px;border:1px solid #3A3936;border-radius:999px;color:#CFCAC1;text-decoration:none;font:500 14px 'Noto Sans KR',sans-serif;background:#0B0B0C;cursor:pointer;transition:border-color .2s,color .2s,background .2s}
+.topnav a:hover,.topnav button:hover{border-color:#9C978F;color:#FFFFFF}
+.topnav a[aria-current]{border-color:#E7E3DC;color:#F2EFEA}
+.topnav .login{background:#E7E3DC;border-color:#E7E3DC;color:#000000;font-weight:700}
+.topnav .login:hover{background:#FFFFFF;border-color:#FFFFFF;color:#000000}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);opacity:0;pointer-events:none;z-index:50;padding:14px 22px;border:1px solid #3A3936;border-radius:999px;background:#111113;color:#F2EFEA;font-size:15px;box-shadow:0 10px 30px rgba(0,0,0,.6);transition:opacity .25s,transform .25s}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media (max-width:640px){.topnav{width:100%;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}.topnav a,.topnav button{flex-direction:column;justify-content:center;gap:3px;min-height:54px;padding:0;border-radius:12px;font-size:12px}}
+/* 로그인·관리 화면 */
+.topnav .login[aria-current]{color:#000000}
+.wrap{max-width:980px;padding:44px 20px 96px;gap:28px}
+.muted{margin:0;color:#9C978F;font-size:14px}
+.card{border:1px solid #26252A;background:#0B0B0C;padding:28px;display:flex;flex-direction:column;gap:16px}
+.narrow{width:min(100%,460px);margin:0 auto}
+.wide{width:100%;justify-content:center}
+button.btn{font:inherit;background:transparent;cursor:pointer}
+button.btn-solid{background:#E7E3DC}
+.btn:disabled{opacity:.5;cursor:default}
+.btn-sm{min-height:38px;padding:0 14px;font-size:14px}
+.btn-danger{border-color:#6B2B2B;color:#E8A3A3}.btn-danger:hover{border-color:#E8A3A3;color:#FFFFFF}
+label.f{display:flex;flex-direction:column;gap:6px;font-size:13px;color:#9C978F}
+.f input,.f textarea,.f select,select.f{font:16px 'Noto Sans KR',sans-serif;color:#F2EFEA;background:#000000;border:1px solid #3A3936;border-radius:2px;padding:11px 12px;width:100%}
+.f textarea{min-height:120px;resize:vertical;line-height:1.7}
+.f input:focus,.f textarea:focus,.f select:focus{outline:none;border-color:#E7E3DC}
+.chk{display:flex;align-items:center;gap:10px;font-size:15px;color:#E7E3DC;cursor:pointer}
+.chk input{width:20px;height:20px;accent-color:#E7E3DC}
+.or{display:flex;align-items:center;gap:12px;font-size:12px;color:#5C5A56}.or::before,.or::after{content:"";flex:1;height:1px;background:#26252A}
+.link{background:none;border:0;padding:0;color:#9C978F;font:14px 'Noto Sans KR',sans-serif;text-decoration:underline;cursor:pointer;align-self:center}
+.link:hover{color:#FFFFFF}
+.msg{margin:0;min-height:1.5em;font-size:14px;color:#E8C27A}
+.warn{margin:0;padding:12px 14px;border:1px solid #5C4A22;background:#16120A;color:#E8C27A;font-size:14px}
+.bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px;padding-bottom:16px;border-bottom:1px solid #1F1F22;font-size:14px;color:#9C978F}
+.bar b{color:#F2EFEA;font-weight:500}
+.role{display:inline-block;margin-left:6px;padding:1px 10px;border:1px solid #3A3936;border-radius:999px;font-size:12px;color:#CFCAC1}
+.tabs{display:flex;flex-wrap:wrap;gap:8px}
+.tabs button{min-height:40px;padding:0 16px;border:1px solid #3A3936;border-radius:999px;background:#0B0B0C;color:#CFCAC1;font:500 14px 'Noto Sans KR',sans-serif;cursor:pointer}
+.tabs button[aria-selected="true"]{border-color:#E7E3DC;color:#F2EFEA}
+.tabs .n{display:inline-block;min-width:20px;margin-left:6px;padding:0 6px;border-radius:999px;background:#E7E3DC;color:#000;font-size:12px;font-weight:700}
+h3.t{margin:0;font-family:'Noto Sans KR',sans-serif;font-weight:900;letter-spacing:-0.02em;font-size:20px;color:#F2EFEA}
+.rows{display:flex;flex-direction:column}
+.row{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;padding:16px 0;border-top:1px solid #26252A}
+.row:last-child{border-bottom:1px solid #26252A}
+.row .who{flex:1 1 240px;min-width:0;display:flex;flex-direction:column;gap:2px}
+.row .who b{color:#F2EFEA;font-weight:700}
+.row .who span{font-size:13px;color:#9C978F;overflow-wrap:anywhere}
+.row select{flex:0 1 200px;width:auto}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:20px 14px}
+.mini{display:flex;flex-direction:column;gap:8px;padding:0;border:0;background:none;text-align:left;color:inherit;font:inherit;cursor:pointer}
+.mini .fr{aspect-ratio:4/5;border:1px solid #26252A;background:#000 center/cover no-repeat;position:relative}
+.mini:hover .fr{border-color:#9C978F}
+.mini b{font:400 13px Michroma,sans-serif;letter-spacing:.1em;color:#F2EFEA}
+.mini small{font-size:12px;color:#9C978F;margin-top:-6px}
+.badge{position:absolute;top:8px;left:8px;padding:1px 8px;border-radius:999px;background:#E8C27A;color:#000;font-size:11px;font-weight:700}
+.add{display:flex;align-items:center;justify-content:center;aspect-ratio:4/5;border:1px dashed #3A3936;color:#9C978F;font-size:14px}
+.ed{display:grid;grid-template-columns:minmax(0,260px) minmax(0,1fr);gap:28px}
+.ed-cover{display:flex;flex-direction:column;gap:10px}
+.frame{aspect-ratio:4/5;border:1px solid #26252A;background:#000 center/cover no-repeat;display:flex;align-items:center;justify-content:center;color:#5C5A56;font-size:13px}
+.ed-form{display:flex;flex-direction:column;gap:14px;min-width:0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.slots{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.slot{display:flex;flex-direction:column;gap:6px}
+.slot .frame{aspect-ratio:1/1;background-size:contain;background-color:#000}
+.slot .acts{display:flex;gap:6px}.slot .acts .btn{flex:1;justify-content:center;padding:0 6px}
+.filebtn{position:relative;overflow:hidden}
+.filebtn input{position:absolute;inset:0;opacity:0;cursor:pointer}
+.crop{position:fixed;inset:0;z-index:70;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;padding:20px}
+.crop .card{width:min(100%,420px);max-height:calc(100vh - 40px);overflow:auto}
+.crop canvas{width:100%;aspect-ratio:4/5;display:block;border:1px solid #3A3936;touch-action:none;cursor:grab}
+.crop input[type=range]{width:100%;accent-color:#E7E3DC}
+.sec-label{margin:18px 0 0;font:13px Michroma,sans-serif;letter-spacing:.2em;color:#9C978F}
+.txt-row{display:flex;flex-direction:column;gap:6px;padding:12px 0;border-top:1px solid #1F1F22}
+.txt-row .k{display:flex;justify-content:space-between;gap:10px;font-size:12px;color:#5C5A56}
+.txt-row textarea{min-height:0;resize:vertical}
+.txt-row.changed textarea{border-color:#9C978F}
+.sticky{position:sticky;bottom:0;z-index:5;display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:14px 0;background:linear-gradient(180deg,rgba(0,0,0,0),#000 30%)}
+.spin{color:#9C978F;font-size:14px;text-align:center;padding:40px 0}
+@media (max-width:720px){.ed{grid-template-columns:1fr}.ed-cover{width:min(100%,260px)}.slots{grid-template-columns:repeat(3,minmax(0,1fr))}.two{grid-template-columns:1fr}.slot .acts{flex-direction:column}.card{padding:22px 18px}}
+</style>
+</head>
+<body>
+
+<header style="border-bottom: 1px solid #1F1F22">
+<div style="max-width: 1200px; margin: 0 auto; padding: 16px 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 32px">
+<a href="index.html" class="slv" style="font-family: 'Michroma', sans-serif; font-size: 20px; letter-spacing: 0.22em; text-decoration: none">BLACKGHOST</a>
+<nav class="topnav" aria-label="메인 메뉴">
+<a href="index.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21l6-6"></path><path d="M8 13l3 3"></path><path d="M10 11l7-7 3 3-7 7z"></path><path d="M15 6l3 3"></path></svg><span>타투</span></a>
+<a href="share.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="12" rx="2"></rect><path d="M8 20h8"></path><path d="M12 16v4"></path></svg><span>쉐어</span></a>
+<a href="academy.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 9l10-5 10 5-10 5z"></path><path d="M6 11v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"></path></svg><span>아카데미</span></a>
+<a href="login.html" class="login" aria-current="page"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"></circle><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"></path></svg><span>로그인</span></a>
+</nav>
+</div>
+</header>
+
+<main class="wrap" id="app"><p class="spin">불러오는 중…</p></main>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore-compat.js"></script>
+<script>
+// 아래에 잠깐 뜨는 안내 문구
+function bgToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._h);
+  t._h = setTimeout(function () { t.classList.remove('show'); }, 2600);
+}
+</script>
+<script>
+// 로그인·관리 페이지 (아티스트: 내 프로필 / 관리자: 가입 승인·아티스트·페이지 문구)
+(function () {
+  var ADMIN = 'vbnmvbnm6272@gmail.com';
+  var PAGES = [['index.html', '홈페이지'], ['share.html', '타투 쉐어'], ['academy.html', '타투플레이스']];
+  var app = document.getElementById('app');
+  if (!window.firebase) { app.innerHTML = '<div class="card narrow"><p class="msg">로그인 프로그램을 불러오지 못했어요. 인터넷 연결을 확인하고 새로고침해 주세요.</p></div>'; return; }
+  firebase.initializeApp({
+    apiKey: 'AIzaSyBINWTCD_JCGidza1sCvHozaS6YyDIinPQ',
+    authDomain: 'blackghost-homepage.firebaseapp.com',
+    projectId: 'blackghost-homepage',
+    storageBucket: 'blackghost-homepage.firebasestorage.app',
+    messagingSenderId: '296389205796',
+    appId: '1:296389205796:web:f533e9e46dca77af51ddb1'
+  });
+  var auth = firebase.auth(), db = firebase.firestore();
+  auth.languageCode = 'ko';
+  var NOW = function () { return firebase.firestore.FieldValue.serverTimestamp(); };
+  var user = null, me = null, admin = false;
+
+  function $(s, r) { return (r || document).querySelector(s); }
+  function $$(s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function slug(s) { return String(s).toLowerCase().replace(/[^a-z0-9]+/g, ''); }
+  function igUrl(s) {
+    s = (s || '').trim(); if (!s) return '';
+    if (/^https?:\/\//.test(s)) return s;
+    return 'https://www.instagram.com/' + s.replace(/^@/, '').replace(/\/+$/, '') + '/';
+  }
+  function bg(src) { return src ? "background-image:url('" + String(src).replace(/'/g, '%27') + "')" : ''; }
+  function fail(e) {
+    console.error(e);
+    var c = e && e.code || '';
+    var t = {
+      'auth/invalid-credential': '이메일이나 비밀번호가 맞지 않아요.',
+      'auth/wrong-password': '이메일이나 비밀번호가 맞지 않아요.',
+      'auth/user-not-found': '가입되지 않은 이메일이에요. \'새로 가입하기\'를 눌러 주세요.',
+      'auth/invalid-email': '이메일 주소 모양이 맞지 않아요.',
+      'auth/email-already-in-use': '이미 가입된 이메일이에요. \'로그인\'을 눌러 주세요.',
+      'auth/weak-password': '비밀번호는 6자 이상으로 해 주세요.',
+      'auth/missing-password': '비밀번호를 입력해 주세요.',
+      'auth/too-many-requests': '너무 여러 번 시도했어요. 잠시 뒤에 다시 해 주세요.',
+      'auth/network-request-failed': '인터넷 연결을 확인해 주세요.',
+      'auth/unauthorized-domain': '이 주소에서는 로그인이 허락되지 않았어요. (Firebase 승인된 도메인 확인)',
+      'permission-denied': '권한이 없어요. 관리자 승인이 필요하거나, 규칙 설정을 확인해 주세요.'
+    }[c];
+    return t || ('문제가 생겼어요. 다시 해 주세요. (' + (c || (e && e.message) || '알 수 없음') + ')');
+  }
+
+  // ---- 사진 줄이기 (창고에 넣을 수 있게 작게) ----
+  function loadImg(file) {
+    return new Promise(function (ok, no) {
+      var u = URL.createObjectURL(file), i = new Image();
+      i.onload = function () { ok(i); }; i.onerror = function () { no(new Error('사진을 열 수 없어요')); }; i.src = u;
+    });
+  }
+  function shrink(c, max) {
+    var q = 0.85, d = c.toDataURL('image/jpeg', q);
+    while (d.length > max && q > 0.45) { q -= 0.08; d = c.toDataURL('image/jpeg', q); }
+    while (d.length > max && c.width > 300) {
+      var s = document.createElement('canvas'); s.width = Math.round(c.width * 0.8); s.height = Math.round(c.height * 0.8);
+      s.getContext('2d').drawImage(c, 0, 0, s.width, s.height); c = s; d = c.toDataURL('image/jpeg', q);
+    }
+    return d;
+  }
+  function photoData(img) {
+    var m = 1400, r = Math.min(1, m / Math.max(img.naturalWidth, img.naturalHeight));
+    var c = document.createElement('canvas'); c.width = Math.round(img.naturalWidth * r); c.height = Math.round(img.naturalHeight * r);
+    var x = c.getContext('2d'); x.fillStyle = '#000'; x.fillRect(0, 0, c.width, c.height); x.drawImage(img, 0, 0, c.width, c.height);
+    return shrink(c, 700000);
+  }
+  // 대표 사진: 세로 4:5로 자르기 (끌어서 위치, 막대로 크기)
+  function cropCover(img) {
+    return new Promise(function (done) {
+      var W = 560, H = 700, zoom = 1, ox = 0.5, oy = 0.5;
+      var d = document.createElement('div'); d.className = 'crop';
+      d.innerHTML = '<div class="card"><h3 class="t">대표 사진 자르기</h3><p class="muted">사진을 끌어서 위치를 맞추고, 아래 막대로 크기를 조절하세요.</p>' +
+        '<canvas width="' + W + '" height="' + H + '"></canvas><label class="f">크게 보기<input type="range" min="1" max="3" step="0.01" value="1"></label>' +
+        '<div class="btns"><button type="button" class="btn btn-solid" data-ok>이 사진으로 저장</button><button type="button" class="btn" data-no>취소</button></div></div>';
+      document.body.appendChild(d);
+      var cv = $('canvas', d), x = cv.getContext('2d');
+      function geo() {
+        var r = Math.max(W / img.naturalWidth, H / img.naturalHeight) * zoom;
+        var w = img.naturalWidth * r, h = img.naturalHeight * r;
+        return { w: w, h: h, x: -(w - W) * ox, y: -(h - H) * oy };
+      }
+      function draw() { var g = geo(); x.fillStyle = '#000'; x.fillRect(0, 0, W, H); x.drawImage(img, g.x, g.y, g.w, g.h); }
+      draw();
+      $('input', d).oninput = function () { zoom = +this.value; draw(); };
+      var drag = null;
+      cv.addEventListener('pointerdown', function (e) { drag = { x: e.clientX, y: e.clientY, ox: ox, oy: oy }; cv.setPointerCapture(e.pointerId); });
+      cv.addEventListener('pointermove', function (e) {
+        if (!drag) return;
+        var g = geo(), k = W / cv.clientWidth;
+        if (g.w > W) ox = Math.min(1, Math.max(0, drag.ox - (e.clientX - drag.x) * k / (g.w - W)));
+        if (g.h > H) oy = Math.min(1, Math.max(0, drag.oy - (e.clientY - drag.y) * k / (g.h - H)));
+        draw();
+      });
+      cv.addEventListener('pointerup', function () { drag = null; });
+      $('[data-ok]', d).onclick = function () { var r = shrink(cv, 300000); d.remove(); done(r); };
+      $('[data-no]', d).onclick = function () { d.remove(); done(null); };
+    });
+  }
+
+  // ---- 위쪽 줄: 누가 로그인했는지 ----
+  function bar() {
+    var role = admin ? '관리자' : me && me.role === 'artist' ? '아티스트' : '승인 대기';
+    return '<div class="bar"><span><b>' + esc(user.displayName || (me && me.name) || user.email) + '</b> · ' + esc(user.email) + '<span class="role">' + role + '</span></span>' +
+      '<button type="button" class="btn btn-sm" data-out>로그아웃</button></div>';
+  }
+  function bindBar() { $$('[data-out]').forEach(function (b) { b.onclick = function () { auth.signOut(); }; }); }
+
+  // ---- 1. 로그인 화면 ----
+  function showLogin() {
+    var inapp = /KAKAOTALK|Instagram|FBAN|FBAV|NAVER|Line\//i.test(navigator.userAgent);
+    app.innerHTML =
+      '<div class="card narrow">' +
+      '<div class="eyebrow"><span></span>LOGIN</div>' +
+      '<h2 class="slv" style="font-size:32px">아티스트 로그인</h2>' +
+      '<p class="muted">블랙고스트 아티스트와 관리자만 쓰는 곳이에요. 손님은 로그인하지 않아도 돼요.</p>' +
+      (inapp ? '<p class="warn">카카오톡·인스타그램 안에서 열면 구글 로그인이 안 될 수 있어요. 오른쪽 위 메뉴(⋮)에서 \'다른 브라우저로 열기\'를 눌러 주세요.</p>' : '') +
+      '<button type="button" class="btn btn-solid wide" data-g><svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true" style="margin-right:10px"><path fill="#EA4335" d="M24 9.5c3.5 0 6.6 1.2 9 3.5l6.7-6.7C35.6 2.4 30.2 0 24 0 14.6 0 6.6 5.4 2.6 13.3l7.8 6C12.3 13.6 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M46.1 24.5c0-1.6-.1-3.1-.4-4.5H24v9h12.4c-.5 2.9-2.2 5.3-4.6 7l7.4 5.7c4.3-4 6.9-9.9 6.9-17.2z"/><path fill="#FBBC05" d="M10.4 28.7A14.5 14.5 0 0 1 9.5 24c0-1.6.3-3.2.9-4.7l-7.8-6A24 24 0 0 0 0 24c0 3.9.9 7.5 2.6 10.7l7.8-6z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.4-5.7c-2.1 1.4-4.8 2.3-8.5 2.3-6.3 0-11.7-4.1-13.6-9.8l-7.8 6C6.6 42.6 14.6 48 24 48z"/></svg>구글로 로그인</button>' +
+      '<div class="or">또는 이메일로</div>' +
+      '<form data-f style="display:flex;flex-direction:column;gap:12px">' +
+      '<label class="f">이메일<input type="email" name="e" autocomplete="email" required></label>' +
+      '<label class="f">비밀번호 (6자 이상)<input type="password" name="p" autocomplete="current-password" minlength="6" required></label>' +
+      '<div class="two"><button class="btn btn-solid wide" data-in>로그인</button><button type="button" class="btn wide" data-up>새로 가입하기</button></div>' +
+      '</form>' +
+      '<button type="button" class="link" data-reset>비밀번호를 잊었어요</button>' +
+      '<p class="msg" data-msg></p></div>';
+    var f = $('[data-f]'), msg = $('[data-msg]');
+    function say(t) { msg.textContent = t || ''; }
+    $('[data-g]').onclick = function () {
+      say('');
+      var p = new firebase.auth.GoogleAuthProvider(); p.setCustomParameters({ prompt: 'select_account' });
+      auth.signInWithPopup(p).catch(function (e) {
+        if (e.code === 'auth/popup-blocked' || e.code === 'auth/operation-not-supported-in-this-environment') return auth.signInWithRedirect(p);
+        if (e.code === 'auth/popup-closed-by-user' || e.code === 'auth/cancelled-popup-request') return;
+        say(fail(e));
+      });
+    };
+    f.onsubmit = function (ev) {
+      ev.preventDefault(); say('');
+      auth.signInWithEmailAndPassword(f.e.value.trim(), f.p.value).catch(function (e) { say(fail(e)); });
+    };
+    $('[data-up]').onclick = function () {
+      say('');
+      if (!f.reportValidity()) return;
+      auth.createUserWithEmailAndPassword(f.e.value.trim(), f.p.value).catch(function (e) { say(fail(e)); });
+    };
+    $('[data-reset]').onclick = function () {
+      var e = f.e.value.trim();
+      if (!e) { say('위 칸에 이메일을 먼저 적고 다시 눌러 주세요.'); f.e.focus(); return; }
+      auth.sendPasswordResetEmail(e).then(function () { say('비밀번호를 바꾸는 메일을 보냈어요. 메일함(스팸함도)을 확인해 주세요.'); }).catch(function (x) { say(fail(x)); });
+    };
+  }
+
+  // ---- 2. 가입 신청 (처음 로그인한 아티스트) ----
+  function showApply() {
+    app.innerHTML = bar() + '<div class="card narrow"><div class="eyebrow"><span></span>JOIN</div><h3 class="t">아티스트 가입 신청</h3>' +
+      '<p class="muted">신청하면 관리자가 확인하고 승인해 드려요. 승인되면 내 사진과 소개를 직접 고칠 수 있어요.</p>' +
+      '<form data-f style="display:flex;flex-direction:column;gap:14px">' +
+      '<label class="f">활동명 (영어, 예: BACK)<input name="name" maxlength="40" required></label>' +
+      '<label class="f">이름 (한글)<input name="ko" maxlength="20"></label>' +
+      '<label class="f">홈페이지의 어느 아티스트인가요?<select name="want"><option value="">불러오는 중…</option></select></label>' +
+      '<label class="f">하고 싶은 말 (선택)<input name="note" maxlength="300"></label>' +
+      '<button class="btn btn-solid wide">신청하기</button><p class="msg" data-msg></p></form></div>';
+    bindBar();
+    var f = $('[data-f]');
+    db.collection('artists').get().then(function (q) {
+      var o = '<option value="">목록에 없어요 (새로 들어온 아티스트)</option>';
+      q.docs.map(function (d) { return [d.id, d.data()]; }).sort(function (a, b) { return a[1].en < b[1].en ? -1 : 1; })
+        .forEach(function (a) { o += '<option value="' + esc(a[0]) + '">' + esc(a[1].en) + (a[1].ko ? ' (' + esc(a[1].ko) + ')' : '') + '</option>'; });
+      f.want.innerHTML = o;
+    }).catch(function () { f.want.innerHTML = '<option value="">목록에 없어요 (새로 들어온 아티스트)</option>'; });
+    f.onsubmit = function (ev) {
+      ev.preventDefault();
+      var b = $('button', f); b.disabled = true;
+      db.collection('users').doc(user.uid).set({
+        email: user.email || '', name: f.name.value.trim().toUpperCase(), ko: f.ko.value.trim(),
+        want: f.want.value, note: f.note.value.trim(), role: 'pending', createdAt: NOW()
+      }).then(route).catch(function (e) { b.disabled = false; $('[data-msg]', f).textContent = fail(e); });
+    };
+  }
+
+  function showPending() {
+    app.innerHTML = bar() + '<div class="card narrow"><div class="eyebrow"><span></span>WAITING</div><h3 class="t">승인을 기다리고 있어요</h3>' +
+      '<p class="muted">가입 신청이 들어갔어요. 관리자가 승인하면 이 페이지에서 내 프로필을 고칠 수 있어요. 승인 뒤에 새로고침해 주세요.</p>' +
+      '<div class="btns"><button type="button" class="btn btn-sm" data-re>새로고침</button><button type="button" class="link" data-cancel>신청 취소하기</button></div></div>';
+    bindBar();
+    $('[data-re]').onclick = route;
+    $('[data-cancel]').onclick = function () {
+      if (!confirm('가입 신청을 취소할까요?')) return;
+      db.collection('users').doc(user.uid).delete().then(route).catch(function (e) { bgToast(fail(e)); });
+    };
+  }
+
+  // ---- 3. 아티스트 프로필 고치기 (아티스트 본인 / 관리자 공통) ----
+  function editor(box, id, opt) {
+    opt = opt || {};
+    var ref = db.collection('artists').doc(id);
+    box.innerHTML = '<p class="spin">불러오는 중…</p>';
+    ref.get().then(function (s) {
+      if (!s.exists) { box.innerHTML = '<div class="card"><p class="msg">연결된 아티스트 정보가 없어요. 관리자에게 알려 주세요.</p></div>'; return; }
+      var a = s.data(), cover = a.cover || a.coverUrl || '';
+      box.innerHTML =
+        (opt.back ? '<div><button type="button" class="btn btn-sm" data-back>← 아티스트 목록</button></div>' : '') +
+        '<div class="head"><div class="eyebrow"><span></span>PROFILE</div><h2 class="slv" style="font-family:Michroma,sans-serif;font-weight:400;letter-spacing:.1em;font-size:clamp(24px,4vw,34px)">' + esc(a.en) + '</h2></div>' +
+        '<div class="ed"><div class="ed-cover"><div class="frame" data-cv style="' + bg(cover) + '">' + (cover ? '' : '대표 사진 없음') + '</div>' +
+        '<label class="btn btn-sm filebtn wide">대표 사진 바꾸기<input type="file" accept="image/*" data-cf></label>' +
+        '<p class="muted" style="font-size:13px">홈페이지 아티스트 목록에 세로(4:5)로 나오는 사진이에요.</p></div>' +
+        '<form class="ed-form" data-f>' +
+        (admin ? '<div class="two"><label class="f">영어 이름 (화면에 나옴)<input name="en" maxlength="30" required value="' + esc(a.en) + '"></label><label class="f">한글 이름 (관리용)<input name="ko" maxlength="20" value="' + esc(a.ko) + '"></label></div>' +
+          '<label class="chk"><input type="checkbox" name="show"' + (a.hidden ? '' : ' checked') + '>홈페이지에 보이기</label>' : '') +
+        '<label class="f">장르 (예: 블랙워크 · 리얼리즘)<input name="genre" maxlength="80" value="' + esc(a.genre) + '"></label>' +
+        '<label class="f">인스타그램 (주소 또는 @아이디)<input name="ig" maxlength="200" value="' + esc(a.ig) + '"></label>' +
+        '<label class="f"><span style="display:flex;justify-content:space-between">소개 글<span data-cnt></span></span><textarea name="bio" maxlength="600" placeholder="예) 섬세한 라인과 감성적인 디자인을 좋아해요. 첫 타투도 편하게 상담해 주세요.">' + esc(a.bio) + '</textarea></label>' +
+        '<div class="btns"><button class="btn btn-solid">저장하기</button>' + (admin ? '<button type="button" class="btn btn-danger" data-del>이 아티스트 지우기</button>' : '') + '</div>' +
+        '</form></div>' +
+        '<div class="head" style="margin-top:12px"><h3 class="t">작업 사진 (최대 5장)</h3><p class="muted">손님이 사진을 누르면 뜨는 \'아티스트 창\'에서 옆으로 넘겨 볼 수 있어요. 비워 두면 대표 사진만 보여요.</p></div>' +
+        '<div class="slots" data-slots></div>';
+      var f = $('[data-f]', box), cnt = $('[data-cnt]', box);
+      function count() { cnt.textContent = f.bio.value.length + ' / 600'; }
+      f.bio.oninput = count; count();
+      if (opt.back) $('[data-back]', box).onclick = opt.back;
+      f.onsubmit = function (ev) {
+        ev.preventDefault();
+        var b = $('button', f), d = { genre: f.genre.value.trim(), ig: igUrl(f.ig.value), bio: f.bio.value.trim(), updatedAt: NOW() };
+        if (admin) { d.en = f.en.value.trim().toUpperCase(); d.ko = f.ko.value.trim(); d.hidden = !f.show.checked; }
+        b.disabled = true;
+        ref.update(d).then(function () { f.ig.value = d.ig; bgToast('저장했어요. 홈페이지에 바로 반영돼요.'); })
+          .catch(function (e) { bgToast(fail(e)); }).then(function () { b.disabled = false; });
+      };
+      if (admin) $('[data-del]', box).onclick = function () {
+        if (!confirm(a.en + ' 아티스트를 지울까요? 사진도 같이 지워지고 되돌릴 수 없어요.\n(잠깐 숨기기만 하려면 \'홈페이지에 보이기\'를 끄세요)')) return;
+        ref.collection('photos').get().then(function (q) {
+          var bt = db.batch(); q.docs.forEach(function (d) { bt.delete(d.ref); }); bt.delete(ref); return bt.commit();
+        }).then(function () { bgToast('지웠어요.'); opt.back && opt.back(); }).catch(function (e) { bgToast(fail(e)); });
+      };
+      $('[data-cf]', box).onchange = function () {
+        var file = this.files[0]; this.value = ''; if (!file) return;
+        loadImg(file).then(cropCover).then(function (data) {
+          if (!data) return;
+          bgToast('저장하는 중…');
+          return ref.update({ cover: data, updatedAt: NOW() }).then(function () {
+            var fr = $('[data-cv]', box); fr.style.backgroundImage = "url('" + data + "')"; fr.textContent = ''; bgToast('대표 사진을 바꿨어요.');
+          });
+        }).catch(function (e) { bgToast(fail(e)); });
+      };
+      slots($('[data-slots]', box), ref);
+    }).catch(function (e) { box.innerHTML = '<div class="card"><p class="msg">' + esc(fail(e)) + '</p></div>'; });
+  }
+  function slots(el, ref) {
+    var col = ref.collection('photos');
+    col.get().then(function (q) {
+      var have = {}; q.docs.forEach(function (d) { have[d.id] = d.data().data; });
+      var h = '';
+      ['p1', 'p2', 'p3', 'p4', 'p5'].forEach(function (p, i) {
+        h += '<div class="slot"><div class="frame" style="' + bg(have[p]) + '">' + (have[p] ? '' : (i + 1)) + '</div><div class="acts">' +
+          '<label class="btn btn-sm filebtn">' + (have[p] ? '바꾸기' : '+ 넣기') + '<input type="file" accept="image/*" data-p="' + p + '"></label>' +
+          (have[p] ? '<button type="button" class="btn btn-sm btn-danger" data-x="' + p + '" aria-label="' + (i + 1) + '번 사진 지우기">지우기</button>' : '') + '</div></div>';
+      });
+      el.innerHTML = h;
+      $$('[data-p]', el).forEach(function (inp) {
+        inp.onchange = function () {
+          var file = this.files[0], p = this.getAttribute('data-p'); this.value = ''; if (!file) return;
+          bgToast('사진을 줄여서 올리는 중…');
+          loadImg(file).then(function (img) { return col.doc(p).set({ data: photoData(img), updatedAt: NOW() }); })
+            .then(function () { bgToast('사진을 넣었어요.'); slots(el, ref); }).catch(function (e) { bgToast(fail(e)); });
+        };
+      });
+      $$('[data-x]', el).forEach(function (b) {
+        b.onclick = function () {
+          if (!confirm('이 사진을 지울까요?')) return;
+          col.doc(b.getAttribute('data-x')).delete().then(function () { slots(el, ref); }).catch(function (e) { bgToast(fail(e)); });
+        };
+      });
+    }).catch(function (e) { el.innerHTML = '<p class="msg">' + esc(fail(e)) + '</p>'; });
+  }
+
+  function showArtist() {
+    app.innerHTML = bar() + '<div data-ed style="display:flex;flex-direction:column;gap:24px"></div>' +
+      '<p class="muted">고친 내용은 저장하면 <a href="index.html#artists">홈페이지</a>에 바로 반영돼요.</p>';
+    bindBar();
+    editor($('[data-ed]'), me.artistId);
+  }
+
+  // ---- 4. 관리자 ----
+  function showAdmin(tab) {
+    tab = tab || 'users';
+    app.innerHTML = bar() + '<div class="tabs" role="tablist">' +
+      '<button type="button" role="tab" data-t="users">가입 승인<span class="n" data-n hidden></span></button>' +
+      '<button type="button" role="tab" data-t="artists">아티스트</button>' +
+      '<button type="button" role="tab" data-t="texts">페이지 문구</button></div><div data-body style="display:flex;flex-direction:column;gap:24px"></div>';
+    bindBar();
+    $$('[data-t]').forEach(function (b) {
+      b.setAttribute('aria-selected', b.getAttribute('data-t') === tab ? 'true' : 'false');
+      b.onclick = function () { showAdmin(b.getAttribute('data-t')); };
+    });
+    var body = $('[data-body]');
+    pendingCount();
+    if (tab === 'users') usersTab(body);
+    if (tab === 'artists') artistsTab(body);
+    if (tab === 'texts') textsTab(body);
+  }
+  function pendingCount() {
+    db.collection('users').where('role', '==', 'pending').get().then(function (q) {
+      var n = $('[data-n]'); if (!n) return; n.textContent = q.size; n.hidden = !q.size;
+    }).catch(function () {});
+  }
+
+  function usersTab(body) {
+    body.innerHTML = '<p class="spin">불러오는 중…</p>';
+    Promise.all([db.collection('users').get(), db.collection('artists').get()]).then(function (r) {
+      var us = r[0].docs.map(function (d) { var o = d.data(); o.uid = d.id; return o; });
+      var ar = {}; r[1].docs.forEach(function (d) { ar[d.id] = d.data(); });
+      var ids = Object.keys(ar).sort(function (a, b) { return ar[a].en < ar[b].en ? -1 : 1; });
+      var pend = us.filter(function (u) { return u.role === 'pending'; });
+      var arts = us.filter(function (u) { return u.role === 'artist' || u.role === 'admin'; });
+      function opts(sel) {
+        return ids.map(function (i) { return '<option value="' + esc(i) + '"' + (i === sel ? ' selected' : '') + '>' + esc(ar[i].en) + (ar[i].ko ? ' (' + esc(ar[i].ko) + ')' : '') + '</option>'; }).join('') +
+          '<option value="__new"' + (!sel || !ar[sel] ? ' selected' : '') + '>새 아티스트로 만들기</option>';
+      }
+      var h = '<div class="head"><h3 class="t">가입 신청</h3><p class="muted">누가 신청했는지 확인하고, 홈페이지의 어느 아티스트인지 골라 승인해 주세요. 모르는 사람이면 거절하세요.</p></div>';
+      h += pend.length ? '<div class="rows">' + pend.map(function (u) {
+        return '<div class="row" data-u="' + esc(u.uid) + '"><div class="who"><b>' + esc(u.name) + (u.ko ? ' · ' + esc(u.ko) : '') + '</b><span>' + esc(u.email) + '</span>' + (u.note ? '<span>“' + esc(u.note) + '”</span>' : '') + '</div>' +
+          '<select class="f" aria-label="연결할 아티스트">' + opts(u.want) + '</select>' +
+          '<button type="button" class="btn btn-sm btn-solid" data-ok>승인</button><button type="button" class="btn btn-sm btn-danger" data-no>거절</button></div>';
+      }).join('') + '</div>' : '<p class="muted">새 신청이 없어요.</p>';
+      h += '<div class="head" style="margin-top:20px"><h3 class="t">승인된 아티스트</h3></div>';
+      h += arts.length ? '<div class="rows">' + arts.map(function (u) {
+        var a = ar[u.artistId];
+        return '<div class="row" data-u="' + esc(u.uid) + '"><div class="who"><b>' + esc(a ? a.en : u.name) + (u.role === 'admin' ? ' · 관리자' : '') + '</b><span>' + esc(u.email) + '</span></div>' +
+          '<button type="button" class="btn btn-sm btn-danger" data-cut>권한 빼기</button></div>';
+      }).join('') + '</div>' : '<p class="muted">아직 없어요.</p>';
+      body.innerHTML = h;
+      $$('[data-ok]', body).forEach(function (b) {
+        b.onclick = function () {
+          var row = b.closest('.row'), uid = row.getAttribute('data-u'), u = pend.filter(function (x) { return x.uid === uid; })[0];
+          var sel = $('select', row).value, go = Promise.resolve(sel);
+          if (sel === '__new') {
+            var en = (u.name || '').toUpperCase(), id = slug(en);
+            if (!id) { bgToast('활동명이 영어가 아니라서 만들 수 없어요. 아티스트 탭에서 먼저 만들어 주세요.'); return; }
+            if (ar[id]) { bgToast(en + ' 이름의 아티스트가 이미 있어요. 목록에서 골라 주세요.'); return; }
+            go = db.collection('artists').doc(id).set({ en: en, ko: u.ko || '', genre: '', ig: '', bio: '', hidden: true, createdAt: NOW() }).then(function () { return id; });
+          }
+          b.disabled = true;
+          go.then(function (id) { return db.collection('users').doc(uid).update({ role: 'artist', artistId: id, approvedAt: NOW() }); })
+            .then(function () { bgToast('승인했어요.' + (sel === '__new' ? ' 새 아티스트는 사진을 넣은 뒤 \'홈페이지에 보이기\'를 켜 주세요.' : '')); usersTab(body); pendingCount(); })
+            .catch(function (e) { b.disabled = false; bgToast(fail(e)); });
+        };
+      });
+      $$('[data-no]', body).forEach(function (b) {
+        b.onclick = function () {
+          if (!confirm('이 신청을 거절할까요?')) return;
+          db.collection('users').doc(b.closest('.row').getAttribute('data-u')).delete().then(function () { usersTab(body); pendingCount(); }).catch(function (e) { bgToast(fail(e)); });
+        };
+      });
+      $$('[data-cut]', body).forEach(function (b) {
+        b.onclick = function () {
+          if (!confirm('이 사람의 수정 권한을 뺄까요? (홈페이지의 아티스트 정보는 그대로 남아요)')) return;
+          db.collection('users').doc(b.closest('.row').getAttribute('data-u')).delete().then(function () { usersTab(body); }).catch(function (e) { bgToast(fail(e)); });
+        };
+      });
+    }).catch(function (e) { body.innerHTML = '<p class="msg">' + esc(fail(e)) + '</p>'; });
+  }
+
+  function artistsTab(body) {
+    body.innerHTML = '<p class="spin">불러오는 중…</p>';
+    db.collection('artists').get().then(function (q) {
+      var list = q.docs.map(function (d) { var o = d.data(); o.id = d.id; return o; }).sort(function (a, b) { return a.en < b.en ? -1 : 1; });
+      if (!list.length) {
+        body.innerHTML = '<div class="card narrow"><h3 class="t">처음 한 번만 해 주세요</h3><p class="muted">지금 홈페이지에 있는 아티스트 정보(이름·장르·인스타·사진)를 관리 창고로 옮겨요.</p>' +
+          '<button type="button" class="btn btn-solid wide" data-seed>홈페이지 아티스트 불러오기</button></div>';
+        $('[data-seed]', body).onclick = function () { this.disabled = true; seed().then(function (n) { bgToast(n + '명을 불러왔어요.'); artistsTab(body); }).catch(function (e) { bgToast(fail(e)); }); };
+        return;
+      }
+      body.innerHTML = '<div class="head"><h3 class="t">아티스트 ' + list.length + '명</h3><p class="muted">눌러서 사진·장르·소개를 고칠 수 있어요. 홈페이지에서는 열 때마다 순서가 섞여요.</p></div>' +
+        '<div class="grid">' + list.map(function (a) {
+          return '<button type="button" class="mini" data-a="' + esc(a.id) + '"><span class="fr" style="' + bg(a.cover || a.coverUrl) + '">' + (a.hidden ? '<span class="badge">숨김</span>' : '') + '</span><b>' + esc(a.en) + '</b><small>' + esc(a.genre || '장르 없음') + '</small></button>';
+        }).join('') + '<button type="button" class="mini" data-new><span class="add">+ 새 아티스트</span></button></div>';
+      $$('[data-a]', body).forEach(function (b) {
+        b.onclick = function () { editor(body, b.getAttribute('data-a'), { back: function () { artistsTab(body); } }); };
+      });
+      $('[data-new]', body).onclick = function () {
+        var en = (prompt('새 아티스트의 영어 이름을 적어 주세요 (예: ROSE)') || '').trim().toUpperCase(), id = slug(en);
+        if (!en) return;
+        if (!id) { bgToast('영어나 숫자로 적어 주세요.'); return; }
+        if (list.some(function (a) { return a.id === id; })) { bgToast('같은 이름이 이미 있어요.'); return; }
+        db.collection('artists').doc(id).set({ en: en, ko: '', genre: '', ig: '', bio: '', hidden: true, createdAt: NOW() })
+          .then(function () { bgToast('만들었어요. 사진을 넣고 \'홈페이지에 보이기\'를 켜 주세요.'); editor(body, id, { back: function () { artistsTab(body); } }); })
+          .catch(function (e) { bgToast(fail(e)); });
+      };
+    }).catch(function (e) { body.innerHTML = '<p class="msg">' + esc(fail(e)) + '</p>'; });
+  }
+  // 홈페이지(index.html)에 들어 있는 아티스트 카드를 창고로 옮기기
+  function seed() {
+    return fetch('index.html', { cache: 'no-store' }).then(function (r) { return r.text(); }).then(function (t) {
+      var doc = new DOMParser().parseFromString(t, 'text/html'), bt = db.batch(), n = 0;
+      $$('.artists .artist', doc).forEach(function (a) {
+        var src = $('img', a).getAttribute('src'), id = (src.match(/([a-z0-9_-]+)\.jpg/) || [])[1];
+        if (!id) return;
+        var lab = $('.ph', a).getAttribute('aria-label') || '';
+        bt.set(db.collection('artists').doc(id), {
+          en: $('h3', a).textContent.trim(), ko: (lab.match(/^([^(]+)\(/) || [])[1] || '', genre: $('.meta p', a).textContent.trim(),
+          ig: $('.ig', a).getAttribute('href'), coverUrl: src, bio: '', hidden: false, createdAt: NOW()
+        });
+        n++;
+      });
+      return bt.commit().then(function () { return n; });
+    });
+  }
+
+  // 글자 칸 → 고치기용 글자 (굵게는 **, 줄바꿈 그대로)
+  function toText(el) {
+    var c = el.cloneNode(true);
+    $$('br', c).forEach(function (b) { b.replaceWith('\n'); });
+    $$('b,strong', c).forEach(function (b) { b.replaceWith('**' + b.textContent + '**'); });
+    return c.textContent.replace(/[ \t\r]*\n[ \t\r]*/g, '\n').replace(/[ \t\r]+/g, ' ').trim();
+  }
+  function textsTab(body, page) {
+    page = page || PAGES[0][0];
+    body.innerHTML = '<div class="head"><h3 class="t">페이지 문구 고치기</h3><p class="muted">고칠 글을 바꾸고 맨 아래 \'저장하기\'를 누르세요. <b style="color:#F2EFEA">**이렇게**</b> 감싸면 굵은 글씨, 줄을 바꾸면 홈페이지에서도 줄이 바뀌어요. 전화번호·링크·주소 버튼은 여기서 못 고쳐요 (말씀해 주세요).</p></div>' +
+      '<div class="tabs">' + PAGES.map(function (p) { return '<button type="button" data-pg="' + p[0] + '" aria-selected="' + (p[0] === page) + '">' + p[1] + '</button>'; }).join('') + '</div>' +
+      '<div data-list><p class="spin">불러오는 중…</p></div>';
+    $$('[data-pg]', body).forEach(function (b) { b.onclick = function () { textsTab(body, b.getAttribute('data-pg')); }; });
+    var ref = db.collection('site').doc('texts'), all = {};
+    Promise.all([fetch(page, { cache: 'no-store' }).then(function (r) { return r.text(); }), ref.get()]).then(function (r) {
+      var doc = new DOMParser().parseFromString(r[0], 'text/html');
+      all = (r[1].exists && r[1].data().texts) || {};
+      var h = '', last = null, rows = [];
+      $$('[data-edit]', doc).forEach(function (el) {
+        var k = el.getAttribute('data-edit'), sec = el.closest('section'), h2 = sec && $('h2', sec);
+        var name = sec && sec.id === 'top' ? '맨 위' : h2 ? h2.textContent.trim() : '기타';
+        if (name !== last) { h += '<p class="sec-label">' + esc(name) + '</p>'; last = name; }
+        var def = toText(el), v = typeof all[k] === 'string' ? all[k] : def;
+        rows.push({ k: k, def: def });
+        h += '<div class="txt-row' + (v !== def ? ' changed' : '') + '" data-k="' + k + '"><div class="k"><span>' + k + '</span>' +
+          '<button type="button" class="link" data-reset' + (v !== def ? '' : ' hidden') + '>원래대로</button></div>' +
+          '<label class="f"><textarea rows="' + Math.max(1, Math.ceil(v.length / 48) + (v.split('\n').length - 1)) + '" aria-label="' + esc(name) + ' 문구">' + esc(v) + '</textarea></label></div>';
+      });
+      h += '<div class="sticky"><button type="button" class="btn btn-solid" data-save>저장하기</button><span class="muted" data-st></span></div>';
+      var list = $('[data-list]', body); list.innerHTML = h;
+      var defs = {}; rows.forEach(function (x) { defs[x.k] = x.def; });
+      $$('.txt-row', list).forEach(function (row) {
+        var k = row.getAttribute('data-k'), ta = $('textarea', row), rs = $('[data-reset]', row);
+        ta.oninput = function () { var ch = ta.value.trim() !== defs[k]; row.classList.toggle('changed', ch); rs.hidden = !ch; $('[data-st]', list).textContent = '저장 안 한 내용이 있어요'; };
+        rs.onclick = function () { ta.value = defs[k]; ta.oninput(); };
+      });
+      $('[data-save]', list).onclick = function () {
+        var b = this, next = {};
+        Object.keys(all).forEach(function (k) { next[k] = all[k]; });
+        $$('.txt-row', list).forEach(function (row) {
+          var k = row.getAttribute('data-k'), v = $('textarea', row).value.trim();
+          if (v === defs[k] || !v) delete next[k]; else next[k] = v;
+        });
+        b.disabled = true;
+        ref.set({ texts: next, updatedAt: NOW() }).then(function () {
+          all = next; $('[data-st]', list).textContent = ''; bgToast('저장했어요. 홈페이지를 새로고침하면 보여요.');
+        }).catch(function (e) { bgToast(fail(e)); }).then(function () { b.disabled = false; });
+      };
+    }).catch(function (e) { $('[data-list]', body).innerHTML = '<p class="msg">' + esc(fail(e)) + '</p>'; });
+  }
+
+  // ---- 누구인지 보고 맞는 화면으로 ----
+  function route() {
+    if (!user) return showLogin();
+    app.innerHTML = '<p class="spin">불러오는 중…</p>';
+    admin = (user.email || '').toLowerCase() === ADMIN && user.emailVerified;
+    db.collection('users').doc(user.uid).get().then(function (s) {
+      me = s.exists ? s.data() : null;
+      if (me && me.role === 'admin') admin = true;
+      if (admin) return showAdmin();
+      if (!me) return showApply();
+      if (me.role === 'artist' && me.artistId) return showArtist();
+      showPending();
+    }).catch(function (e) {
+      app.innerHTML = bar() + '<div class="card narrow"><p class="msg">' + esc(fail(e)) + '</p></div>'; bindBar();
+    });
+  }
+  auth.getRedirectResult().catch(function (e) { bgToast(fail(e)); });
+  auth.onAuthStateChanged(function (u) { user = u; me = null; admin = false; route(); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,53 @@
+rules_version = '2';
+// 블랙고스트 홈페이지 창고(Firestore) 잠금 규칙
+// Firebase 콘솔 → Firestore → 규칙 탭에 이 내용을 그대로 붙여 넣고 '게시'를 누릅니다.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function signedIn() { return request.auth != null; }
+    // 대장님(관리자) 구글 계정
+    function boss() {
+      return signedIn() && request.auth.token.email == 'vbnmvbnm6272@gmail.com'
+        && request.auth.token.email_verified == true;
+    }
+    function hasMe() { return signedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid)); }
+    function me() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
+    function isAdmin() { return boss() || (hasMe() && me().role == 'admin'); }
+    function ownsArtist(id) { return hasMe() && me().role == 'artist' && me().artistId == id; }
+    function short(m, k, n) { return !(k in m) || (m[k] is string && m[k].size() <= n); }
+
+    // 로그인한 사람 정보 (가입 신청·승인)
+    match /users/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isAdmin());
+      allow create: if isAdmin() || (signedIn() && request.auth.uid == uid
+        && request.resource.data.role == 'pending'
+        && request.resource.data.keys().hasOnly(['email', 'name', 'ko', 'want', 'note', 'role', 'createdAt'])
+        && short(request.resource.data, 'name', 40) && short(request.resource.data, 'ko', 20)
+        && short(request.resource.data, 'note', 300));
+      allow update: if isAdmin();
+      allow delete: if isAdmin() || (signedIn() && request.auth.uid == uid);
+    }
+
+    // 아티스트: 누구나 보기, 본인은 장르·인스타·소개·대표 사진만, 관리자는 전부
+    match /artists/{id} {
+      allow read: if true;
+      allow create, delete: if isAdmin();
+      allow update: if isAdmin() || (ownsArtist(id)
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['genre', 'ig', 'bio', 'cover', 'updatedAt'])
+        && short(request.resource.data, 'genre', 80) && short(request.resource.data, 'ig', 200)
+        && short(request.resource.data, 'bio', 1000) && short(request.resource.data, 'cover', 400000));
+
+      // 작업 사진 5장 (p1~p5)
+      match /photos/{pid} {
+        allow read: if true;
+        allow write: if (isAdmin() || ownsArtist(id)) && pid in ['p1', 'p2', 'p3', 'p4', 'p5']
+          && (request.resource == null || short(request.resource.data, 'data', 900000));
+      }
+    }
+
+    // 페이지 문구: 누구나 보기, 관리자만 고치기
+    match /site/{doc} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}
