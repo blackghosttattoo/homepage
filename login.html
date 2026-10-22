@@ -578,44 +578,68 @@ function bgToast(msg) {
   // 위치 맞추기 창: 사진을 끌어서 보여 줄 곳을 정함 → {x, y} (퍼센트) 또는 취소하면 null
   function placePhoto(src, s, start) {
     return new Promise(function (done) {
-      var img = new Image(), p = { x: start ? start.x : 50, y: start ? start.y : 50 };
+      var img = new Image(), p = { x: start ? start.x : 50, y: start ? start.y : 50, z: start && start.z ? start.z : 1 };
       var d = document.createElement('div'); d.className = 'crop';
       function frame(r, label, cls) {
         return '<div class="pp ' + cls + '"><span class="pp-l">' + label + '</span><div class="pp-f" style="aspect-ratio:' + r + '">' +
           (s.ov ? '<i style="background:' + s.ov + '"></i>' : '') + '</div></div>';
       }
       d.innerHTML = '<div class="card wide-card"><h3 class="t">보여 줄 곳 맞추기</h3>' +
-        '<p class="muted">사진을 끌어서 보여 주고 싶은 곳을 맞추세요.' + (s.ph ? ' PC와 폰은 화면 모양이 달라서 잘리는 곳이 달라요. 두 화면 다 확인해 주세요.' : '') + '</p>' +
+        '<p class="muted">사진을 끌어서 보여 주고 싶은 곳을 맞추고, 아래 막대로 크기를 조절하세요. (폰에서는 두 손가락으로 벌리거나 오므려도 돼요)' + (s.ph ? ' PC와 폰은 화면 모양이 달라서 잘리는 곳이 달라요. 두 화면 다 확인해 주세요.' : '') + '</p>' +
         '<div class="pp-row">' + frame(s.pc, 'PC 화면', 'pp-pc') + (s.ph ? frame(s.ph, '폰 화면', 'pp-ph') : '') + '</div>' +
-        '<p class="warn" data-same hidden>사진 모양이 칸 모양과 같아서 옮길 곳이 없어요. 다른 부분을 보여 주려면 그 부분만 잘라 낸 사진을 올려 주세요.</p>' +
-        '<div class="btns"><button type="button" class="btn btn-solid" data-ok>이 위치로 저장</button><button type="button" class="btn" data-mid>가운데로</button><button type="button" class="btn" data-no>취소</button></div></div>';
+        '<label class="f"><span>크기 <span data-zt></span></span><input type="range" min="1" max="3" step="0.01" data-z></label>' +
+        '<p class="warn" data-same hidden>사진 모양이 칸 모양과 같아서 이대로는 옮길 곳이 없어요. 크기를 키우면 옮길 수 있어요.</p>' +
+        '<div class="btns"><button type="button" class="btn btn-solid" data-ok>이 위치로 저장</button><button type="button" class="btn" data-mid>처음대로</button><button type="button" class="btn" data-no>취소</button></div></div>';
       document.body.appendChild(d);
-      var fs = $$('.pp-f', d);
-      function draw() { fs.forEach(function (f) { f.style.backgroundImage = 'url("' + src + '")'; f.style.backgroundPosition = posText(p); }); }
+      var fs = $$('.pp-f', d), zr = $('[data-z]', d);
+      // 칸 크기에서 사진이 차지하는 크기 (꽉 채우기 × 크기)
+      function geo(f) {
+        var W = f.clientWidth, H = f.clientHeight, r = Math.max(W / img.naturalWidth, H / img.naturalHeight) * p.z;
+        return { w: img.naturalWidth * r, h: img.naturalHeight * r, ox: img.naturalWidth * r - W, oy: img.naturalHeight * r - H };
+      }
+      function draw() {
+        fs.forEach(function (f) {
+          var g = geo(f);
+          f.style.backgroundImage = 'url("' + src + '")';
+          f.style.backgroundSize = Math.ceil(g.w) + 'px ' + Math.ceil(g.h) + 'px';
+          f.style.backgroundPosition = posText(p);
+        });
+        zr.value = p.z; $('[data-zt]', d).textContent = '· ' + p.z.toFixed(1) + '배';
+        $('[data-same]', d).hidden = fs.some(function (f) { var g = geo(f); return g.ox > 2 || g.oy > 2; });
+      }
+      function setZ(z) { p.z = Math.round(Math.min(3, Math.max(1, z)) * 100) / 100; draw(); }
       img.onload = function () {
         draw();
-        $('[data-same]', d).hidden = fs.some(function (f) {
-          var W = f.clientWidth, H = f.clientHeight, r = Math.max(W / img.naturalWidth, H / img.naturalHeight);
-          return img.naturalWidth * r - W > 2 || img.naturalHeight * r - H > 2;
-        });
+        zr.oninput = function () { setZ(+zr.value); };
         fs.forEach(function (f) {
-          var drag = null;
-          f.addEventListener('pointerdown', function (e) { drag = { x: e.clientX, y: e.clientY, px: p.x, py: p.y }; f.setPointerCapture(e.pointerId); e.preventDefault(); });
+          var pts = {}, drag = null, pinch = null;
+          function dist() { var a = Object.keys(pts).map(function (k) { return pts[k]; }); return Math.hypot(a[0].x - a[1].x, a[0].y - a[1].y); }
+          f.addEventListener('pointerdown', function (e) {
+            pts[e.pointerId] = { x: e.clientX, y: e.clientY }; f.setPointerCapture(e.pointerId); e.preventDefault();
+            var n = Object.keys(pts).length;
+            if (n === 1) drag = { x: e.clientX, y: e.clientY, px: p.x, py: p.y };
+            if (n === 2) { drag = null; pinch = { d: dist(), z: p.z }; }
+          });
           f.addEventListener('pointermove', function (e) {
+            if (!pts[e.pointerId]) return;
+            pts[e.pointerId] = { x: e.clientX, y: e.clientY };
+            if (pinch && Object.keys(pts).length === 2) { setZ(pinch.z * dist() / (pinch.d || 1)); return; }
             if (!drag) return;
-            var W = f.clientWidth, H = f.clientHeight, r = Math.max(W / img.naturalWidth, H / img.naturalHeight);
-            var ox = img.naturalWidth * r - W, oy = img.naturalHeight * r - H;
-            if (ox > 1) p.x = Math.min(100, Math.max(0, drag.px - (e.clientX - drag.x) / ox * 100));
-            if (oy > 1) p.y = Math.min(100, Math.max(0, drag.py - (e.clientY - drag.y) / oy * 100));
+            var g = geo(f);
+            if (g.ox > 1) p.x = Math.min(100, Math.max(0, drag.px - (e.clientX - drag.x) / g.ox * 100));
+            if (g.oy > 1) p.y = Math.min(100, Math.max(0, drag.py - (e.clientY - drag.y) / g.oy * 100));
             draw();
           });
-          f.addEventListener('pointerup', function () { drag = null; });
-          f.addEventListener('pointercancel', function () { drag = null; });
+          function up(e) { delete pts[e.pointerId]; pinch = null; drag = null; }
+          f.addEventListener('pointerup', up);
+          f.addEventListener('pointercancel', up);
+          // PC: 마우스 휠로도 크기 조절
+          f.addEventListener('wheel', function (e) { e.preventDefault(); setZ(p.z * (e.deltaY < 0 ? 1.08 : 1 / 1.08)); }, { passive: false });
         });
       };
       img.src = src;
-      $('[data-mid]', d).onclick = function () { p = { x: 50, y: 50 }; draw(); };
-      $('[data-ok]', d).onclick = function () { d.remove(); done({ x: Math.round(p.x), y: Math.round(p.y) }); };
+      $('[data-mid]', d).onclick = function () { p = { x: 50, y: 50, z: 1 }; draw(); };
+      $('[data-ok]', d).onclick = function () { d.remove(); done({ x: Math.round(p.x), y: Math.round(p.y), z: p.z }); };
       $('[data-no]', d).onclick = function () { d.remove(); done(null); };
     });
   }
@@ -628,7 +652,7 @@ function bgToast(msg) {
         var d = r[i + 1]; mine[s.k] = d.exists && v[s.k] ? d.data().data : '';
         var changed = mine[s.k] || pos[s.k];
         h += '<div class="row" data-s="' + s.k + '"><div class="frame" style="flex:0 0 160px;aspect-ratio:4/3;' + bg(mine[s.k] || s.src) + ';background-position:' + posText(pos[s.k]) + '"></div>' +
-          '<div class="who"><b>' + esc(s.name) + '</b><span>' + (mine[s.k] ? '바꾼 사진' : '처음 사진') + (pos[s.k] ? ' · 위치 맞춤' : '') + ' · <a href="' + s.page + '" target="_blank" rel="noopener" style="color:#9C978F">페이지에서 보기</a></span></div>' +
+          '<div class="who"><b>' + esc(s.name) + '</b><span>' + (mine[s.k] ? '바꾼 사진' : '처음 사진') + (pos[s.k] ? ' · 위치 맞춤' + (pos[s.k].z > 1 ? ' · ' + (+pos[s.k].z).toFixed(1) + '배' : '') : '') + ' · <a href="' + s.page + '" target="_blank" rel="noopener" style="color:#9C978F">페이지에서 보기</a></span></div>' +
           '<label class="btn btn-sm btn-solid filebtn">사진 바꾸기<input type="file" accept="image/*"></label>' +
           '<button type="button" class="btn btn-sm" data-pos>위치 맞추기</button>' +
           (changed ? '<button type="button" class="btn btn-sm" data-undo>원래대로</button>' : '') + '</div>';

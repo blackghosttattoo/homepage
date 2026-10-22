@@ -86,8 +86,33 @@
   // 바꾼 사진이 있는 칸은 <head>의 짧은 명령이 잠깐 가려 두고(원래 사진이 깜빡 보이지 않게), 새 사진이 오면 보여 줌
   (function () {
     var spots = document.querySelectorAll('[data-photo]');
+    // 관리자가 키운 크기(z배) 적용. 사진: 테두리 상자 안에서 키움 / 배경: 칸 크기를 재서 '꽉 채우기 × z배'
+    function zoom(el, p, src) {
+      var z = p && +p.z; if (!(z > 1)) return;
+      var o = (+p.x || 0) + '% ' + (+p.y || 0) + '%';
+      if (el.tagName === 'IMG') {
+        var box = document.createElement('span');
+        box.style.cssText = 'display:block;overflow:hidden;border:' + getComputedStyle(el).border;
+        el.parentNode.insertBefore(box, el); box.appendChild(el);
+        el.style.border = '0'; el.style.transformOrigin = o; el.style.transform = 'scale(' + z + ')';
+        return;
+      }
+      var m = (src ? 'url("' + src + '")' : getComputedStyle(el).backgroundImage).match(/url\(["']?(.*?)["']?\)$/);
+      if (!m) return;
+      var im = new Image();
+      im.onload = function () {
+        function fit() {
+          var W = el.clientWidth, H = el.clientHeight; if (!W || !H) return;
+          var r = Math.max(W / im.naturalWidth, H / im.naturalHeight) * z;
+          el.style.backgroundSize = Math.ceil(im.naturalWidth * r) + 'px ' + Math.ceil(im.naturalHeight * r) + 'px';
+        }
+        fit();
+        if (window.ResizeObserver) new ResizeObserver(fit).observe(el); else window.addEventListener('resize', fit);
+      };
+      im.src = m[1];
+    }
     function reveal() { var w = document.getElementById('phw'); if (w) w.remove(); }
-    var safety = setTimeout(reveal, 4000);
+    var safety = setTimeout(reveal, 4000), later = [];
     get('site/photos').then(function (j) {
       var f = fields(j.fields), v = f.v || {}, pos = f.pos || {};
       var keys = Object.keys(v).concat(Object.keys(pos).filter(function (k) { return !v[k]; }));
@@ -97,17 +122,18 @@
         var k = el.getAttribute('data-photo'), p = pos[k];
         // 관리자가 맞춘 '보여 줄 곳'
         if (p) el.style[el.tagName === 'IMG' ? 'objectPosition' : 'backgroundPosition'] = (+p.x || 0) + '% ' + (+p.y || 0) + '%';
-        if (!v[k]) return;
+        if (!v[k]) { later.push(function () { zoom(el, p, null); }); return; }
         jobs.push(get('pagePhotos/' + k).then(function (d) {
           var src = fields(d.fields).data; if (!src) return;
           if (el.tagName === 'IMG') { el.removeAttribute('srcset'); el.src = src; }
           else el.style.backgroundImage = 'url("' + src + '")';
+          zoom(el, p, src);
         }).catch(function () {}));
       });
       return Promise.all(jobs);
     }).catch(function (e) {
       if (e && e.message === '404') try { localStorage.setItem('bg-ph', '[]'); } catch (x) {}
-    }).then(function () { clearTimeout(safety); reveal(); });
+    }).then(function () { clearTimeout(safety); reveal(); later.forEach(function (f) { f(); }); });
   })();
 
   // ---- 4. 아티스트 (홈페이지에만 있음) ----
