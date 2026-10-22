@@ -1,0 +1,42 @@
+# firestore.rules가 main에 올라오면 Firebase에 보안 규칙을 자동 게시한다.
+# 필요: 저장소 Secrets에 FIREBASE_RULES_KEY (서비스 계정 키 JSON, 역할 "Firebase 규칙 관리자")
+name: 보안 규칙 게시
+on:
+  push:
+    branches: [main]
+    paths: [firestore.rules]
+  workflow_dispatch:
+concurrency: rules
+env:
+  PROJECT: blackghost-homepage
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: 출입증 확인
+        env:
+          KEY: ${{ secrets.FIREBASE_RULES_KEY }}
+        run: |
+          if [ -z "$KEY" ]; then echo "::error::FIREBASE_RULES_KEY가 등록되지 않았습니다. 콘솔에서 직접 게시하세요."; exit 1; fi
+      - uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.FIREBASE_RULES_KEY }}
+      - uses: google-github-actions/setup-gcloud@v2
+      - name: 규칙 게시
+        run: |
+          set -euo pipefail
+          TOKEN=$(gcloud auth print-access-token)
+          API=https://firebaserules.googleapis.com/v1/projects/$PROJECT
+          # 1) 규칙 묶음 만들기 (문법 오류가 있으면 여기서 실패하고 게시되지 않음)
+          jq -n --rawfile c firestore.rules '{source:{files:[{name:"firestore.rules",content:$c}]}}' > body.json
+          curl -sS --fail-with-body -X POST "$API/rulesets" -H "Authorization: Bearer $TOKEN" \
+            -H "Content-Type: application/json" -d @body.json > ruleset.json || { cat ruleset.json; exit 1; }
+          NAME=$(jq -r .name ruleset.json)
+          echo "만든 규칙: $NAME"
+          # 2) Firestore에 적용
+          jq -n --arg n "$NAME" --arg r "projects/$PROJECT/releases/cloud.firestore" \
+            '{release:{name:$r,rulesetName:$n}}' > rel.json
+          curl -sS --fail-with-body -X PATCH "$API/releases/cloud.firestore" -H "Authorization: Bearer $TOKEN" \
+            -H "Content-Type: application/json" -d @rel.json || exit 1
+          echo "✓ 보안 규칙 게시 완료"

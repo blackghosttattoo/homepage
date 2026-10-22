@@ -132,7 +132,9 @@
 
 - **Firebase 프로젝트 `blackghost-homepage`** (무료 Spark, 관리 앱 sales-app과 완전히 분리). 로그인: 구글 + 이메일/비밀번호. Firestore 위치 서울(asia-northeast3). 승인된 도메인에 blackghosttattoo.com, www 추가함.
 - **관리자 = `vbnmvbnm6272@gmail.com` (구글 로그인으로 들어와야 관리자)**. 규칙 파일 `firestore.rules`에도 적혀 있음.
-- **규칙(`firestore.rules`)은 Firebase 콘솔 → Firestore → 규칙 탭에 붙여 넣고 '게시'** 해야 적용됨. 고치면 다시 붙여 넣기.
+- **규칙(`firestore.rules`) 자동 게시**: sales-app과 같은 방식. `main`에 `firestore.rules`가 올라오면 GitHub Actions(`.github/workflows/rules.yml`, '보안 규칙 게시')가 Firebase에 게시함. 저장소 Secret `FIREBASE_RULES_KEY`(서비스 계정 키 JSON, 역할 'Firebase 규칙 관리자') 필요.
+  - 대장님께는 GitHub → Actions 탭에서 '보안 규칙 게시'가 초록 체크인지 확인하라고 안내. 실패하거나 키가 없으면 예전처럼 콘솔 → Firestore → 규칙에 붙여 넣고 '게시'.
+  - 규칙을 고치면 가짜 서버(Firestore 에뮬레이터 + @firebase/rules-unit-testing, Java·npm 있음)로 허용/차단을 먼저 시험 (2026-10-22: 32개 경우 모두 통과).
 - 창고 구조: `users/{uid}`(가입 신청·역할 pending/artist/admin·artistId), `artists/{id}`(en·ko·genre·ig·bio·hidden·cover(줄인 사진)·coverUrl(원래 artists/ 사진)), `artists/{id}/photos/p1~p5`(작업 사진), `site/texts`(고친 페이지 문구).
 - 흐름: 아티스트가 로그인 → 가입 신청 → 관리자가 '가입 승인' 탭에서 어느 아티스트인지 골라 승인 → 아티스트는 자기 장르·인스타·소개·대표 사진·작업 사진 5장만 고침.
 - 관리자: 가입 승인 / 아티스트(처음 한 번 '홈페이지 아티스트 불러오기', 새 아티스트 추가·숨기기·지우기) / 페이지 문구(세 페이지 글자 고치기, `**굵게**`, 줄바꿈).
@@ -206,7 +208,7 @@
 - ⏸ **홈페이지 첫 화면 배경 사진** — 대장님이 매장 사진을 새로 찍어 보내주시기로 함
 - 🔄 **로그인·관리 페이지** — main에 반영함. 남은 것: 규칙 게시 확인 → 대장님 구글 로그인 → 아티스트 불러오기 → 실제로 고쳐 보기
 - ⏸ 수강생 작품 칸 — 사진 받으면
-- 🔄 **로그인하면 메뉴 바뀌기 + 페이지 사진 바꾸기** — 만듦(작업 브랜치). 대장님이 새 규칙 다시 붙여 넣기 → "반영"하면 main에 올림
+- 🔄 **로그인하면 메뉴 바뀌기 + 페이지 사진 바꾸기 + 규칙 자동 게시** — 만듦(작업 브랜치). 대장님이 서비스 계정 키 → GitHub Secret `FIREBASE_RULES_KEY` 등록 → "반영"하면 main에 올림(규칙도 자동 게시)
 
 ## 아직 모르는 정보 (받으면 채우기)
 
