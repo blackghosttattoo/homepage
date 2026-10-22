@@ -310,7 +310,6 @@ html.js-rv .rv.in{opacity:1;transform:none}
 <img src="academy/tp-mark.png" alt="" width="141" height="240" style="width: 34px; height: auto; margin-bottom: 4px">
 <div style="display: flex; align-items: center; gap: 14px; width: min(100%, 420px)"><span style="flex: 1; height: 1px; background: #3A3936"></span><span class="slv" style="font-family: 'Michroma', sans-serif; font-size: 16px; letter-spacing: 0.24em; white-space: nowrap">TATTOO PLACE</span><span style="flex: 1; height: 1px; background: #3A3936"></span></div>
 <span style="font-family: 'Michroma', sans-serif; letter-spacing: 0.3em; font-size: 11px">ACADEMY · BY BLACKGHOST</span>
-<span>[타투플레이스 상호 · 사업자등록번호 · 대표]</span>
 </div>
 </footer>
 
@@ -331,7 +330,7 @@ function bgToast(msg) {
   var root = document.documentElement;
   if (!('IntersectionObserver' in window)) { root.classList.remove('js-rv'); return; }
   // 묶음: 안에 있는 것들이 차례로 나타남
-  var groups = '.points, .artists, .steps, .care, .info, .route, .btns, .why, .stats, .notes, .gallery, .faq, .price, .checks, .items';
+  var groups = '.notice, .points, .artists, .steps, .care, .info, .route, .btns, .why, .stats, .notes, .gallery, .faq, .price, .checks, .items';
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (!e.isIntersecting) return;

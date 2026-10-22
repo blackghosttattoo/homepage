@@ -273,7 +273,7 @@ html.js-rv .rv.in{opacity:1;transform:none}
 <div class="btns">
 <a href="tel:01076406272" class="btn btn-solid">상담 전화하기</a>
 <a href="https://open.kakao.com/o/sLedaTNb" target="_blank" rel="noopener" class="btn">카카오톡 상담</a>
-<a href="https://map.naver.com/p/search/%EB%B8%94%EB%9E%99%EA%B3%A0%EC%8A%A4%ED%8A%B8%ED%83%80%ED%88%AC" target="_blank" rel="noopener" class="btn">네이버 지도</a>
+<a href="https://naver.me/5KO1WL5Z" target="_blank" rel="noopener" class="btn">네이버 지도</a>
 </div>
 </div>
 </section>
@@ -283,7 +283,6 @@ html.js-rv .rv.in{opacity:1;transform:none}
 <div style="max-width: 1200px; margin: 0 auto; padding: 36px 20px; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 10px; font-size: 13px; color: #9C978F">
 <div style="display: flex; align-items: center; gap: 14px; width: min(100%, 420px)"><span style="flex: 1; height: 1px; background: #3A3936"></span><span class="slv" style="font-family: 'Michroma', sans-serif; font-size: 16px; letter-spacing: 0.24em; white-space: nowrap">BLACKGHOST</span><span style="flex: 1; height: 1px; background: #3A3936"></span></div>
 <span style="font-family: 'Michroma', sans-serif; letter-spacing: 0.3em; font-size: 11px">TATTOO STUDIO</span>
-<span>블랙고스트타투 · 사업자등록번호 219-04-93305 · 대표 이태호</span>
 </div>
 </footer>
 
@@ -304,7 +303,7 @@ function bgToast(msg) {
   var root = document.documentElement;
   if (!('IntersectionObserver' in window)) { root.classList.remove('js-rv'); return; }
   // 묶음: 안에 있는 것들이 차례로 나타남
-  var groups = '.points, .artists, .steps, .care, .info, .route, .btns, .why, .stats, .notes, .gallery, .faq, .price, .checks, .items';
+  var groups = '.notice, .points, .artists, .steps, .care, .info, .route, .btns, .why, .stats, .notes, .gallery, .faq, .price, .checks, .items';
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
       if (!e.isIntersecting) return;
