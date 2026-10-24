@@ -23,11 +23,14 @@
     return fetch(BASE + path + (path.indexOf('?') < 0 ? '?' : '&') + 'key=' + KEY)
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
   }
-  function list(path) {
-    return get(path + '?pageSize=100').then(function (j) {
-      return (j.documents || []).map(function (d) {
-        var o = fields(d.fields); o.id = d.name.split('/').pop(); return o;
+  // 목록 읽기. 사진처럼 큰 내용은 창고가 여러 번에 나눠 보내므로(nextPageToken) 끝까지 이어서 받음
+  function list(path, token, acc) {
+    acc = acc || [];
+    return get(path + '?pageSize=100' + (token ? '&pageToken=' + encodeURIComponent(token) : '')).then(function (j) {
+      (j.documents || []).forEach(function (d) {
+        var o = fields(d.fields); o.id = d.name.split('/').pop(); acc.push(o);
       });
+      return j.nextPageToken && acc.length < 500 ? list(path, j.nextPageToken, acc) : acc;
     });
   }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
