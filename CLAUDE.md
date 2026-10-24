@@ -201,7 +201,7 @@
     → 하루 뒤 Enforce HTTPS 체크
   - 기존 DNS에 다른 내용(이메일 등)이 있으면 지우기 전에 대장님께 확인.
 - **incheontattoo.com**: 예전부터 가진 주소. 업체 **호스팅kr**, 만료 **2027-05-23**, 자동 연장 켜짐.
-  - 호스팅kr **포워딩**으로 blackghosttattoo.com으로 넘어가게 합니다.
+  - ~~호스팅kr 포워딩~~ → https로 들어오면 로딩만 돼서(포워딩 서버에 자물쇠 없음) 바꿈: **넘겨 주기 전용 저장소 `blackghosttattoo/incheontattoo`**(index.html·404.html이 https://blackghosttattoo.com + 뒤 주소로 보냄, CNAME 파일). 호스팅kr DNS는 blackghosttattoo.com과 같은 값(A 4개 + www CNAME blackghosttattoo.github.io).
 - GitHub Pages는 저장소 하나에 주소 하나만 연결 가능.
 
 ## 절대 하지 말 것
@@ -212,7 +212,7 @@
 
 ## 대기 목록
 
-- 🔄 **incheontattoo.com이 https로 들어오면 로딩만 됨** (원인: 호스팅kr 포워딩 서버에 자물쇠 없음. http://로는 넘어감, DNS 정상 확인). 해결 예시: 새 저장소 `blackghosttattoo/incheontattoo`(넘겨 주기 전용: index.html·404.html이 https://blackghosttattoo.com + 뒤 주소로 보냄, CNAME=incheontattoo.com) → GitHub Pages 켜기 → 호스팅kr에서 incheontattoo.com 포워딩 끄고 A 4개(185.199.108~111.153) + www CNAME(blackghosttattoo.github.io) → 하루 뒤 Enforce HTTPS. **blackghosttattoo.github.io 저장소는 절대 안 씀.** 예시 파일 완성·시험 통과, 대장님 "반영" 기다림
+- 🔄 **incheontattoo.com https 고치기** — ✅ 새 저장소 `blackghosttattoo/incheontattoo`(넘겨 주기 전용, Claude 앱 권한 추가함) 파일 올림 ✅ GitHub Pages(main, root) + Custom domain incheontattoo.com ✅ 호스팅kr 포워딩 끔 + DNS A 4개·www CNAME 넣음(2026-10-24) → ⏳ GitHub DNS 확인·자물쇠 발급 기다리는 중 → 하루쯤 뒤 Enforce HTTPS 체크 → 도메인 잠금 다시 켜기(풀었다면)
 - 🔄 **배포·주소 연결**: ✅① GitHub Pages ✅② 호스팅kr DNS(A 4개 + www CNAME) ✅③ Custom domain·CNAME ✅④ HTTPS(Enforce 체크) ✅⑤ incheontattoo.com 유동 포워딩(닷홈 A 2줄 삭제, 도메인 잠금 다시 켜기) → ⑥ 구글 완료 / **네이버는 사진 정리 뒤에** (대장님 결정: 소유확인 → 사이트맵 제출 → 웹 페이지 수집 3개, 안내는 이미 드림)
 - ⏸ **홈페이지 첫 화면 배경 사진** — 대장님이 매장 사진을 새로 찍어 보내주시기로 함
 - 🔄 **로그인·관리 페이지** — main에 반영, 관리자 로그인·아티스트 12명 불러오기 완료. 남은 것: 실제로 소개·사진 고쳐 보기, 아티스트들 가입 받기
