@@ -230,6 +230,8 @@
     if (d.ig) { ig.href = d.ig; ig.style.display = ''; } else ig.style.display = 'none';
     pics(d.cover ? [d.cover] : [], d.en);
     m.classList.add('open'); document.body.style.overflow = 'hidden';
+    // 폰 '뒤로 가기'를 누르면 페이지를 떠나지 않고 창만 닫히도록 기록을 하나 남겨 둠
+    if (!(history.state && history.state.am)) history.pushState({ am: id }, '');
     m.querySelector('.am-x').focus();
     list('artists/' + id + '/photos').then(function (ph) {
       if (cur !== id) return;
@@ -239,11 +241,14 @@
     }).catch(function () {});
     return true;
   }
-  function close() {
+  function close(fromBack) {
+    if (!m.classList.contains('open')) return;
     m.classList.remove('open'); document.body.style.overflow = ''; cur = null;
+    if (!fromBack && history.state && history.state.am) history.back();
     if (back && back.focus) back.focus();
   }
-  m.querySelector('.am-x').onclick = close;
+  m.querySelector('.am-x').onclick = function () { close(); };
+  window.addEventListener('popstate', function () { close(true); });
   m.addEventListener('click', function (e) { if (e.target === m) close(); });
   document.addEventListener('keydown', function (e) {
     if (!m.classList.contains('open')) return;
