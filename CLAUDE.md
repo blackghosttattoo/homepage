@@ -212,7 +212,6 @@
 
 ## 대기 목록
 
-- 🔄 **고침: 아티스트 창에서 뒤로 가기 누르면 이전 페이지로 나가던 것** — 창을 열 때 기록을 하나 남겨서(pushState) 뒤로 가기 = 창 닫기. X·바깥·Esc로 닫아도 기록 정리. 폰 크기로 7가지 경우 시험 통과. 대장님 "반영" 기다림
 - 🔄 **incheontattoo.com https 고치기** — ✅ 새 저장소 `blackghosttattoo/incheontattoo`(넘겨 주기 전용, Claude 앱 권한 추가함) 파일 올림 ✅ GitHub Pages(main, root) + Custom domain incheontattoo.com ✅ 호스팅kr 포워딩 끔 + DNS A 4개·www CNAME 넣음(2026-10-24) ✅ 대장님 확인: incheontattoo.com → blackghosttattoo.com 넘어감(2026-10-24) → 남은 것: Enforce HTTPS 체크(자물쇠 발급되면) → 도메인 잠금 다시 켜기(풀었다면)
 - 🔄 **배포·주소 연결**: ✅① GitHub Pages ✅② 호스팅kr DNS(A 4개 + www CNAME) ✅③ Custom domain·CNAME ✅④ HTTPS(Enforce 체크) ✅⑤ incheontattoo.com 유동 포워딩(닷홈 A 2줄 삭제, 도메인 잠금 다시 켜기) → ⑥ 구글 완료 / **네이버는 사진 정리 뒤에** (대장님 결정: 소유확인 → 사이트맵 제출 → 웹 페이지 수집 3개, 안내는 이미 드림)
 - ⏸ **홈페이지 첫 화면 배경 사진** — 대장님이 매장 사진을 새로 찍어 보내주시기로 함
@@ -262,3 +261,4 @@
 - 페이지 사진 확대(크기 막대·두 손가락·마우스 휠) main 반영
 - 주소에서 .html 없애기(`/share`·`/academy`·`/login`), 사진 폴더 `images/`로 옮김 main 반영 (대장님: 항상 같은 주소만 보이게 하는 방식은 새로고침·링크 공유·검색 문제로 안 하기로)
 - 고침: 아티스트 창 작업 사진이 3장만 보이던 것(창고가 나눠 보내는 사진을 끝까지 받기) main 반영
+- 고침: 아티스트 창에서 뒤로 가기 = 창 닫기(이전 페이지로 나가지 않음) main 반영
