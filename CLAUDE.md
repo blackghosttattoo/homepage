@@ -19,6 +19,7 @@
   - 그래서 **페이지 이름과 같은 폴더를 만들면 안 됨** (예: `share/` 폴더가 있으면 `/share`가 폴더로 감). 사진 폴더는 `images/` 안에 둠.
 
 - 반응형 홈페이지(폰·PC 모두 잘 보이게). **GitHub Pages**로 올립니다.
+- **`bg-site.js`를 고치면 네 페이지(index·share·academy·login)의 `bg-site.js?v=날짜` 번호도 꼭 같이 바꾸기** (안 바꾸면 폰이 예전 파일을 씀).
 - 파일 구성: `index.html`(홈페이지) + `share.html`(타투 쉐어 안내) + `academy.html`(타투플레이스 학원 안내) + `login.html`(로그인·관리) + `bg-site.js`(세 페이지 공용: 고친 문구·아티스트 창) + `firestore.rules`(창고 잠금 규칙, 홈페이지엔 안 올라감) + 로고 `logo.jpg` + `artists/` 사진. 각 페이지는 한 파일 안에 디자인이 다 들어 있음(같은 색·폰트).
 - 디자인 시안: https://claude.ai/artifact/DWy5dgfoqno7LdwGSAFwUQ
   → 이 시안과 **똑같은 모양**으로 만듭니다. (시안 화면 3개: 홈페이지 `Main.dc.html`, 타투 쉐어 `Share.dc.html`, 타투플레이스 `Academy.dc.html`)
@@ -212,7 +213,6 @@
 
 ## 대기 목록
 
-- 🔄 **공용 파일 번호표** — 네 페이지의 `bg-site.js`에 `?v=날짜` 붙임. **bg-site.js를 고칠 때마다 네 페이지의 번호를 같이 바꾸기** (폰·GitHub가 예전 파일을 10분 넘게 기억해서 고친 게 늦게 보이던 문제). 대장님 "반영" 기다림
 - 🔄 **incheontattoo.com https 고치기** — ✅ 새 저장소 `blackghosttattoo/incheontattoo`(넘겨 주기 전용, Claude 앱 권한 추가함) 파일 올림 ✅ GitHub Pages(main, root) + Custom domain incheontattoo.com ✅ 호스팅kr 포워딩 끔 + DNS A 4개·www CNAME 넣음(2026-10-24) ✅ 대장님 확인: incheontattoo.com → blackghosttattoo.com 넘어감(2026-10-24) → 남은 것: Enforce HTTPS 체크(자물쇠 발급되면) → 도메인 잠금 다시 켜기(풀었다면)
 - 🔄 **배포·주소 연결**: ✅① GitHub Pages ✅② 호스팅kr DNS(A 4개 + www CNAME) ✅③ Custom domain·CNAME ✅④ HTTPS(Enforce 체크) ✅⑤ incheontattoo.com 유동 포워딩(닷홈 A 2줄 삭제, 도메인 잠금 다시 켜기) → ⑥ 구글 완료 / **네이버는 사진 정리 뒤에** (대장님 결정: 소유확인 → 사이트맵 제출 → 웹 페이지 수집 3개, 안내는 이미 드림)
 - ⏸ **홈페이지 첫 화면 배경 사진** — 대장님이 매장 사진을 새로 찍어 보내주시기로 함
@@ -263,3 +263,4 @@
 - 주소에서 .html 없애기(`/share`·`/academy`·`/login`), 사진 폴더 `images/`로 옮김 main 반영 (대장님: 항상 같은 주소만 보이게 하는 방식은 새로고침·링크 공유·검색 문제로 안 하기로)
 - 고침: 아티스트 창 작업 사진이 3장만 보이던 것(창고가 나눠 보내는 사진을 끝까지 받기) main 반영
 - 고침: 아티스트 창에서 뒤로 가기 = 창 닫기(이전 페이지로 나가지 않음) main 반영
+- 공용 파일 번호표(`bg-site.js?v=20261025`) main 반영
