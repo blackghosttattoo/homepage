@@ -64,6 +64,7 @@
 <link rel="manifest" href="/manifest.webmanifest">
 <link rel="apple-touch-icon" href="/images/icon-180.png">
 <script>document.documentElement.classList.add('js-rv')</script>
+<script>/* 첫 화면 로딩 로고: 이번에 처음 열 때만 (같은 창에서 다시 오면 안 나옴) */try{if(!sessionStorage.getItem('bg-splash'))document.documentElement.classList.add('splash')}catch(e){}</script>
 <script>try{var k=JSON.parse(localStorage.getItem('bg-ph')||'[]');if(k.length){var s=document.createElement('style');s.id='phw';s.textContent=k.map(function(x){return '[data-photo="'+x+'"]{background-image:none!important}img[data-photo="'+x+'"]{opacity:0}'}).join('');document.head.appendChild(s)}}catch(e){}</script>
 <link rel="icon" href="logo.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -151,9 +152,33 @@ h2{margin:0;font-family: 'Noto Sans KR', sans-serif; font-weight: 900; letter-sp
 html.js-rv .rv{opacity:0;transform:translateY(26px);transition:opacity .7s ease,transform .7s ease}
 html.js-rv .rv.in{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){html.js-rv .rv{opacity:1;transform:none;transition:none}}
+/* 첫 화면 로딩 로고 (화면 가득, 다 뜨면 사라짐) */
+#splash{display:none}
+html.splash #splash{display:flex;position:fixed;inset:0;z-index:100;align-items:center;justify-content:center;background:#000;transition:opacity .6s ease,visibility .6s}
+html.splash #splash img{width:min(92vw,80vh,640px);height:auto;animation:splashIn 1s ease both}
+html.splash.splash-out #splash{opacity:0;visibility:hidden}
+@keyframes splashIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){html.splash #splash img{animation:none}}
 </style>
 </head>
 <body>
+<div id="splash" aria-hidden="true"><img src="logo.jpg" alt="" width="600" height="600"></div>
+<script>
+// 로딩 로고: 페이지가 다 뜨면(최소 1.2초 보여 주고, 아무리 늦어도 3초) 부드럽게 사라짐
+(function () {
+  var h = document.documentElement; if (!h.classList.contains('splash')) return;
+  try { sessionStorage.setItem('bg-splash', '1'); } catch (e) {}
+  var t0 = Date.now(), done = false;
+  function hide() {
+    if (done) return; done = true;
+    h.classList.add('splash-out');
+    setTimeout(function () { h.classList.remove('splash', 'splash-out'); }, 700);
+  }
+  window.addEventListener('load', function () { setTimeout(hide, Math.max(0, 1200 - (Date.now() - t0))); });
+  setTimeout(hide, 3000);
+  document.getElementById('splash').addEventListener('click', hide);
+})();
+</script>
 
 <header style="border-bottom: 1px solid #1F1F22">
 <div style="max-width: 1200px; margin: 0 auto; padding: 16px 20px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 32px">

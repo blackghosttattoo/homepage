@@ -213,6 +213,7 @@
 
 ## 대기 목록
 
+- 🔄 **첫 화면 로딩 로고(크게 꽉 차게)** — 홈페이지(index)만. 처음 열 때 검은 화면에 로고를 화면 가득(폰 약 90% 폭, PC 최대 640px) → 페이지가 다 뜨면 부드럽게 사라짐(최소 1.2초, 최대 3초, 누르면 바로 닫힘). 같은 창에서 다시 오면 안 나옴(sessionStorage `bg-splash`). 폰·PC 시험 통과. 대장님 "반영" 기다림
 - 🔄 **첫 화면 로딩 때 흰 바탕 고치기** — 네 페이지 `<head>` 맨 앞에 color-scheme dark + `html{background:#000}`(그려지기 전부터 검정), 홈 화면 아이콘용 `manifest.webmanifest`(배경 검정)·`images/icon-180/192/512.png`(logo.jpg로 만듦)·apple-touch-icon. 시험 통과(네 페이지 정상). 대장님이 어떤 앱에서 흰 화면을 보셨는지 확인 필요. 대장님 "반영" 기다림
 - 🔄 **incheontattoo.com https 고치기** — ✅ 새 저장소 `blackghosttattoo/incheontattoo`(넘겨 주기 전용, Claude 앱 권한 추가함) 파일 올림 ✅ GitHub Pages(main, root) + Custom domain incheontattoo.com ✅ 호스팅kr 포워딩 끔 + DNS A 4개·www CNAME 넣음(2026-10-24) ✅ 대장님 확인: incheontattoo.com → blackghosttattoo.com 넘어감(2026-10-24) → 남은 것: Enforce HTTPS 체크(자물쇠 발급되면) → 도메인 잠금 다시 켜기(풀었다면)
 - 🔄 **배포·주소 연결**: ✅① GitHub Pages ✅② 호스팅kr DNS(A 4개 + www CNAME) ✅③ Custom domain·CNAME ✅④ HTTPS(Enforce 체크) ✅⑤ incheontattoo.com 유동 포워딩(닷홈 A 2줄 삭제, 도메인 잠금 다시 켜기) → ⑥ 구글 완료 / **네이버는 사진 정리 뒤에** (대장님 결정: 소유확인 → 사이트맵 제출 → 웹 페이지 수집 3개, 안내는 이미 드림)
