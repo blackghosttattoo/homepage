@@ -215,7 +215,7 @@
 
 ## 대기 목록
 
-- 🔄 **폰 홈 화면 아이콘으로 열 때 흰 화면** — 원인: 폰이 아이콘을 만들 때(검정 설정 전) 정보를 기억해 둠. manifest를 앱처럼(standalone)·폰 모양용 아이콘(maskable, `images/icon-mask-*.png`) 추가. 반영 뒤 대장님이 **홈 화면 아이콘 지우고 다시 추가**해야 바뀜. 대장님 "반영" 기다림
+- ⏳ **폰 홈 화면 아이콘** — main 반영함. 대장님이 아이콘 지우고 다시 추가한 뒤 첫 화면이 검은지 확인 기다림
 - 🔄 **incheontattoo.com https 고치기** — ✅ 새 저장소 `blackghosttattoo/incheontattoo`(넘겨 주기 전용, Claude 앱 권한 추가함) 파일 올림 ✅ GitHub Pages(main, root) + Custom domain incheontattoo.com ✅ 호스팅kr 포워딩 끔 + DNS A 4개·www CNAME 넣음(2026-10-24) ✅ 대장님 확인: incheontattoo.com → blackghosttattoo.com 넘어감(2026-10-24) → 남은 것: Enforce HTTPS 체크(자물쇠 발급되면) → 도메인 잠금 다시 켜기(풀었다면)
 - 🔄 **배포·주소 연결**: ✅① GitHub Pages ✅② 호스팅kr DNS(A 4개 + www CNAME) ✅③ Custom domain·CNAME ✅④ HTTPS(Enforce 체크) ✅⑤ incheontattoo.com 유동 포워딩(닷홈 A 2줄 삭제, 도메인 잠금 다시 켜기) → ⑥ 구글 완료 / **네이버는 사진 정리 뒤에** (대장님 결정: 소유확인 → 사이트맵 제출 → 웹 페이지 수집 3개, 안내는 이미 드림)
 - ⏸ **홈페이지 첫 화면 배경 사진** — 대장님이 매장 사진을 새로 찍어 보내주시기로 함
@@ -268,3 +268,4 @@
 - 고침: 아티스트 창에서 뒤로 가기 = 창 닫기(이전 페이지로 나가지 않음) main 반영
 - 공용 파일 번호표(`bg-site.js?v=20261025`) main 반영
 - 로딩 때 흰 바탕 안 보이게(color-scheme dark·html 검정·홈 화면 아이콘 manifest), 첫 화면 로딩 로고(화면 가득) main 반영
+- 폰 홈 화면 아이콘(앱처럼 열기·검은 시작 화면·폰 모양 아이콘) main 반영
