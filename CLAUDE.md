@@ -214,6 +214,7 @@
 
 ## 대기 목록
 
+- 🔄 **폰 홈 화면 아이콘으로 열 때 흰 화면** — 원인: 폰이 아이콘을 만들 때(검정 설정 전) 정보를 기억해 둠. manifest를 앱처럼(standalone)·폰 모양용 아이콘(maskable, `images/icon-mask-*.png`) 추가. 반영 뒤 대장님이 **홈 화면 아이콘 지우고 다시 추가**해야 바뀜. 대장님 "반영" 기다림
 - 🔄 **incheontattoo.com https 고치기** — ✅ 새 저장소 `blackghosttattoo/incheontattoo`(넘겨 주기 전용, Claude 앱 권한 추가함) 파일 올림 ✅ GitHub Pages(main, root) + Custom domain incheontattoo.com ✅ 호스팅kr 포워딩 끔 + DNS A 4개·www CNAME 넣음(2026-10-24) ✅ 대장님 확인: incheontattoo.com → blackghosttattoo.com 넘어감(2026-10-24) → 남은 것: Enforce HTTPS 체크(자물쇠 발급되면) → 도메인 잠금 다시 켜기(풀었다면)
 - 🔄 **배포·주소 연결**: ✅① GitHub Pages ✅② 호스팅kr DNS(A 4개 + www CNAME) ✅③ Custom domain·CNAME ✅④ HTTPS(Enforce 체크) ✅⑤ incheontattoo.com 유동 포워딩(닷홈 A 2줄 삭제, 도메인 잠금 다시 켜기) → ⑥ 구글 완료 / **네이버는 사진 정리 뒤에** (대장님 결정: 소유확인 → 사이트맵 제출 → 웹 페이지 수집 3개, 안내는 이미 드림)
 - ⏸ **홈페이지 첫 화면 배경 사진** — 대장님이 매장 사진을 새로 찍어 보내주시기로 함
